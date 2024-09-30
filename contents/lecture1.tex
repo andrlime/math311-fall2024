@@ -1,0 +1,201 @@
+\section{September 24, 2024}
+\subsection{Introduction}
+Introducing a probability course first requires a rigourous definition of a probability space, and some brief review of set theory.
+
+\begin{proposition}
+    Under the classical definition of probability, the probability of some event is defined as
+    \begin{align}
+        \mathbb{P}(\mathrm{event}) = \dfrac{\#\,\mathrm{favourable\,outcomes}}{\#\,\mathrm{total\,outcomes}}
+    \end{align}
+    For example, for rolling a (fair) six-sided dice, the probability of each of the six sides landing up is 
+    \begin{align}
+        \mathbb{P}(\{1\}) = \mathbb{P}(\{2\}) = ... = \mathbb{P}(\{6\}) = 1/6
+    \end{align}
+    For flipping two coins, the notation more clearly implicates why events are defined as sets as opposed to distinct elements.
+    \begin{align}
+        \mathbb{P}(\{ HH, HT, TH \}) = 3/4
+    \end{align}
+    or phrased in English, the probability of flipping at least one head after flipping two (fair) coins is $3/4$. Note here that
+    \begin{align}
+        \{ HH, HT, TH \}^C = \{ \mathrm{TT} \} 
+    \end{align}
+    which obviously has a $\left( \frac{1}{2} \right)^2 = \frac{1}{4}$ probability.
+\end{proposition}
+
+\subsection{Probability Spaces}
+\begin{definition}
+    A \textbf{sample space} $\Omega$ is defined as the set of possible outcomes of some random experiment.
+\end{definition}
+\begin{definition}
+    An \textbf{event space} $\mathcal{F}$ is defined as some set of events, which are subsets of some sample space $\Omega$. That is, an event is some set of outcomes, such as $\{ 2, 4, 6 \}$ being the even sides of a dice.
+\end{definition}
+\begin{definition}
+    A \textbf{probability space} is a triplet
+    \begin{align}
+        \left( \Omega, \mathcal{F}, \mathbb{P} \right)
+    \end{align}
+    consisting of $\Omega$ a sample space (a set), $\mathcal{F}$ an event space (a $\sigma$-algebra of subsets/events), and $\mathbb{P}: \mathcal{F} \to [0,1]$ (a probability measure on $\mathcal{F}$).
+\end{definition}
+
+\subsubsection{Sigma Algebra}
+\begin{definition}
+    A collection of subsets ($\mathcal{F}$) of some set ($\Omega$) is a \textbf{$\sigma$-algebra} if
+    \begin{align}
+        \begin{cases}
+            \Omega \in \mathcal{F}\\
+            A_1, ..., A_\infty \in \mathcal{F} \implies \bigcup_i^\infty A_i \in \mathcal{F}\\
+            A \in \mathcal{F} \implies A^C \in \mathcal{F}
+        \end{cases}
+    \end{align}
+\end{definition}
+It follows trivially that
+\begin{lemma}
+    A $\sigma$-algebra always contains $\emptyset$
+\end{lemma}
+\begin{proof}
+    Suppose some $\sigma$-algebra $\mathcal{F}$ does not contain the empty set. By definition, $\Omega \in \mathcal{F}$, and by definition, $\Omega^C \in \mathcal{F}$. However, $\Omega^C = \emptyset$, which is a contradiction.
+\end{proof}
+It follows slightly less trivially that
+\begin{example}
+    It is not necessarily true that $\mathcal{F}$ contains \textbf{all} subsets of $\Omega$. As a trivial example, let $\Omega = \{ 1, 2, 3, 4, 5, 6 \}$. Then,
+    \begin{align}
+        \mathcal{F} = \{ \emptyset, \{ 1 \}, \{ 2, 3, ..., 6 \}, \{ 1, 2, ..., 6 \} \}
+    \end{align}
+    is clearly a $\sigma$-algebra, and is easy to see per Definition 1.5.
+\end{example}
+
+\subsubsection{Probability Measure}
+\begin{definition}
+    A \textbf{probability measure} is some function
+    \begin{align}
+        \mathbb{P}: \mathcal{F} \to [0,1]
+    \end{align}
+    such that
+    \begin{align}
+        \mathbb{P}(\Omega) = 1
+    \end{align}
+    where $\Omega$ is a sample space, i.e. all possible outcomes. 
+\end{definition}
+The probability of an event (a set) corresponds to the sum of all outcomes within that event. Suppose $\Omega = \{ 1, 2, 3, ..., N \}$; then
+\begin{align}
+    \mathbb{P}(\Omega) = \mathbb{P}(1) + \mathbb{P}(2) + ... + \mathbb{P}(N)
+\end{align}
+\begin{proposition}
+    In general, let $A_1, A_2, ...$ be disjoint subsets of $\Omega$; then
+    \begin{align}
+        \mathbb{P}\left(\bigcup_i^\infty A_i\right) &= \sum_i^\infty \mathbb{P}(A_i)
+    \end{align}
+\end{proposition}
+\begin{definition}
+    Two sets $A_i$ and $A_j$ are disjoint if
+    \begin{align}
+        A_i \cap A_j = \emptyset \impliedby i \ne j
+    \end{align}
+\end{definition}
+A simple example for this is rolling a six-sided (fair) dice. In this case, $\mathcal{F}$ is the set of all $2^6 = 64$ subsets of $\Omega$. We can easily see that
+\begin{align}
+    \mathbb{P}(\{1\}) &= 1/6\\
+    \mathbb{P}(\{2\}) &= 1/6\\
+    \mathbb{P}(\{1, 2\}) &= 1/6 + 1/6 = 2/6
+\end{align}
+Note that the probabilities are not derived based on anything (though we could use physics); we use probability as a model for the world based on how we define the probabilities of certain events.
+
+\subsection{Digression on Set Theory}
+Suppose $A, B, C$ are sets. The operations $\cup$, $\cap$, and $^C$ are closed and have the following properties:
+\begin{enumerate}
+    \item Commutativity
+    \begin{align}
+        A \cap B &= B \cap A\\
+        A \cup B &= B \cup A \notag
+    \end{align}
+    \item Associativity
+    \begin{align}
+        A \cap (B\cap C) &= (A \cap B) \cap C\\
+        A \cup (B\cup C) &= (A \cup B) \cup C \notag
+    \end{align}
+    \item Distributivity
+    \begin{align}
+        A \cup (B \cap C) &= (A \cup B) \cap (B \cup C)\\
+        A \cap (B \cup C) &= (A \cap B) \cup (B \cap C) \notag
+    \end{align}
+\end{enumerate}
+
+\subsubsection{De Morgan's Laws}
+Suppose $A_1, A_2, ...$ are sets. Then,
+\begin{lemma}
+    \begin{align}
+        \left( \bigcap_n^\infty A_n \right)^C = \bigcup_n^\infty A_n^C
+    \end{align}
+\end{lemma}
+\begin{proof}
+    For some element $x$,
+    \begin{align}
+        x \in \left( \bigcap_n^\infty A_n \right)^C &\iff \exists n \mid x \notin A_n\\
+        &\iff \exists n \mid x \in A_n^C \\
+        &\iff x \in \bigcup_n^\infty A_n^C
+    \end{align}
+    (1.20) follows because if $x$ is in the complement of the intersection of all of the sets, that necessarily means it must not be in that intersection, i.e. not be in at least one set. (1.21) follows trivially: given the previous statement, $x$ must be in the complement of one of the sets. So, (1.22) follows because $x$ is in at least one of the complements which is a subset of the union of all of them.
+\end{proof}
+\begin{lemma}
+    \begin{align}
+        \left( \bigcup_n^\infty A_n \right)^C = \bigcap_n^\infty A_n^C
+    \end{align}
+\end{lemma}
+\begin{proof}
+    \begin{align}
+        x \in \left( \bigcup_n^\infty A_n \right)^C &\iff x \notin A_n \mid \forall n\\
+        &\iff x \in A_n^C \mid \forall n \\
+        &\iff x \in \bigcap_n^\infty A_n^C
+    \end{align}
+    (1.24) follows because for $x$ to not be in the union of all of these sets, then $x$ cannot be an element of any of them, which implies (1.25) because that means $x$ must simultaneously be an element of the complement of all of the sets. For that to be true requires $x$ to be an element of the intersection of all $A_n^C$.
+\end{proof}
+
+\subsection{Exercises (1.2)}
+\begin{enumerate}
+    \item[1.] An experiment involves choosing an integer N between 0 and 9 (the sample space consists of the integers from 0 to 9, inclusive). Let $A = \{ N \le 5 \}$, $B = \{ 3 \le N \le 7 \}$, $C = \{ N \text{ is even and } N > 0 \} $. List the points that belong to the following events.
+    \begin{align}
+        A \cap B \cap C \qsp A \cup (B \cap C^C) \qsp (A \cup B) \cap C^C \qsp (A \cap B) \cap [(A \cup C)^C]
+    \end{align}
+    \begin{solution}
+        It's trivial.
+    \end{solution}
+    \item[5.] Let $\Omega$ be the reals. Prove the following:
+    \begin{itemize}
+        \item[i.] Open intervals \begin{align}
+            (a,b) = \underbracket{\bigcup_{n=1}^\infty \left( a, b - \frac{1}{n} \right]}_{\circled{A}} = \bigcup_{n=1}^\infty \left[ a + \frac{1}{n}, b \right)
+        \end{align}
+        \begin{solution}
+            The open interval $(a,b) = \{ N \mid a < N < b \}$. Claim that $x \in (a,b) \iff x \in \circled{A}$. For some element $x \in (a,b)$ to be in $\bigcup \cdots$, there must exist some $n'$ such that $b - \frac{1}{n'} > x$. Then, because $x \in \left(a, b - \frac{1}{n'}\right]$, it must be true that $x$ is also in the union of all of these intervals. Set
+            \begin{align}
+                n' \equiv \left\lceil\frac{1}{b - x}\right\rceil
+            \end{align}
+            Then, for $n = \left\lceil\frac{1}{b - x}\right\rceil$, due to taking the ceiling in (1.30), the inverse of $\lceil1/(b-x)\rceil$ is something less than $b - x$, i.e. the interval becomes, for some small $\varepsilon > 0$,
+            \begin{align}
+                &\left(a, b - (b - x) + \varepsilon \right] \to \left( a, x + \varepsilon \right] \supset (a,x)
+            \end{align}
+            This is true for all $x$, i.e. for all elements $x \in (a,b)$, there exists some interval being unioned that contains that element. Conversely, it is trivial to show that all elements $x$ in at least one of the intervals being unioned necessarily lie in the $(a,b)$ interval.
+        \end{solution}
+        \item[ii.] Closed intervals \begin{align}
+            [a,b] = \bigcap_{n=1}^\infty \left[ a, b + \frac{1}{n} \right) = \bigcap_{n=1}^\infty \left( a - \frac{1}{n}, b \right]
+        \end{align}
+        \begin{solution}
+            Same chain of reasoning as above but for a slightly different scenario.
+        \end{solution}
+    \end{itemize}
+    \item[9.] If $A, B_1, B_2, \ldots$ are arbitrary events, show that
+    \begin{align}
+        A \cap \left( \bigcup_i^N B_i \right) = \bigcup_i^N \left( A \cap B_i \right)
+    \end{align}
+    holds as $N \to \infty$.
+    \begin{solution}
+        We can prove by induction. The base case is for $N=2$, i.e.
+        \begin{align}
+            A \cap (B_1 \cup B_2) = (A \cap B_1) \cup (A \cap B_2)
+        \end{align}
+        This is obvious. For some element $x$ to be in $A \cap (B_1 \cup B_2)$ means $x \in A$ and $x$ is in at least one of the $B_{\ldots}$ sets. That implies $x \in (A \cap B_1)$ or $x \in (A \cap B_2)$ or both, which is equivalent to the right side. We claim that (1.34) is true for some $N$. Then, to show it holds for $N+1$,
+        \begin{align}
+            A \cap \left( \bigcup_i^{N+1} B_i \right) &= A \cap \left( \left[\bigcup_i^{N} B_i\right] \cup B_{N+1}\right) = \left( A \cap \left[\bigcup_i^{N} B_i\right] \right) \cup \left( A \cap B_{N+1} \right)\\
+            &= \bigcup_i^N \left( A \cap B_i \right) \cup \left( A \cap B_{N+1} \right) = \bigcup_i^{N+1} \left( A \cap B_i \right)
+        \end{align}
+    \end{solution}
+\end{enumerate}

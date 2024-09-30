@@ -1,0 +1,143 @@
+\section{September 25, 2024}
+Recall that a probability space is defined as a triplet $(\Omega, \mathcal{F}, \mathbb{P})$. Further recall the three conditions that define a $\sigma$-algebra. Finally, recall the definition of a probability measure. Using these, we can define some properties.
+
+\subsection{Probability Space Properties}
+
+\subsubsection{Properties of a Sigma Algebra}
+Let $\mathcal{F}$ be a $\sigma$-algebra. Then,
+\begin{enumerate}
+    \item $\emptyset \in \mathcal{F}$ which is proven in Lemma 1.6.
+    \item Closedness under union
+    \begin{align}
+        A_1, \ldots, A_N \in \curlyf \implies \bigcup_i^N A_i \in \curlyf
+    \end{align}
+    \begin{proof}
+        Using $A_{N+1}, ... \equiv \emptyset$, the union of all of these must be an element of $\curlyf$
+    \end{proof}
+    \item Closedness under intersection
+    \begin{align}
+        A_1, \ldots, A_N \in \curlyf \implies \bigcap_i^N A_i \in \curlyf
+    \end{align}
+    \begin{proof}
+        Take
+        \begin{align}
+            A_1, \ldots, A_N \in \curlyf 
+        \end{align}
+        Then, by definition,
+        \begin{align}
+            A_1^C, \ldots, A_N^C \in \curlyf 
+        \end{align}
+        By definition and then De Morgan's Laws,
+        \begin{align}
+            A_1^C, \ldots, A_N^C \in \curlyf  \implies  \bigcup A_i^C \in \curlyf \implies \left( \bigcap A_i \right)^C \in \curlyf \implies \bigcap A_i \in \curlyf & \qedhere
+        \end{align}
+    \end{proof}
+\end{enumerate}
+
+\subsubsection{Generated Sigma Algebras}
+Let $\Omega \equiv \natural$. Then,
+\begin{align}
+    \curlyf \equiv \{ \emptyset, \{ 1 \}, \{ 1, 2 \}, ... \}
+\end{align}
+is not a $\sigma$-algebra because $\{ 1, 2 \} - \{ 1 \} = \{ 2 \}$ is not an element of $\curlyf$. In spite of this, we can define a $\sigma$-algebra $\widetilde{\curlyf}$ to be the intersections of all $\sigma$-algebras that contain $\curlyf$, i.e. for some non-sigma-algebra subset of sets $\curlyf$,
+\begin{align}
+    \widetilde{\curlyf} \equiv \bigcap \mathcal{G} \qsp \forall \mathcal{G}_\sigma \supset \mathcal{F}
+\end{align}
+\begin{proposition}
+    $\widetilde{\curlyf}$ is a $\sigma$-algebra.
+\end{proposition}
+For the case in (2.5) specifically, we assert that $\widetilde{\curlyf} \equiv 2^\natural$, i.e. the power set of natural numbers. To show this, see that if $\{ 1 \} \in \curlyf$ then $\{ 2 \} \in \curlyf$ for $\{ 1, 2 \} \in \curlyf$. For similar reasons,
+\begin{align}
+    \{ n \} \in \curlyf \qsp \forall n \in \natural
+\end{align}
+and by taking the union of these sets, all subsets of $\natural$ can be composed of these singleton subsets.
+
+\subsubsection{Properties of a Probability Measure}
+\begin{enumerate}
+    \item The probability of nothing... is nothing!
+    \begin{align}
+        \probability(\emptyset) = 0
+    \end{align}
+    \begin{proof}
+        \begin{align}
+            \probability(\emptyset \union \Omega) = \probability(\Omega) = \probability(\emptyset) + \probability(\Omega) \implies \probability(\emptyset) = 0
+        \end{align}
+    \end{proof}
+    \item Probability of unions
+    \begin{align}
+        \probability(A \cup B) = \probability(A) + \probability(B) - \probability(A \cap B)
+    \end{align}
+    To prove this without using pictures, we can express $A$, $B$, and $A \cup B$ as disjoint sets
+    \begin{align}
+        A \cup B &= (A - B) \cup (A \cap B) \cup (B - A)\\
+        A &= (A - B) \cup (A \cap B)\\
+        B &= (B - A) \cup (A \cap B)
+    \end{align}
+    This means that
+    \begin{align}
+        \probability(A) + \probability(B) = \probability(A - B) + \probability(B - A) + 2 \probability(A \cap B)
+    \end{align}
+    and clearly, there is one extra $\probability(A \cap B)$.
+    \item Subset probability. Given $B \subseteq A$, $\probability(A - B) = \probability(A) - \probability(B)$ which implies $\probability(B) \le \probability(A)$ due to non-negative probabilities being not possible by definition. We can write $A$ and $B$ as disjoint sets,
+    \begin{align}
+        A &= B \cup (A-B)\\
+        B &= B
+    \end{align}
+    and then
+    \begin{align}
+        \probability(A) &= \probability(B) + \probability(A - B)\\
+        \probability(B) &= \probability(B)\\
+        \therefore \probability(A) - \probability(B) &= \probability(A - B) (\ge 0) & \qedhere
+    \end{align}
+    \item Union probability less than sum
+    \begin{align}
+        \probability\left( \bigcup A_i \right) \le \sum \probability(A_i)
+    \end{align}
+    \begin{proof}
+        We can again write these in a different way
+        \begin{align}
+            \bigcup A_i = (A_1) \cup (A_1^C \cap A_2) \cup (A_1^C \cap A_2^C \cap A_3) \cup \cdots
+        \end{align}
+        Note that by Property 3, $\probability(A_1^C \cap A_2) \le \probability(A_2)$ and the same applies to all of the other ones. So,
+        \begin{align}
+            \probability\left( \bigcup A_i \right) \le \probability(A_1) + \probability(A_2) + \cdots & \qedhere
+        \end{align}
+    \end{proof}
+\end{enumerate}
+
+
+\subsection{Combinatorics and Counting}
+Take $\Omega = \{ a_1, \cdots, a_N \}$ as some sample space with $\abs{\Omega} = N$. Take $\curlyf \equiv 2^\Omega$ as all subsets of $\Omega$ and define
+\begin{align}
+    \probability(a_i) = 1/N \qsp \forall i
+\end{align}
+which generalizes to
+\begin{align}
+    \probability(A) = \dfrac{\abs{A}}{\abs{\Omega}}
+\end{align}
+To compute $\probability$, we have to be able to count $\abs{A}$, which requires an overview of combinatorics. 
+
+\subsubsection{Ordered with Replacement}
+Suppose we have a license plate with five letters. Then, there are $26^5$ possible combinations because we can reuse letters, and the order matters. In general, for a set of size $N$ and $R$ repeats, there are
+\begin{align}
+    N^R \qsp \text{permutations}
+\end{align}
+
+\subsubsection{Ordered without Replacement}
+If we do not replace then we cannot reuse letters. So, for the license plate we have $26 \cdot 25 \cdots 22$ combinations. In general, for $N$ and $R$, we have
+\begin{align}
+    \frac{N!}{(N-R)!} = \, ^NP_R = (N)_R \qsp \text{permutations}
+\end{align}
+
+% \subsubsection{Unordered with Replacement}
+% Unordered means there are $N!$ permutations with the same set of characters, i.e. we are overcounting by $N!$. So, we have
+% \begin{align}
+%     \frac{N^R}{R!} \qsp \text{permutations}
+% \end{align}
+
+\subsubsection{Unordered without Replacement}
+By the same logic, we now have
+\begin{align}
+    \frac{N!}{R!(N-R)!} = \binom{N}{R} \qsp \text{permutations}
+\end{align}
+

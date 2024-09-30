@@ -1,0 +1,112 @@
+\section{September 27, 2024}
+
+\subsection{Counting Problems (cont)}
+Recall counting formulas:
+\begin{enumerate}
+    \item Ordered samples of $r$ objects out of $n$ with replacement is $n^r$
+    \item Ordered samples of $r$ objects out of $n$ with\textit{out} replacement is $\frac{n!}{(n-r)!}$
+    \item Unordered samples of $r$ objects out of $n$ without replacement is $\frac{n!}{r!(n-r)!} = \binom{n}{r}$
+\end{enumerate}
+\begin{example}
+    There are 10 balls in an urn numbered 1 through 10. Randomly draw 5 balls without replacement. What is the probability of the second largest number being 8?
+    \begin{solution}
+        Ways to choose 5 balls out of 10 is
+        \begin{align}
+            \binom{10}{5}
+        \end{align}
+        if we do not care about the order. How many of these combinations have the second largest number of 8? There are two possibilities: largest number is 9 or largest number is 10. So there are
+        \begin{align}
+            \underset{9 \text{ or } 10}{2} \times \underset{\text{choose 3 from 7 remaining}}{\binom{7}{3}}
+        \end{align}
+        This sets one choice as 8, one as one of 9 or 10, and the rest as arbitrary picks that are not 8, 9, or 10. So the probability is
+        \begin{align}
+            \probability = \dfrac{2 \times \binom{7}{3}}{\binom{10}{5}}
+        \end{align}
+    \end{solution}
+\end{example}
+\subsubsection{Unordered Samples \textit{With} Replacement}
+How many Scrabble combinations of 7 letters are there if there are only A, B, and C? It is not as simple as $N^R/R!$ because there can be repeated elements which adds a degree of nuance. We can rewrite some sequence using ``stars and bars'' into
+\begin{align}
+    AABCABA \implies ***\,* \mid *\,* \mid *
+\end{align}
+To count the number of combinations, there is one slot for each star and one slot for each bar. Each slot can either be a star or a bar. So we pick 7 positions from 9 positions:
+\begin{align}
+    \binom{9}{7} \equiv \binom{9}{2} = 36
+\end{align}
+ways to arrange these stars and bars.
+\begin{proposition}
+    The number of unordered samples of $R$ objects out of $N$ is
+    \begin{align}
+        \binom{R+N-1}{R} = \binom{R+N-1}{N-1}
+    \end{align}
+\end{proposition}
+
+\subsection{Independence}
+\begin{proposition}
+    Let $A$ and $B$ be two independent events. We say $A$ and $B$ are independent if $\probability(A \text{ and } B) = \probability(A) \cdot \probability(B)$
+\end{proposition}
+What if we have $N$ events? How can this definition be generalized?
+\begin{definition}
+    A family of events $\mathcal{A} \equiv \{ A_i \}_{i \in I}$ (where $I$ is some set of indices such as $\natural$) are \textbf{independent} if and only if for every finite subset $A' \subseteq \mathcal{A}$,
+    \begin{align}
+        \probability\left(\bigcap A'_i\right) = \prod \probability(A'_i)
+    \end{align}
+\end{definition}
+
+\subsubsection{Properties of Independent Events}
+Recall the properties of a sample space defined previously.
+\begin{lemma}
+    Let $\Omega$ be a sample space and let $A$ be an event with probability $\probability(A)$. Then, $\probability(A^C) = 1- \probability(A)$.
+    \begin{proof}
+        It must be true that
+        \begin{align}
+            A \cup A^C = \Omega
+        \end{align}
+        so
+        \begin{align}
+            \probability(A) + \probability(A^C) = \probability(A \cup A^C) = \probability(\Omega) = 1
+        \end{align}
+    \end{proof}
+\end{lemma}
+\begin{enumerate}
+    \item If $A$ and $B$ are independent, then $\probability(A \cap B^C) = \probability(A) \cdot \probability(B^C)$. That is, if an event is independent with another, then the first event is independent with the other not happening as well.
+    \begin{align}
+        A, B \text{ indep.} \implies \left\{ A, A^C \right\} \times \left\{ B, B^C \right\} \text{ all indep.}
+    \end{align}
+    \begin{proof}
+        Given $A$ and $B$ are independent, $\probability(A \cap B) = \probability(A)\probability(B)$. Then,
+        \begin{align}
+            \probability(A \cap B^C) = \probability(A - B) = \probability(A - (A \cap B))
+        \end{align}
+        But, if $B \subseteq A$, then $\probability(A - B) = \probability(A) - \probability(B)$. So,
+        \begin{align}
+            \probability(A \cap B^C) \stackrel{\ldots}{=} \probability(A - (A \cap B)) &= \probability(A) - \probability(A)\probability(B)\\
+            &= \probability(A) \left[ 1 - \probability(B) \right]\\
+            &= \probability(A) \probability(B^C)
+        \end{align}
+    \end{proof}
+    This works for the other two non-trivial elements of (3.10) as well.
+\end{enumerate}
+\begin{proposition}
+    For some family $\{ A_i \}_{i \in I}$ of independent events, define $B_\alpha \equiv (A_\alpha \text{ or } A_\alpha^C)$. Then,
+    \begin{align}
+        \probability\left( \bigcap B_i \right) = \prod \probability(B_i)
+    \end{align}
+    where here, each event is either some event in $A$ or its complement.
+\end{proposition}
+
+\subsection{Bernoulli Trials}
+Suppose some factory produces batteries and 5\% of all batteries are defective. These are independent defective batteries which makes the QA job difficult. Suppose the factory makes 10 batteries. What is the probability that exactly 3 of them are defective? The first three being defective has probability
+\begin{align}
+    \probability\left[ \text{first 3 are defective; rest are ok} \right] = \left( \dfrac{1}{20} \right)^3 \cdot \left( \dfrac{19}{20} \right)^7
+\end{align}
+But, there are multiple ways to pick three, so the probability there is
+\begin{align}
+    \binom{10}{3} \cdot \probability\left[ \text{first 3 are defective; rest are ok} \right]
+\end{align}
+\begin{definition}
+    For repeating some binary event with probability of success $p$ for $N$ independent trials, the probability of succeeding exactly $k$ times is
+    \begin{align}
+        \probability(k \text{ successes}) = \binom{N}{k} \cdot p^k \cdot (1-p)^{N-k}
+    \end{align}
+\end{definition}
