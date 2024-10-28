@@ -10,9 +10,22 @@ NC='\033[0m' # No Color
 # Emojis
 CHECK="\xE2\x9C\x85"    # ✅
 CROSS="\xE2\x9D\x8C"     # ❌
-RECYCLE="\xF0\x9F\x9A\xB3" # ♻️
 BOOK="\xF0\x9F\x93\x96"  # 📖
-PROGRESS_BAR="⏳"
+
+# Progress bar function
+progress_bar() {
+  local current=$1
+  local total=$2
+  local width=40  # Width of the progress bar
+  local progress=$((current * width / total))
+  local remainder=$((width - progress))
+
+  # Create the visual bar
+  bar=$(printf "%${progress}s" | tr ' ' '#')
+  space=$(printf "%${remainder}s" | tr ' ' '-')
+  
+  printf "\r${BLUE}Compiling LaTeX: [%s%s] %d/%d${NC}" "$bar" "$space" "$current" "$total"
+}
 
 # Compute the new hash
 sha1sum contents/* | sha1sum > temp
@@ -33,14 +46,14 @@ fi
 # Perform LaTeX compilation if needed
 if [[ ! -f temp ]]; then
   for i in $(seq 1 $1); do
-    echo -e "${BLUE}${PROGRESS_BAR} Compiling LaTeX pass ${i}/${1} (silently)...${NC}"
-    pdflatex --shell-escape main.tex > temp.log
+    progress_bar $i $1
+    pdflatex --shell-escape main.tex > /dev/null 2>&1
   done
+  echo -e "\n${GREEN}${CHECK} Compilation complete!${NC}"
 
   # Cleanup temporary files
-  rm temp.log
   rm */*.aux *.aux *.log *.out
 
-  echo -e "${GREEN}${RECYCLE} Cleanup complete!${NC}"
+  echo -e "${GREEN} Cleanup complete!${NC}"
 fi
 
