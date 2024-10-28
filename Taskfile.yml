@@ -4,19 +4,25 @@ tasks:
   open:
     cmds:
       - open main.pdf
+    silent: true
   preview:
     cmds:
       - ./build.sh 1
+    silent: true
   build:
     cmds:
       - ./build.sh 2
+    silent: true
   o:
     cmds:
       - task: open
+    silent: true
   p:
     cmds:
       - task: preview
+    silent: true
   b:
     cmds:
       - task: build
+    silent: true
 

@@ -1,23 +1,46 @@
-#!/bin/sh
+#!/bin/bash
 
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Emojis
+CHECK="\xE2\x9C\x85"    # ✅
+CROSS="\xE2\x9D\x8C"     # ❌
+RECYCLE="\xF0\x9F\x9A\xB3" # ♻️
+BOOK="\xF0\x9F\x93\x96"  # 📖
+PROGRESS_BAR="⏳"
+
+# Compute the new hash
 sha1sum contents/* | sha1sum > temp
 
-if diff hash.txt temp > /dev/null; then
-  echo "Hashes are the same. No need to rebuild!"
+# Check if hash.txt exists and compare hashes
+if [[ ! -f hash.txt ]]; then
+  echo -e "${YELLOW}${BOOK} hash.txt not found. Creating it and rebuilding...${NC}"
   mv temp hash.txt
+elif diff hash.txt temp > /dev/null; then
+  echo -e "${GREEN}${CHECK} Hashes are the same. No need to rebuild!${NC}"
+  rm temp
+  exit 0
 else
-  echo "Hashes are different. Rebuilding!"
+  echo -e "${YELLOW}${CROSS} Hashes are different. Rebuilding...${NC}"
   mv temp hash.txt
-  
+fi
+
+# Perform LaTeX compilation if needed
+if [[ ! -f temp ]]; then
   for i in $(seq 1 $1); do
-    echo "Compiling LaTeX (silently...)"
+    echo -e "${BLUE}${PROGRESS_BAR} Compiling LaTeX pass ${i}/${1} (silently)...${NC}"
     pdflatex --shell-escape main.tex > temp.log
-    rm temp.log
   done
-  
-  rm */*.aux
-  rm *.aux
-  rm *.log
-  rm *.out
+
+  # Cleanup temporary files
+  rm temp.log
+  rm */*.aux *.aux *.log *.out
+
+  echo -e "${GREEN}${RECYCLE} Cleanup complete!${NC}"
 fi
 
