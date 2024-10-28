@@ -1,0 +1,161 @@
+\section{October 23, 2024}
+
+\subsection{Review of Moments}
+Let $X$ be a random variable. Recall that
+\begin{align}
+    \alpha_k = E(X^k) && k > 0
+\end{align}
+is the $k$-th moment. It follows that $E(X) = \text{mean}(X)$, so recall that
+\begin{align}
+    \beta_k = E((X - m)^k) && k > 0
+\end{align}
+is the $k$-th central moment (for $m < \infty$).
+
+\subsection{Properties of Expectation Continued}
+\begin{enumerate}
+    \item[8.] The central moments $\beta_1, \beta_2, \ldots$ of a random variable can be obtained from the moments $\alpha_1, \alpha_2, \ldots$, assuming $\alpha_i < \infty$ for $i < n$ and $\alpha_n$ exists. The result is
+    \begin{align}
+        \beta_n = E\qty[(R - m)^n] = E \qty[\sum_{k = 0}^n \binom{n}{k} (-m)^{n-k} R^k]
+    \end{align}
+    assuming $m < \infty$. This simplifies into
+    \begin{align}
+        \sum_{k=0}^n \binom{n}{k}(-m)^{n-k} \alpha_k
+    \end{align}
+    because $E(R^k) \equiv \alpha_k$. It follows that for $n = 2$,
+    \begin{align}
+        \text{var}(R) = E(R^2) - 2mE(R) + m^2 \implies \boxed{\sigma_R^2 = E(R^2) - \qty[E(R)]^2}
+    \end{align}
+    \item[9.] If $0 < j < k$, then
+    \begin{align}
+        E(\abs{R}^j) \le 1 + E(\abs{R}^k)
+    \end{align}
+    \begin{proof}
+        For $\omega \in \Omega$,
+        \begin{align}
+            \abs{R(\omega)}^j \le \begin{cases}
+                \abs{R(\omega)}^k & \abs{R(\omega)} \ge 1\\
+                1 & \text{else}
+            \end{cases}
+        \end{align}
+        i.e. finiteness is a logical consequence of $0 < j < k$. Thus,
+        \begin{align}
+            \abs{R(\omega)}^j \le 1 + \abs{R(\omega)}^k
+        \end{align}
+        for all $\omega \in \Omega$. This extends to the expectation:
+        \begin{align}
+            E(\abs{R}^j) \le 1 + E(\abs{R}^k)
+        \end{align}
+    \end{proof}
+    It follows that if some higher order expectation is finite, then lower order expectations are also finite.
+\end{enumerate}
+
+\begin{example}
+    Let $R \sim \exp(\lambda)$ be
+    \begin{align}
+        f_R(x) = \begin{cases}
+            \lambda e^{-\lambda x} & x \ge 0\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Find $\alpha_i$ and $\text{var}(R)$.
+\end{example}
+\begin{solution}
+    By definition,
+    \begin{align}
+        \alpha_j = E\qty(R^j) = \int_0^\infty x^j \lambda e^{-\lambda x} \dd{x}
+    \end{align}
+    This integration could clearly be done by parts. But this can also be done through a substitution. Set $y = \lambda x$. Then, $\dd{y} = \lambda \dd{x}$. We get
+    \begin{align}
+        \dfrac{1}{\lambda^j} \cdot \int_0^\infty y^j \cdot e^{-y} \dd{y}
+    \end{align}
+    \begin{aside}
+        Define the Gamma function
+        \begin{align}
+            \Gamma\qty(j) \equiv \int_0^\infty y^{j-1} \cdot e^{-y} \dd{y}
+        \end{align}
+        We can do some induction on $j$:
+        \begin{align}
+            \Gamma(1) = \int_0^\infty e^{-x} = 1
+        \end{align}
+        For $\Gamma(r)$,
+        \begin{align}
+            \int_0^\infty x^{r-1} e^{-x} \dd{x}
+        \end{align}
+        By parts, this becomes
+        \begin{align}
+            \cancel{\eval{\frac{x^r}{r} e^{-x}}_0^\infty} + \frac{1}{r} \int_0^\infty x^r e^{-x} \dd{x}
+        \end{align}
+        This indicates
+        \begin{align}
+            \Gamma(r) = \dfrac{1}{r} \Gamma(r+1)
+        \end{align}
+        Inductively, for $n \in \natural$, $\Gamma(n + 1) = n!$.
+    \end{aside}
+    It follows that Equation 13.12 simplifies into
+    \begin{align}
+        a_j = \dfrac{j!}{\lambda^j}
+    \end{align}
+    So it follows that
+    \begin{align}
+        \text{var}\qty(\exp(\lambda)) = \alpha_2 - \alpha_1^2 = \dfrac{2}{\lambda^2} - \qty(\dfrac{1}{\lambda})^2 = \boxed{\dfrac{1}{\lambda^2}} & \qedhere
+    \end{align}
+\end{solution}
+
+\subsection{Covariance}
+With multiple random variables, we can define covariance for two variables at a time. Let $R_1,R_2$ be two random variables.
+\begin{definition}
+     The $(i,j)$-th joint moment for the pair of random variables is
+    \begin{align}
+        \alpha_{i,j} = E\qty[R_1^i \cdot R_2^j] && i,j \ge 1
+    \end{align}
+\end{definition}
+Assume that the moments are finite, i.e. $m_1 = E(R_1) < \infty$ and $m_2 = E(R_2) < \infty$.
+\begin{definition}
+    The $(i,j)$-th joint central moment for the pair of random variables is
+    \begin{align}
+        \beta_{i,j} = E\qty[(R_1 - m_1)^i \cdot (R_2 - m_2)^j]
+    \end{align}
+\end{definition}
+\begin{definition}
+    The \textbf{covariance} of a pair of random variables $R_1,R_2$ is defined as
+    \begin{align}
+        \beta_{1,1} = \text{cov}
+    \end{align}
+    Note that if $R_1 = R_2$, then
+    \begin{align}
+        \text{cov}(R_1,R_2) = \text{var}(R_1)
+    \end{align}
+\end{definition}
+\begin{proposition}
+    An easier way to compute covariance is given by
+    \begin{align}
+        \text{cov}(R_1,R_2) &= E(R_1R_2 - R_2m_1 - R_1m_2 + m_1m_2)\\
+        &= E(R_1R_2) - m_1 \cdot E(R_2) - m_2 \cdot E(R_1) + m_1m_2\\
+        &= E(R_1R_2) - m_1 m_2 - m_1 m_2 + m_1m_2\\
+        &= E(R_1R_2) - m_1 m_2
+    \end{align}
+\end{proposition}
+
+\subsection{Preview of Correlation}
+Covariance is not normalized and can take any value $r \in \real$. However, that may be unintuitive, so we want a normalized correlation constant $R \in [-1,1]$
+% \begin{aside}
+%     If a plot looks like
+%     % figure
+%     then we say the two random variables are positively correlated and has positive covariance. Similarly,
+%     % figure
+%     are negatively correlated and has negative covariance. And,
+%     % figure
+%     are not correlated and has zero covariance.
+% \end{aside}
+\begin{proposition}
+    If $R_1,R_2$ are independent, then $\text{cov}(R_1,R_2) = 0$ and the two variables are uncorrelated.
+    \begin{proof}
+        $R_1,R_2$ are independent, so
+        \begin{align}
+            E\qty[(R_1-m_1)(R_2-m_2)] &= E\qty[(R_1-m_1)] \cdot E\qty[(R_2-m_2)]\\
+            &= 0 \cdot 0 = 0 && \qedhere
+        \end{align}
+    \end{proof}
+    This is not an iff; functions may be uncorrelated, but not independent.
+\end{proposition}
+This will be completed in Lecture 14.

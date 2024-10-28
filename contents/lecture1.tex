@@ -150,52 +150,52 @@ Suppose $A_1, A_2, ...$ are sets. Then,
     (1.24) follows because for $x$ to not be in the union of all of these sets, then $x$ cannot be an element of any of them, which implies (1.25) because that means $x$ must simultaneously be an element of the complement of all of the sets. For that to be true requires $x$ to be an element of the intersection of all $A_n^C$.
 \end{proof}
 
-\subsection{Exercises (1.2)}
-\begin{enumerate}
-    \item[1.] An experiment involves choosing an integer N between 0 and 9 (the sample space consists of the integers from 0 to 9, inclusive). Let $A = \{ N \le 5 \}$, $B = \{ 3 \le N \le 7 \}$, $C = \{ N \text{ is even and } N > 0 \} $. List the points that belong to the following events.
-    \begin{align}
-        A \cap B \cap C \qsp A \cup (B \cap C^C) \qsp (A \cup B) \cap C^C \qsp (A \cap B) \cap [(A \cup C)^C]
-    \end{align}
-    \begin{solution}
-        It's trivial.
-    \end{solution}
-    \item[5.] Let $\Omega$ be the reals. Prove the following:
-    \begin{itemize}
-        \item[i.] Open intervals \begin{align}
-            (a,b) = \underbracket{\bigcup_{n=1}^\infty \left( a, b - \frac{1}{n} \right]}_{\circled{A}} = \bigcup_{n=1}^\infty \left[ a + \frac{1}{n}, b \right)
-        \end{align}
-        \begin{solution}
-            The open interval $(a,b) = \{ N \mid a < N < b \}$. Claim that $x \in (a,b) \iff x \in \circled{A}$. For some element $x \in (a,b)$ to be in $\bigcup \cdots$, there must exist some $n'$ such that $b - \frac{1}{n'} > x$. Then, because $x \in \left(a, b - \frac{1}{n'}\right]$, it must be true that $x$ is also in the union of all of these intervals. Set
-            \begin{align}
-                n' \equiv \left\lceil\frac{1}{b - x}\right\rceil
-            \end{align}
-            Then, for $n = \left\lceil\frac{1}{b - x}\right\rceil$, due to taking the ceiling in (1.30), the inverse of $\lceil1/(b-x)\rceil$ is something less than $b - x$, i.e. the interval becomes, for some small $\varepsilon > 0$,
-            \begin{align}
-                &\left(a, b - (b - x) + \varepsilon \right] \to \left( a, x + \varepsilon \right] \supset (a,x)
-            \end{align}
-            This is true for all $x$, i.e. for all elements $x \in (a,b)$, there exists some interval being unioned that contains that element. Conversely, it is trivial to show that all elements $x$ in at least one of the intervals being unioned necessarily lie in the $(a,b)$ interval.
-        \end{solution}
-        \item[ii.] Closed intervals \begin{align}
-            [a,b] = \bigcap_{n=1}^\infty \left[ a, b + \frac{1}{n} \right) = \bigcap_{n=1}^\infty \left( a - \frac{1}{n}, b \right]
-        \end{align}
-        \begin{solution}
-            Same chain of reasoning as above but for a slightly different scenario.
-        \end{solution}
-    \end{itemize}
-    \item[9.] If $A, B_1, B_2, \ldots$ are arbitrary events, show that
-    \begin{align}
-        A \cap \left( \bigcup_i^N B_i \right) = \bigcup_i^N \left( A \cap B_i \right)
-    \end{align}
-    holds as $N \to \infty$.
-    \begin{solution}
-        We can prove by induction. The base case is for $N=2$, i.e.
-        \begin{align}
-            A \cap (B_1 \cup B_2) = (A \cap B_1) \cup (A \cap B_2)
-        \end{align}
-        This is obvious. For some element $x$ to be in $A \cap (B_1 \cup B_2)$ means $x \in A$ and $x$ is in at least one of the $B_{\ldots}$ sets. That implies $x \in (A \cap B_1)$ or $x \in (A \cap B_2)$ or both, which is equivalent to the right side. We claim that (1.34) is true for some $N$. Then, to show it holds for $N+1$,
-        \begin{align}
-            A \cap \left( \bigcup_i^{N+1} B_i \right) &= A \cap \left( \left[\bigcup_i^{N} B_i\right] \cup B_{N+1}\right) = \left( A \cap \left[\bigcup_i^{N} B_i\right] \right) \cup \left( A \cap B_{N+1} \right)\\
-            &= \bigcup_i^N \left( A \cap B_i \right) \cup \left( A \cap B_{N+1} \right) = \bigcup_i^{N+1} \left( A \cap B_i \right)
-        \end{align}
-    \end{solution}
-\end{enumerate}
+% \subsection{Exercises (1.2)}
+% \begin{enumerate}
+%     \item[1.] An experiment involves choosing an integer N between 0 and 9 (the sample space consists of the integers from 0 to 9, inclusive). Let $A = \{ N \le 5 \}$, $B = \{ 3 \le N \le 7 \}$, $C = \{ N \text{ is even and } N > 0 \} $. List the points that belong to the following events.
+%     \begin{align}
+%         A \cap B \cap C \qsp A \cup (B \cap C^C) \qsp (A \cup B) \cap C^C \qsp (A \cap B) \cap [(A \cup C)^C]
+%     \end{align}
+%     \begin{solution}
+%         It's trivial.
+%     \end{solution}
+%     \item[5.] Let $\Omega$ be the reals. Prove the following:
+%     \begin{itemize}
+%         \item[i.] Open intervals \begin{align}
+%             (a,b) = \underbracket{\bigcup_{n=1}^\infty \left( a, b - \frac{1}{n} \right]}_{\circled{A}} = \bigcup_{n=1}^\infty \left[ a + \frac{1}{n}, b \right)
+%         \end{align}
+%         \begin{solution}
+%             The open interval $(a,b) = \{ N \mid a < N < b \}$. Claim that $x \in (a,b) \iff x \in \circled{A}$. For some element $x \in (a,b)$ to be in $\bigcup \cdots$, there must exist some $n'$ such that $b - \frac{1}{n'} > x$. Then, because $x \in \left(a, b - \frac{1}{n'}\right]$, it must be true that $x$ is also in the union of all of these intervals. Set
+%             \begin{align}
+%                 n' \equiv \left\lceil\frac{1}{b - x}\right\rceil
+%             \end{align}
+%             Then, for $n = \left\lceil\frac{1}{b - x}\right\rceil$, due to taking the ceiling in (1.30), the inverse of $\lceil1/(b-x)\rceil$ is something less than $b - x$, i.e. the interval becomes, for some small $\varepsilon > 0$,
+%             \begin{align}
+%                 &\left(a, b - (b - x) + \varepsilon \right] \to \left( a, x + \varepsilon \right] \supset (a,x)
+%             \end{align}
+%             This is true for all $x$, i.e. for all elements $x \in (a,b)$, there exists some interval being unioned that contains that element. Conversely, it is trivial to show that all elements $x$ in at least one of the intervals being unioned necessarily lie in the $(a,b)$ interval.
+%         \end{solution}
+%         \item[ii.] Closed intervals \begin{align}
+%             [a,b] = \bigcap_{n=1}^\infty \left[ a, b + \frac{1}{n} \right) = \bigcap_{n=1}^\infty \left( a - \frac{1}{n}, b \right]
+%         \end{align}
+%         \begin{solution}
+%             Same chain of reasoning as above but for a slightly different scenario.
+%         \end{solution}
+%     \end{itemize}
+%     \item[9.] If $A, B_1, B_2, \ldots$ are arbitrary events, show that
+%     \begin{align}
+%         A \cap \left( \bigcup_i^N B_i \right) = \bigcup_i^N \left( A \cap B_i \right)
+%     \end{align}
+%     holds as $N \to \infty$.
+%     \begin{solution}
+%         We can prove by induction. The base case is for $N=2$, i.e.
+%         \begin{align}
+%             A \cap (B_1 \cup B_2) = (A \cap B_1) \cup (A \cap B_2)
+%         \end{align}
+%         This is obvious. For some element $x$ to be in $A \cap (B_1 \cup B_2)$ means $x \in A$ and $x$ is in at least one of the $B_{\ldots}$ sets. That implies $x \in (A \cap B_1)$ or $x \in (A \cap B_2)$ or both, which is equivalent to the right side. We claim that (1.34) is true for some $N$. Then, to show it holds for $N+1$,
+%         \begin{align}
+%             A \cap \left( \bigcup_i^{N+1} B_i \right) &= A \cap \left( \left[\bigcup_i^{N} B_i\right] \cup B_{N+1}\right) = \left( A \cap \left[\bigcup_i^{N} B_i\right] \right) \cup \left( A \cap B_{N+1} \right)\\
+%             &= \bigcup_i^N \left( A \cap B_i \right) \cup \left( A \cap B_{N+1} \right) = \bigcup_i^{N+1} \left( A \cap B_i \right)
+%         \end{align}
+%     \end{solution}
+% \end{enumerate}

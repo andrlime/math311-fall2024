@@ -1,0 +1,192 @@
+\section{October 14, 2024}
+
+\subsection{Functions of More Than One Random Variable}
+\begin{example}
+    Take $R_1,R_2$ as independent, uniformly distributed random variables between $0$ and $1$. Find the density of $R_3 = \frac{R_2}{R_1^2}$
+\end{example}
+\begin{solution}
+    The density of the pair $(R_1,R_2)$ is
+    \begin{align}
+        f_{12}(x,y) = \begin{cases}
+            1 & 0 \le x,y \le 1\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    which is the uniform square $[0,1] \times [0,1]$. We can compute the distribution function for $R_3$:
+    \begin{align}
+        F_3(z) = \probability(R_3 \le z)
+    \end{align}
+    This just equals
+    \begin{align}
+        F_3(z) = \probability\qty(R_2 \le (R_1)^2z)
+    \end{align}
+    Note that we do not care about $R_1 = 0$ because it has zero probability. This equals
+    \begin{align}
+        \iint_{y \le x^2 z} f_{12}(x,y) \dd{x}\dd{y}
+    \end{align}
+    We can take $z \ge 0$ because negative quotients are not possible. Then, the cases $z \in [0,1]$ and $z > 1$ are separate in evaluating this double integral.
+    \begin{enumerate}
+        \item Take $z \in [0,1]$. Then, we are integrating
+        \begin{align}
+            \int_0^1 x^2 z \dd{x} = \frac{z}{3}
+        \end{align}
+        \item Take $z > 1$. Then, we are integrating
+        \begin{align}
+            \int_0^{\sqrt{1/z}} x^2 z \dd{z} + \int_{\sqrt{1/z}}^1 1 \dd{z}
+        \end{align}
+        which equals
+        \begin{align}
+            \int_0^{\sqrt{1/z}} x^2 z \dd{z} + \qty(1 - \sqrt{1/z})
+        \end{align}
+        which trivially equals
+        \begin{align}
+            1 - \frac{2}{3\sqrt{z}}
+        \end{align}
+    \end{enumerate}
+    Thus, the distribution function equals
+    \begin{align}
+        F_3(z) = \begin{cases}
+            0 & z < 0\\
+            \frac{z}{3} & z \in [0,1]\\
+            1 - \frac{2}{3\sqrt{z}} & z > 1
+        \end{cases}
+    \end{align}
+    The density is the derivative
+    \begin{align}
+        f_3(z) = \begin{cases}
+            0 & z < 0\\
+            \frac{1}{3} & z \in [0,1]\\
+            \frac{1}{3}z^{-3/2} & z > 1
+        \end{cases}
+    \end{align}
+\end{solution}
+
+\begin{definition}
+    A random variable $R_1$ with density
+    \begin{align}
+        f(z) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+    \end{align}
+    where $\mu$ is the mean and $\sigma > 0$ is the standard deviation of a Gaussian/normal distribution.
+\end{definition}
+Everybody knows what a normal distribution, its mean, and its standard deviation are.
+
+\begin{example}
+    Let $R_1,R_2$ be independent normal distributions with $\mu = 0, \sigma = 1$. Find the density of $R_3 = \sqrt{R_1^2 + R_2^2}$
+\end{example}
+\begin{solution}
+    For $z > 0$,
+    \begin{align}
+        F_3(z) = \probability(R_3 \le z)
+    \end{align}
+    This is the probability that $R_1^2 + R_2^2 \le z^2$. The joint density of $(R_1,R_2)$ is the product, i.e.
+    \begin{align}
+        f_{12} = \frac{1}{2\pi} e^{\frac{-(x^2+y^2)}{2}}
+    \end{align}
+    Then,
+    \begin{align}
+        F_3(z) &= \iint_{x^2+y^2 \le z^2} \frac{1}{2\pi} e^{\frac{-(x^2+y^2)}{2}} \dd{x}\dd{y}\\
+        &= \int_0^{2\pi} \int_0^z \frac{1}{2\pi} e^{\frac{-r^2}{2}} r\dd{r}\dd{\theta}\\
+        &= \int_0^z e^{\frac{-r^2}{2}} r\dd{r}
+    \end{align}
+    It's pretty trivial to compute this, but we want the density. The inside of this integral \textit{is} the density.
+\end{solution}
+
+\subsection{Poisson Distribution}
+Recall the Binomial distribution. Suppose we have $n$ Bernoulli trials, for each of which $p$ is the probability of success. Let $R$ be the discrete random variable where $R$ is the number of successes after $n$ trials. Obviously,
+\begin{align}
+    \probability_R(k) = \binom{n}{k} p^k (1-p)^{n-k}
+\end{align}
+What happens when we have many, many trials? Suppose $n$ is very large and $p$ is very small. Also assume that $np \to \lambda$ where $\lambda > 0$ is some positive constant. ($p \sim \lambda/n$)
+\begin{proposition}
+    This distribution converges to the discrete \textbf{Poisson Distribution} with probability function
+    \begin{align}
+        p(k) = e^{-\lambda} \frac{\lambda^k}{k!}
+    \end{align}
+\end{proposition}
+\begin{proof}
+    Write $R_n$ for this random variable. Using
+    \begin{align}
+        \probability(R_n = k) = \binom{n}{k}p^k (1-p)^{n-k}
+    \end{align}
+    As $n \to \infty$,
+    \begin{align}
+        \probability(R_n = k) &= \frac{n(n-1)\cdots(n-k+1)}{k!} (np)^k \frac{1}{n^k} \qty(1 - \frac{np}{n})^{n-k}\\
+        &= \frac{1(1-1/n)\cdots(1-(k-1)/n)}{k!} \lambda^k \qty(1 - \frac{np}{n})^n \qty(1 - \frac{np}{n})^{-k}\\
+        &= \frac{1}{k!} \lambda^k \qty(1 - \frac{np}{n})^n \qty(1 - \frac{np}{n})^{-k}
+    \end{align}
+    But, $\qty(1 - \frac{np}{n})^{-k} \to 1$ because $np \to \lambda$, and $\lim_{n\to\infty}\qty(1 + \frac{x}{n})^n = e^x$. Thus, our $R_n$ approaches
+    \begin{align}
+        e^{-\lambda} \frac{\lambda^k}{k!}
+    \end{align}
+\end{proof}
+
+\begin{proposition}
+    The Poisson Distribution is well defined, i.e.
+    \begin{align}
+        \sum_0^\infty e^{-\lambda} \frac{\lambda^k}{k!} \dd{k} = 1
+    \end{align}
+\end{proposition}
+\begin{proof}
+    This just equals
+    \begin{align}
+        e^{-\lambda} \sum_0^\infty \frac{\lambda^k}{k!}
+    \end{align}
+    which equals
+    \begin{align}
+        e^{-\lambda}e^{\lambda}
+    \end{align}
+    which is obviously $1$.
+\end{proof}
+\begin{example}
+    Poisson Distributions can model the number of typos on the page of a printed book.
+\end{example}
+\begin{example}
+    Poisson Distributions can model the number of radioactive emissions / alpha particles in an hour.
+\end{example}
+
+\subsubsection{Sum of Poisson Distributions}
+\begin{proposition}
+    Let $R_1,R_2$ be two Poisson distributions with parameters $\lambda_1,\lambda_2$. Then, the random variable
+    \begin{align}
+        R' = R_1 + R_2
+    \end{align}
+    is a Poisson distribution with parameter $\lambda' = \lambda_1+\lambda_2$.
+\end{proposition}
+\begin{lemma}
+    Let $R_1,R_2, \ldots, R_n$ be independent, discrete random variables with probability functions $P_1, P_2, \ldots, P_n$. Write $P_{12\cdots n}$ for the joint probability function of the $n$ random variables, i.e.
+    \begin{align}
+        P_{12\cdots n}(x_1, x_2, \ldots, x_n) = \probability(R_1 = x_1, \ldots)
+    \end{align}
+    Then, $R_1, R_2, \ldots, R_n$ are independent if and only if
+    \begin{align}
+        \probability(R_1 = x_1, \ldots, R_n = x_n) = \probability(R_1 = x_2) \cdots \probability(R_n = x_n)
+    \end{align}
+\end{lemma}
+\begin{proof}[Proof of Proposition]
+    The joint probability function $f_{12}(i,j)$ equals
+    \begin{align}
+        f_{12}(i,j) &= \probability(R_1 = i \qand R_2 = j)\\
+        &= \probability(R_1 = i) \cdot \probability(R_2 = j)
+    \end{align}
+    That is just the product of the two Poisson distributions
+    \begin{align}
+        e^{-\lambda_1} \frac{\lambda_1^k}{k!} e^{-\lambda_2} \frac{\lambda_2^k}{k!}
+    \end{align}
+    Then,
+    \begin{align}
+        \probability(R_1 + R_2 = k) = \sum_{i = 0}^k \probability(R_1 = i)\probability(R_2 = k - i)
+    \end{align}
+    which equals
+    \begin{align}
+        \sum_{i = 0}^k \frac{1}{i!}\lambda_1^i e^{-\lambda_1} \frac{1}{(k-i)!} \lambda_2^{k-i} e^{-\lambda_2}
+    \end{align}
+    After multiplying by $k!/k!$, we get
+    \begin{align}
+        \sum_{i = 0}^k \binom{k}{i} \frac{1}{k!} \lambda_1^i \lambda_2^{k-i} e^{-(\lambda_1 + \lambda_2)}
+    \end{align}
+    which simplifies into
+    \begin{align}
+        \frac{(\lambda_1 + \lambda_2)^k}{k!} e^{-(\lambda_1 + \lambda_2)}
+    \end{align}
+    which is clearly a Poisson Distribution with parameter $\lambda_1 + \lambda_2$.
+\end{proof}

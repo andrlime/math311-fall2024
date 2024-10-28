@@ -1,0 +1,217 @@
+\section{October 16, 2024}
+`new' stuff lol
+
+\subsection{Expectation}
+
+\subsubsection{Discrete Expectation}
+
+Throw a fair six-sided die. Let $R$ be the result. What is the expected value of $R$? Obviously, in this case, $R = 3.5$. What if $R$ is any \textit{simple} random variable?
+
+\begin{definition}
+    A \textbf{simple random variable} takes at most \textit{finitely} many values, such as rolling a dice with $6$ possible values.
+\end{definition}
+
+\begin{definition}
+    Let $R$ be a simple random value. Then, the expectation of $R$ equals
+    \begin{align}
+        E(R) = \sum_x x \cdot \probability(x)
+    \end{align}
+    the weighted average of the probabilities.
+\end{definition}
+
+\begin{example}
+    Take a biased coin
+    \begin{align}
+        \probability(\text{heads}) = \frac{3}{4} && \probability(\text{tails}) = \frac{1}{4}
+    \end{align}
+    and flip it twice. Define $R \equiv \text{number of heads}$. What is $E(R)$?
+\end{example}
+\begin{solution}
+    $E(R)$ equals
+    \begin{align}
+        \sum_x x \cdot \probability(x)
+    \end{align}
+    which equals
+    \begin{align}
+        0 \cdot \probability(0) + 1 \cdot (2(3/4)(1/4)) + 2 \cdot (9/16) = \frac{3}{2}
+    \end{align}
+\end{solution}
+
+\begin{definition}
+    Let $R$ be a simple random variable, and let
+    \begin{align}
+        g: \real \to \real
+    \end{align}
+    Then, the expectation of this is
+    \begin{align}
+        E(g(R)) = \sum_x g(x) \cdot \probability(x)
+    \end{align}
+\end{definition}
+
+\begin{definition}
+    Let $R$ be a discrete random variable (it could have countably infinitely many values). Then, (again)
+    \begin{align}
+        E(g(R)) = \sum_x g(x) \probability(x)
+    \end{align}
+    This could be an infinite sum, which indicates a possibility of divergence. Thus, we define Equation 11.7 as long as
+    \begin{enumerate}
+        \item $g \ge 0$ (in this case, $E(R)$ could diverge)
+        \item or the sum is absolutely convergent
+    \end{enumerate}
+\end{definition}
+
+\subsubsection{Absolutely Continuous Expectation}
+
+\begin{definition}
+    Let $R$ be an absolutely continuous random variable with density $f_R(x)$. Then, define the expectation
+    \begin{align}
+        E(R) = \int_\real x \cdot f_R(x) \dd{x}
+    \end{align}
+    Additionally, if $g$ is a Borel function, define
+    \begin{align}
+        E(g(R)) = \int_\real g(x) f_R(x) \dd{x}
+    \end{align}
+    as long as
+    \begin{enumerate}
+        \item $g(x) \ge 0$
+        \item or $\int \ldots$ is absolutely convergent
+    \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+    This above definition can be extended to finitely many random variables $R_1, \ldots, R_n$. Take $R_1, \ldots, R_n$ discrete. Then,
+    \begin{align}
+        E(g(R_1, \ldots, R_n)) = \sum_{x_1, \ldots, x_n} g(x_1, \ldots, x_n) \cdot \probability(R_1 = x_1, \ldots, R_n = x_n)
+    \end{align}
+    This same thing can be done to absolutely continuous random variables:
+    \begin{align}
+        E(g(R_1, \ldots, R_n)) = \int_{\real^n} g(x_1, \ldots, x_n) f_{12\cdots n}(x_1, \ldots x_n) \dd{\vb{x}_n}
+    \end{align}
+    where $g$ is some Borel function and we make similar assumptions as above.
+\end{lemma}
+
+\begin{example}
+    Let $R$ be a random variable with density
+    \begin{align}
+        f_R(x) = \begin{cases}
+            e^{-x} & x \ge 0\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Fine $E(R)$.
+\end{example}
+\begin{solution}
+    Since $f$ is zero on $x < 0$, the expectation equals
+    \begin{align}
+        E(R) = \int_0^\infty x \cdot e^{-x} \dd{x}
+    \end{align}
+    which is a fairly trivial integration by parts. It equals
+    \begin{align}
+        E(R) = \cdots = 1
+    \end{align}
+\end{solution}
+
+We were then shown \textit{another} example.
+\begin{example}
+    Let $R_1,R_2$ be independent random variables each with density
+    \begin{align}
+        f_R(x) = \begin{cases}
+            e^{-x} & x \ge 0\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Find $E(\max(R_1,R_2))$
+\end{example}
+\begin{solution}
+    First, the joint density is just the product, i.e.
+    \begin{align}
+        f_{12}(x,y) = \begin{cases}
+            e^{-x-y} & (x \ge 0) \cap (y \ge 0)\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Using Equation 11.11, we get
+    \begin{align}
+        E(\max(R_1,R_2)) &= \iint_{\real^2_+} \max(x,y) \cdot e^{-x-y} \dd{\vb{x}_2}\\
+        &= \int_0^\infty \int_0^\infty \max(x,y) \cdot e^{-x-y} \dd{x}\dd{y}
+    \end{align}
+    Using some inequalities, the $\max(\cdots)$ becomes
+    \begin{align}
+        \max(x,y) = \begin{cases}
+            x & x \ge y\\
+            y & x \le y
+        \end{cases}
+    \end{align}
+    So we can write our integral as
+    \begin{align}
+        \underbracket{\int_0^\infty \int_0^x x \cdot e^{-x-y} \dd{y}\dd{x}}_{\circled{1}} + \underbracket{\int_0^\infty \int_x^\infty y \cdot e^{-x-y} \dd{y}\dd{x}}_{\circled{2}}
+    \end{align}
+    which can be quite trivially integrated by parts. The answer is
+    \begin{align}
+        E(\max(\cdots)) = \frac{3}{2}
+    \end{align}
+\end{solution}
+
+\subsection{Moments}
+\begin{definition}
+    Let $R$ be a random variable. Then, for $k > 0$ ($k$ is not necessarily an integer). Then, the $k$-th moment of $R$ is defined as
+    \begin{align}
+        \alpha_k = E(R^k)
+    \end{align}
+    Note that
+    \begin{align}
+        \alpha_1 = E(R) = \mu && \text{mean}
+    \end{align}
+\end{definition}
+Let $R$ be an absolutely continuous random variable with density $f(x)$. Consider the centroid of the mass defined by $0 \le y \le f(x)$ (the ``center of mass''), located at $(x_c, y_c)$. Then
+\begin{align}
+    x_c = \alpha_1(R) = E(R) = \mu_R
+\end{align}
+Given $N$ points
+\begin{align}
+    (x_1, y_1), \cdots, (x_N, y_N)
+\end{align}
+the centroid is the point 
+\begin{align}
+    \frac{1}{N} \sum_{i=1}^N (x_i, y_i)
+\end{align}
+The same thing is true for infinitely many points:
+\begin{align}
+    \frac{\iint (x,y) \dd{x}\dd{y}}{\iint_{\real^2} 1 \dd{x}\dd{y}}
+\end{align}
+In the case of some random mass (possibly a nose, which we can assume to be spherical), the denominator may be complicated and annoying. In the case of an absolutely continuous random variable, that denominator just equals $1$. So, for our random variable,
+\begin{align}
+    \iint (x,y) \dd{x}\dd{y}
+\end{align}
+In the specific case of a shaded region under some function $f(x)$, this is
+\begin{align}
+    \int_\real \int_0^{f(x)} (x,y) \dd{y}\dd{x}
+\end{align}
+
+\subsubsection{Central Moments}
+\begin{definition}
+    Let $R$ be a random variable; let $k > 0$ be positive. Then, the $k$-th central moment of $R$ is
+    \begin{align}
+        \beta_k = E\qty[(R - \mu)^k]
+    \end{align}
+    such that the mean is zero. In particular,
+    \begin{align}
+        \beta_1 = E(R - \mu) = 0
+    \end{align}
+    Then, $\beta_2$ is the variance, which is the square of standard deviation.
+\end{definition}
+\begin{example}
+    Take $R = N(\cdots)$, so
+    \begin{align}
+        f_R(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+    \end{align}
+    Then, using the first moment and second central moment,
+    \begin{align}
+        \alpha_1 = \mu && \beta_2 = \sigma^2
+    \end{align}
+\end{example}
+\begin{solution}
+    I've done this twice already and will not do it a third time.
+\end{solution}
+
+

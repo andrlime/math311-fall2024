@@ -1,0 +1,140 @@
+\section{October 9, 2024}
+
+\subsection{Properties of Distribution Functions}
+Take some $\psp$ probability space, $R$ random variable, and $F(x) = \probability(R \le x)$ distribution function. Recall Lemma 7.2,
+\begin{align}
+    A_1 \subset A_2 \subset \cdots \implies \lim_{n \to \infty} \probability(A_n) = \probability\qty(\bigcup_{n=1}^\infty A_n)
+\end{align}
+and a similar Lemma for contracting sets. Now, we can continue proving some properties
+\begin{enumerate}
+    \item $F$ non decreasing. Proven last time.
+    \item $\lim_{x \to\infty} F(x) = 1$. Proven last time.
+    \item $\lim_{x \to{-\infty}} F(x) = 0$
+    \begin{proof}
+        Let $x_n \to -\infty$. For every sequence of real numbers tending to $-\infty$,
+        \begin{align}
+            \lim_{n \to \infty} F(x_n) = 0
+        \end{align}
+        Then, define $A_n \equiv \{ R \le x_n \}$. Then, the sets $A_n$ are contracting, and we can apply the Lemma.
+        \begin{align}
+            \lim_{n \to \infty} \probability(A_n) = \probability\qty(\bigcap_{n=1}^\infty A_n)
+        \end{align}
+        Because $A_n$ are contracting as $x \to -\infty$, this means $A_n \to \emptyset$, and therefore
+        \begin{align}
+            \lim_{n \to \infty} F(x_n) \to F(\emptyset) = 0
+        \end{align}
+    \end{proof}
+    \item Limit probability from the right
+    \begin{align}
+        \lim_{x \to x_0^+} F(x) = F(x_0)
+    \end{align}
+    \begin{proof}    
+        Let $x_n$ be a monotonically decreasing sequence of real numbers such that $x_n > x_0$ but $x_n \to x_0$. Let
+        \begin{align}
+            A_n = \{ R \le x_n \}
+        \end{align}
+        The sets $A_n$ are contracting because $x_n$ are decreasing on $x \to x_0^+$. Then,
+        \begin{align}
+            \lim_{n \to \infty} F(x_n) = \lim_{n \to \infty} \probability(A_n) = \probability\qty(\bigcap_{n=1}^\infty A_n)
+        \end{align}
+        The intersection of all of these is $(-\infty, x_0)$. If $\omega \in A_n$ for all $n$, that implies $R(\omega) \le x_n$ for all $n$. As $x_n \to x_0$, this means
+        \begin{align}
+            R(\omega) \le x_0
+        \end{align}
+        for all $\omega$. Conversely,
+    \end{proof}
+    \item Limit probability from the left
+    \begin{align}
+        \lim_{x \to x_0^-} F(x) = \probability(R < x_0)
+    \end{align}
+    (this is not the same as $\le x_0$).
+    \begin{proof}
+        The proof is pragmatically the same as above. Let $x_n$ be a monotonically increasing sequence. Then, set $A_n$ as an increasing sequence. As $n\to\infty$, $F(x_n) \to \probability(R < x_0)$.
+        \begin{align}
+            \lim_{n \to \infty}\probability(A_n) = \probability\qty(\bigcup_{n=1}^\infty A_n)
+        \end{align}
+        We want to show that
+        \begin{align}
+            \bigcup_n A_n \equiv \{ R < x_0 \}
+        \end{align}
+        For this to be true, pick some $\omega \in \bigcup_n A_n$; that means $\omega$ must be in any of them. All $A_n$ are some $\{ R < x_n \}$. But, $x_n \to x_0$ implies that $\omega < x_0 \implies \omega \in A_n$ for some $n$. Since the limit $x_n$ does not equal $x_0$, this effectively means
+        \begin{align}
+            \bigcup_n A_n \equiv \{ R < x_0 \}
+        \end{align}
+        This can be done in reverse too to complete the $\iff$ proof, but that proof is quite trivial.
+    \end{proof}
+    \item Probability of equality
+    \begin{align}
+        \probability(R = x_0) = F(x_0^+) - F(x_0^-)
+    \end{align}
+    \begin{proof}
+        Trivially,
+        \begin{align}
+            \probability(R = x_0) = \probability(R \le x_0) - \probability(R < x_0)
+        \end{align}
+        By previous properties, this equation is pretty obviously equal to Equation 8.13.
+    \end{proof}
+\end{enumerate}
+
+\begin{example}
+    Pick some discrete probability space where $R$ is the value of a fair die. Then, the probability
+    \begin{align}
+        \probability(R = 2) = \probability(R \le 2) - \probability(R < 2) = \frac{2}{6} - \frac{1}{6} = \frac{1}{6}
+    \end{align}
+    and the rest of the distribution looks like a staircase for obvious reasons. This also satisfies the other properties, which is trivial.
+\end{example}
+
+\subsection{Joint Density Functions}
+\begin{definition}
+    Take some probability space $\psp$ and random variables $R_1, R_2$. We say the pair $(R_1, R_2)$ is absolutely continuous if there exists some integrable function $f_{12}(x,y) > 0$ such that the joint distribution function
+    \begin{align}
+        F(x,y) = \probability(R_1 \le x \cap R_2 \le y) = \iint_{(-\infty,-\infty)}^{(x,y)} f_{12}(x,y) \dd{A}
+    \end{align}
+    Then, $f_{12}$ is called the density of the pair $(R_1, R_2)$ or the joint density of $R_1$ \textbf{and} $R_2$.    
+\end{definition}
+
+\subsubsection{Borel Sets Tangent}
+Borel sets can be done on $\real^2$.
+\begin{definition}
+    On $\real^2$, the Borel $\sigma$-algebra $\mathcal{B}$ is the $\sigma$-algebra of subsets of $\real^2$ generated by rectangles
+    \begin{align}
+        [x_1, x_2] \times [y_1, y_2]
+    \end{align}
+    where rectangle bounds can also have open-interval bounds.
+\end{definition}
+This definition can be generalized to $\real^n$.
+\begin{proposition}
+    Take $\Omega \equiv \real^n$. If $f$ is non-negative and integrable on $\real^n$ such that
+    \begin{align}
+        \int_{\real^n} f(\vb{x}) \dd{\vb{x}} = 1
+    \end{align}
+    then if $\curlyf \equiv \mathcal{B}^n$, then there exists a unique probability measure $\probability$ on $\mathcal{B}^n$ such that
+    \begin{align}
+        \probability([x_1^i, x_1^f] \times \cdots \times [x_n^i, x_n^f]) = \int_{\real^n} f(\vb{x}) \dd{\vb{x}}
+    \end{align}
+\end{proposition}
+
+\begin{lemma}
+    A ball is an element of $\mathcal{B}^3$; a disk is an element of $\mathcal{B}^2$.
+\end{lemma}
+
+There were a few more examples, but they did not say anything new.\footnote{``Once you see some examples it becomes more tractable'' but it already is???}
+
+\begin{example}
+    Let $f(x,y)$, $R_1 \equiv x$, $R_2 \equiv y$. Set
+    \begin{align}
+        f(x,y) = \begin{cases}
+            1 & 0 \le x \le 1 \cup 0 \le y \le 1\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Let $R_1, R_2$ have joint density $f$. Find
+    \begin{align}
+        \probability(2 R_1 \le R_2)
+    \end{align}
+    That just equals
+    \begin{align}
+        \probability(2x \le y)
+    \end{align}
+    and finding this can be done with a very simple double integral (or just finding the area of a triangle).
+\end{example}

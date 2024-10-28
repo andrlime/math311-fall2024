@@ -1,0 +1,135 @@
+\section{September 30, 2024}
+
+\subsection{Generalized Bernoulli Trials}
+Recall for $n$ independent trials and the probability of success for each trial is $p$. Then,
+\begin{align}
+    \probability(k\text{ successes}) = \binom{n}{k} p^{k} (1-p)^{n-k}
+\end{align}
+What if there are more than two outcomes? Let there be $n$ independent trials and $k$ possible outcomes $b_1, \ldots, b_k$ for each trial with associated probabilities $p_1, \ldots, p_k$ ($\sum p_i = 1$), e.g. rolling a dice $n$ times.\\
+
+The sample space $\Omega = $ set of all finite sequences of length $n$ where each entry is one of $b_1,\ldots,b_k$ (there are $k^n$ such sequences). We want to compute the probability of exactly $n_1$ occurrences of $b_1$, $n_2 \to b_2, \ldots, n_k\to b_k$. Define this as
+\begin{align}
+    p(n_1, n_2, \ldots, n_k) \qsp \sum n_i = n
+\end{align}
+
+First, we can compute the probability of the first $n_1$ being $b_1$; next $n_2$ being $b_2$; etc. That equals
+\begin{align}
+    p_1^{n_1} \cdots p_k^{n_k}
+\end{align}
+We also need to scale by the total number of arrangements, i.e. number of ways to get $n_1$ occurrences of $b_1, \ldots, n_k$ of $b_k$. That equals
+\begin{align}
+    \binom{n}{n_1}\binom{n-n_1}{n_2}\binom{n-n_1-n_2}{n_3}\cdots\binom{n_k}{n_k}
+\end{align}
+Can we simplify this? After some trivial arithmetic (write it out), this reduces to
+\begin{align}
+    \dfrac{n!}{n_1! n_2! n_3! \cdots n_k!} = n! \cdot \prod_i (n_i)!^{-1}
+\end{align}
+so the total probability is
+\begin{definition}
+    \textbf{Generalized Bernoulli Trials}
+    \begin{align}
+        p(n_1, n_2, \ldots, n_k) = n! \cdot \left[\prod_i (n_i)!^{-1}\right] \cdot p_1^{n_1} \cdots p_k^{n_k}
+    \end{align}
+\end{definition}
+
+\begin{example}
+    Take an urn with black, white, red, and green balls. Randomly and independently draw four balls with replacement. What is the probability that I have exactly two distinct colors?
+\end{example}
+\begin{solution}
+    Let $(b_1, b_2, b_3, b_4)$ = (black, white, red, green). Each is equally likely. What is the probability I have exactly two black and two white?
+    \begin{align}
+        \probability(b_1=2, b_2=2, 0, 0) = \dfrac{4!}{2!2!} \cdot (1/4)^2 \cdot (1/4)^2 = 3/128
+    \end{align}
+    That is a simple case. For two of one color and two of another, there are $\binom{4}{2}$ ways to pick two colors, which is six. So, that sub-probability is $18/128 = 9/64$ (two of one color; two of another). We still have to do one of one color and three of another.
+    \begin{align}
+        \probability(3, 1, 0, 0) = \dfrac{4!}{3!1!} \cdot (1/4)^3 \cdot (1/4)^1 = 1/64
+    \end{align}
+    There are twelve ways to do this (six in one way; six in the other), so this sub-probability is $12/64$. The total is $21/64 \approx 1/3$.
+\end{solution}
+
+\subsection{Conditional Probability}
+% bayes?
+Take two events $A, B$ in some probability space. What is
+\begin{align}
+    \probability(A \mid B) \qand \probability(B \mid A)
+\end{align}
+or the probabilities of some event happening given another has happened? Intuitively,
+\begin{definition}
+    The probability $B$ occurs \textit{given} $A$ occurs is
+    \begin{align}
+        \probability(B \mid A) = \dfrac{\probability(A \cap B)}{\probability(A)}
+    \end{align}
+\end{definition}
+\begin{lemma}
+    If $A$ and $B$ are independent,
+    \begin{align}
+        \probability(B \mid A) = \dfrac{\probability(A \cap B)}{\probability(A)} = \dfrac{\probability(A) \probability(B)}{\probability(A)} = \probability(B)
+    \end{align}
+    which is quite intuitive.
+\end{lemma}
+\begin{example}
+    Roll a fair die once. $A$ is rolling an odd number and $B$ is rolling a 5.
+    \begin{align}
+        \probability(B \mid A) = \dfrac{1/6}{1/2} = \dfrac{1}{3}
+    \end{align}
+\end{example}
+\begin{example}
+    Throw two dice. Let $A$ be that the highest roll is a six; let $B$ be that the sum is a ten.
+    \begin{align}
+        \probability(B \mid A) = \dfrac{2/36}{11/36} = 2/11 \qsp \probability(A \mid B) = \dfrac{2/36}{3/36} = 2/3
+    \end{align}
+\end{example}
+\noindent Notice that
+\begin{align}
+    \probability(A \cap B) = \probability(A) \probability(B \mid A) = \probability(B) \probability(A \mid B)
+\end{align}
+This yields
+\begin{theorem}
+    \textbf{Bayes' Theorem}
+    \begin{align}
+        \probability(A \mid B) = \dfrac{\probability(A) \probability(B \mid A)}{\probability(B)}
+    \end{align}
+\end{theorem}
+What happens when there are multiple events, namely $A, B, C, D$?
+\begin{align}
+    \probability(A \cap B \cap C) &= \probability(A \cap B) \probability(C \mid A\cap B)\\
+    &= \probability(A)\probability(B \mid A) \probability(C \mid A\cap B)
+\end{align}
+We can keep going.
+\begin{proposition}
+    \begin{align}
+        \probability\left(\bigcap A_i\right) = \prod_i \probability\left(A_i \mid \bigcap_j^{i-1} A_j\right)
+    \end{align}
+\end{proposition}
+\begin{example}
+    Draw three cards randomly from a regular deck without replacment. Find the probability that there is no ace in the three cards. Let $A_i = i-\text{th card is not an ace}$
+    \begin{align}
+        \probability(A_1 \cap A_2 \cap A_3) = \probability(A_1) \probability(A_2 \mid A_1) \probability(A_3\mid A_1 \cap A_2)
+    \end{align}
+    We can enumerate some probabilities
+    \begin{align}
+        A_1 &= 48/52 & \text{52 total cards; 4 aces}\\
+        A_2 &= 47/51\\
+        A_3 &= 46/50
+    \end{align}
+\end{example}
+
+\subsection{Law of Total Probability}
+\begin{definition}
+    Events $B_1, B_2, \ldots$ are \textbf{mutually exclusive} if they are disjoint.
+\end{definition}
+\begin{definition}
+    Events $B_1, B_2, \ldots$ are exhaustive if $\Omega = \bigcup_i B_i$
+\end{definition}
+Combining these two yields the law of total probability
+\begin{theorem}
+    Let $B_1, B_2, \ldots$ be mutually exclusive and exhaustive. Then,
+    \begin{align}
+        \probability(A) = \sum_i \probability(A \cap B_i)
+    \end{align}
+    and
+    \begin{align}
+        \probability(A) = \sum_i \probability(B_i) \probability(A \mid B_i)
+    \end{align}
+    for all $i \mid \probability(B_i) > 0$.
+\end{theorem}

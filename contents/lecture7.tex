@@ -1,0 +1,198 @@
+\section{October 7, 2024}
+
+\subsection{Recap: Absolutely Continuous Random Variables}
+Given some probability space $\psp$ and a random variable $R: \Omega \to \real$, recall the distribution function
+\begin{align}
+    F_R(x) = \probability(R \le x)
+\end{align}
+$R$ is absolutely continuous if there exists a non-negative, integrable density function $f_R: \real \to \real$
+\begin{align}
+    F_R(x) = \int_{-\infty}^x f_R(x) \dd{x}
+\end{align}
+In this case, then
+\begin{align}
+    \probability(R \in B) = \int_B f_R(x) \dd{x}
+\end{align}
+Some remarks:
+\begin{enumerate}
+    \item If $R$ is a absolutely continuous random variable, then $F_R$ is continuous.
+    \begin{proof}[Hand Waving]
+        We need to show that
+        \begin{align}
+            \lim_{x\to a} F_R(x) = F_R(a)
+        \end{align}
+        But, $F_R(x) = \int_{-\infty}^x f(t) \dd{t}$, so
+        \begin{align}
+            \lim_{x\to a} F_R(x) = \underbracket{\cdots\cdots}_{\text{measure theory}} = F_R(a)
+        \end{align}
+        $\varepsilon-\delta$ was not done.
+    \end{proof}
+    \item If the density function $f_R$ is continuous, then the fundamental theorem of calculus yields
+    \begin{align}
+        \dv{F_R(x)}{x} = f_R(x)
+    \end{align}
+    That is, the (probability) density function is the derivative of the (cumulative) distribution function.
+    \item ``Let $R$ be an absolutely continuous random variable with density function $f(x)$'' means that we can construct $R$ using the probability space $(\real, \mathcal{B}, \probability)$ where
+    \begin{align}
+        \probability(B) = \int_B f(x) \dd{x}
+    \end{align}
+    using the given density function $f(x)$. Then, $R$ is a random variable with density $f$. The density and distribution functions well-define $R$. We don't care about $R(\Omega)$ as much as $f_R$ and $F_R$.
+\end{enumerate}
+
+\subsection{Functions of Random Variables}
+Let $R_1$ be a random variable uniformly distributed on $[0,1]$, i.e.
+\begin{align}
+    f_1(x) = \begin{cases}
+        1 & 0 \le x \le 1\\
+        0 & \text{else}
+    \end{cases}
+\end{align}
+Define $R_2$ as
+\begin{align}
+    R_2 = \qty(R_1)^2
+\end{align}
+Then, we want to find $F_2(x)$. First, note
+\begin{align}
+    F_1(x) = \probability(R_1 \le x) = \begin{cases}
+        0 & x < 0\\
+        x & x \in [0,1]\\
+        1 & x > 1
+    \end{cases}
+\end{align}
+To find the distribution function $(F_2)_{R_2}$,
+\begin{align}
+    F_2(u) = \probability(R_2 \le u) = \probability(R_1^2 \le u)
+\end{align}
+If $u \ge 0$, then
+\begin{align}
+    F_2(u) &= \probability\qty(R_1 \in [-\sqrt{u}, \sqrt{u}])\\
+    &= \int_{-\sqrt{u}}^{\sqrt{u}} f_1(t) \dd{t}\\
+    &= \begin{cases}
+        0 & u < 0 \\
+        \sqrt{u} & 0 \le u \le 1\\
+        1 & \text{else}
+    \end{cases}
+\end{align}
+The derivative, i.e. the density function, equals
+\begin{align}
+    f(u) = \begin{cases}
+        0 & u < 0\\
+        \frac{1}{2\sqrt{u}} & u \in [0,1] \\
+        0 & u > 1
+    \end{cases}
+\end{align}
+\begin{example}
+    A slightly trickier example. Take $R_1$ with density function
+    \begin{align}
+        f_1(x) = \begin{cases}
+            0 & x < 0\\
+            e^{-x} & x \ge 0
+        \end{cases}
+    \end{align}
+    and $R_2$ as
+    \begin{align}
+        R_2 = \begin{cases}
+            R_1 & R_1 \le 1\\
+            1/R_1 & R_1 > 1
+        \end{cases}
+    \end{align}
+    What is $\text{cdf}(R_2)$ (or $F_2$)?
+\end{example}
+\begin{solution}
+    We can split into ranges. When $y \le 0$,
+    \begin{align}
+        F_2(y) = \probability(R_2 \le y) = \int_{(-\infty,y]} f_1(x) \dd{x} = 0
+    \end{align}
+    For $y > 0$,
+    \begin{align}
+        F_2(y) = \probability(R_2 \le y)
+    \end{align}
+    Now, there are two cases: one where $y \le 1$ and one where $y > 1$.
+    \begin{align}
+        \probability(R_2 \le y \qand R_1 \le 1) \qand \probability(R_2 \le y \qand R_1 > 1)
+    \end{align}
+    So,
+    \begin{align}
+        F_2(y \mid y > 0) &= \probability(R_1 \le y \text{ and } R_1 \le 1) + \probability\qty(\frac{1}{R_1} \le y \text{ and } R_1 > 1)\\
+        &= F_1(y) + \probability(R_1 > 1/y)\\
+        &= \left[ 1 - e^{-y} \right] + \left[ 1 - \probability(R_1 \le 1/y) \right]\\
+        &= \cdots = 1 - e^{-y} + e^{-1/y}
+    \end{align}
+    As $y \to 1$, $F_2(y) \to 1$. So, other than this case,
+    \begin{align}
+        F_2(y) = \begin{cases}
+            1 & y > 1\\
+            0 & y < 0
+        \end{cases} & \qedhere
+    \end{align}
+\end{solution}
+
+\subsection{Properties of Distributions Functions}
+Take $\psp$ as some probability space and $R$ as a random variable. Take $F(x)$ as
+\begin{align}
+    \probability(R \le x)
+\end{align}
+Then,
+\begin{proposition}
+    \begin{enumerate}
+        \item Let $A_1, A_2, \ldots \in \curlyf$ be an expanding sequence (i.e. $A_m \supseteq A_n$ for all $m > n$). Then,
+        \begin{align}
+            \probability\qty(\bigcup_{n=1}^\infty A_n) = \lim_{n\to\infty} \probability(A_n)
+        \end{align}
+        \item Let $A_1, A_2, \ldots \in \curlyf$ be a contracting sequence (i.e. $A_m \subseteq A_n$ for all $m > n$). Then,
+        \begin{align}
+            \probability\qty(\bigcap_{n=1}^\infty A_n) = \lim_{n\to\infty} \probability(A_n)
+        \end{align}
+    \end{enumerate}
+\end{proposition}
+\begin{proof}[Proof of the first]
+    Take $A = \bigcup_{n} A_n$. Then,
+    \begin{align}
+        A = A_1 \cup (A_2 - A_1) \cup (A_3 - A_2) \cup \cdots
+    \end{align}
+    These are clearly disjoint. It follows that
+    \begin{align}
+        \probability(A) = \sum_{i=1} \probability(A_i - A_{i-1})
+    \end{align}
+    where $A_0 \equiv \emptyset$. This equals
+    \begin{align}
+        \probability(A_1) + \lim_{n\to\infty} \sum_{i=1}^\infty \qty[\probability(A_{i+1}) - \probability(A_i)]
+    \end{align}
+    But there are cascading cancellations, so
+    \begin{align}
+        \probability(A) = \probability(A_1) + \lim_{n \to \infty} \left( \probability(A_{n+1}) - \probability(A_1) \right)
+    \end{align}
+    Thus,
+    \begin{align}
+        \probability(A) = \lim_{n \to \infty} A_{n+1 \equiv n}
+    \end{align}
+\end{proof}
+
+Some properties of distribution functions
+\begin{enumerate}
+    \item $F$ is non decreasing, i.e. if $a < b$ then $F(a) \le F(b)$.
+    \begin{proof}
+        \begin{align}
+            a < b \implies \{ R \le a \} \subset \{ R \le b \}
+        \end{align}
+    \end{proof}
+    \item Infinite limit
+    \begin{align}
+        \lim_{x \to \infty} F(x) = 1
+    \end{align}
+    For the absolutely continuous case this is trivial. Let $x_n$ be a sequence of real numbers with $x_n \to \infty$. We want to show that
+    \begin{align}
+        \lim_{n \to\infty} F(x_n) = 1
+    \end{align}
+    This is equivalent to showing that $F(x \to \infty) \to 1$.
+    \begin{proof}
+        Define $A_n = \{ R \le x_n \}$. Then,
+        \begin{align}
+            F(x_n) = \probability(R \le x_n) = \probability(A_n)
+        \end{align}
+        But, this is an expanding sequence because $A_1 \subset A_2 \subset \cdots$. Thus, applying Proposition 7.2,
+        \begin{align}
+            F\qty(x_n \ce{->[n \to \infty]} \infty) = \probability\qty(\bigcup_{i=1}^\infty A_i) = \probability(\Omega) = 1
+        \end{align}
+    \end{proof}
+\end{enumerate}

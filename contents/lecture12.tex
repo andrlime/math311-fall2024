@@ -1,0 +1,142 @@
+\section{October 18, 2024}
+
+\subsection{Recap: Random Variables}
+Recall that a random variable $R$ on some probability space $\psp$ is a function
+\begin{align}
+    R: \Omega \to \real
+\end{align}
+\begin{example}
+    Flip one coin. Then
+    \begin{align}
+        R = \begin{cases}
+            1 & \text{heads}\\
+            0 & \text{tails}
+        \end{cases}
+    \end{align}
+    Then, the probability distribution is
+    \begin{align}
+        F_R(x) = \probability(R \le x) = \begin{cases}
+            0 & x < 0\\
+            1/2 & x \in [0,1)\\
+            1 & x \ge 1
+        \end{cases}
+    \end{align}
+    This can also be thought of as $\Omega = \{ H, T \}$, and
+    \begin{align}
+        R(\Omega) = \{ H \to 1, T \to 0 \}
+    \end{align}
+\end{example}
+
+\begin{example}
+    Roll a dice. Let
+    \begin{align}
+        R = \begin{cases}
+            1 & \text{even}\\
+            0 & \text{odd}
+        \end{cases}
+    \end{align}
+    Then, $R$ can also be expressed as
+    \begin{align}
+        R = \{ 1 \to 0, 2 \to 1, \cdots \}
+    \end{align}
+    The probability distribution is the same as in Equation 12.3.
+\end{example}
+
+\noindent Take $R$ as a random variable with a density $f(x)$. Note that the probability space here is not specified, because there are many random variables with the same density $f$. \textbf{Choose} the probability space $(\real, \mathcal{B}, \probability)$ such that
+\begin{align}
+    \probability(B \in \mathcal{B}) = \int_B f(x) \dd{x}
+\end{align}
+Then we can define
+\begin{align}
+    R: \real \to \real \equiv R(x) = x
+\end{align}
+Then the probability
+\begin{align}
+    \probability(R \le z) = \int_{x \le z} f(x) \dd{x}
+\end{align}
+
+\begin{aside}
+    If a random variable has a density function, it is assumed to be absolutely continuous.
+\end{aside}
+
+Let $R_1, \ldots, R_n$ be independent, absolutely continuous random variables with densities $f_1(x), \ldots, f_n(x)$. Take the probability space $(\real^n, \mathcal{B}, \probability)$ where
+\begin{align}
+    \probability(B) = \int\cdots\int_B f_1(x_1)\cdots f_n(x_n) \dd{x_1}\cdots\dd{x_n}
+\end{align}
+Then,
+\begin{align}
+    R_1(x_1, \ldots, x_n) &= x_1\\
+    R_n(x_1, \ldots, x_n) &= x_n
+\end{align}
+
+\subsection{Median}
+\begin{definition}
+    Let $R$ be a random variable with distribution function $F_R(x)$. Assume absolute continuity. Then, $F_R(x)$ is continuous. Then, the median is defined as
+    \begin{align}
+        m \in \real \mid f_R(m) = \frac{1}{2}
+    \end{align}
+    which is equivalent to
+    \begin{align}
+        \probability(R \le m) = \frac{1}{2} = \probability(R > m)
+    \end{align}
+\end{definition}
+
+\noindent For general, not-necessarily-absolutely-continuous $R$,
+\begin{definition}
+    The median $m \in \real$ of a random variable $R$ satisfies
+    \begin{align}
+        F_R(m) \ge 1/2 \qsp F_R(\ce{$m$-}) \le 1/2
+    \end{align}
+\end{definition}
+\begin{example}
+    Take Example 12.1. The median is any number $m \in [0,1]$.
+    \begin{proof}
+        Let $x \in [0,1]$. Then,
+        \begin{align}
+            F_R(x) \ge 1/2 \qand F_R(x^-) \le 1/2 & \qedhere
+        \end{align}
+    \end{proof}
+\end{example}
+
+
+\subsection{Properties of Expectation}
+\begin{aside}
+    Assume expectations all exist and are finite, i.e. do not diverge.
+\end{aside}
+\begin{enumerate}
+    \item Closure under addition. Let $R_1, \ldots, R_n$ be random variables. Then,
+    \begin{align}
+        E\qty(\sum_i R_i) = \sum_i E(R_i)
+    \end{align}
+    \item For $a \in \real$,
+    \begin{align}
+        E(aR) = a \cdot E(R)
+    \end{align}
+    \item If $R_1 \le R_2$ for all $\omega \in \Omega$, then $E(R_1) \le E(R_2)$.
+    \item If $R \ge 0$ and $E(R) = 0$, then $\probability(R = 0) = 1$, i.e. $R$ is essentially zero.
+    \begin{proof}
+        It's in the textbook.
+    \end{proof}
+    \begin{aside}
+        If for some random variable $R$, $\text{Var}(R)$, then $R$ is essentially constant.
+    \end{aside}
+    \item Let $R_1, \ldots, R_n$ be independent random variables. Then,
+    \begin{align}
+        E(R_1\cdots R_n) = E(R_1) \cdots E(R_n)
+    \end{align}
+    \item Let $R$ be a random variable with mean $\mu$ and variance $\sigma^2$. Then,
+    \begin{align}
+        \text{var}(aR + b) = a^2\sigma^2
+    \end{align}
+    \begin{proof}
+        It's in the textbook.
+    \end{proof}
+    \item Variance is closed under addition, i.e. for independent random variables $R_1, \ldots, R_n$,
+    \begin{align}
+        \text{var}\qty(\sum_i R_i) = \sum_i \text{var}\qty(R_i)
+    \end{align}
+    \begin{proof}
+        It's in the textbook.
+    \end{proof}
+\end{enumerate}
+

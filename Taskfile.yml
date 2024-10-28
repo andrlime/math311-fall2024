@@ -1,0 +1,22 @@
+version: '3'
+
+tasks:
+  open:
+    cmds:
+      - open main.pdf
+  preview:
+    cmds:
+      - ./build.sh 1
+  build:
+    cmds:
+      - ./build.sh 2
+  o:
+    cmds:
+      - task: open
+  p:
+    cmds:
+      - task: preview
+  b:
+    cmds:
+      - task: build
+

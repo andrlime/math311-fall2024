@@ -1,0 +1,155 @@
+\section{October 4, 2024}
+\subsection{Random Variables}
+Take $(\Omega, \curlyf, \probability)$ as a probability space. Recall
+
+\begin{definition}
+    A random variable is some function
+    \begin{align}
+        R : \Omega \to \real
+    \end{align}
+    such that $R^{-1}([a,b]) \in \curlyf$. Note that
+    \begin{align}
+        R^{-1}([a,b])
+    \end{align}
+    describes all points $\chi \in \Omega$ such that $R(\chi)$ maps into $[a,b] \in \real$.
+\end{definition}
+\begin{definition}
+    A random variables is some function
+    \begin{align}
+        R: \Omega \to \real
+    \end{align}
+    such that $R^{-1}(B) \in \curlyf$ for all Borel sets $B \in \mathcal{B}$ on $\real$.
+\end{definition}
+
+\begin{proposition}
+    The above two definitions are equivalent.
+\end{proposition}
+\begin{proof}
+    Suppose $R$ is a random variable as defined in Definition 6.1. Define
+    \begin{align}
+        \mathcal{G} = \{ G\subset \real \mid R^{-1}(G) \in \curlyf \}
+    \end{align}
+    By Definition 6.1, all closed intervals are in $\mathcal{G}$. We now claim that $\mathcal{G}$ is a $\sigma$-algebra on $\real$. If this is true, then $\mathcal{G}$ being a $\sigma$-algebra containing all closed intervals means it contains all Borel sets $B \in \mathcal{B}$, i.e. $\mathcal{B} \subseteq \mathcal{G}$. This means Definition 6.2 $\subseteq$ Definition 6.1.
+    \begin{lemma}
+        \textbf{The Claim} $\mathcal{G}$ is a $\sigma$-algebra on $\real$
+    \end{lemma}
+    \begin{proof}[Proof of Lemma 6.4]
+        \begin{align}
+            R^{-1}(\real) &= \Omega \in \curlyf \implies \real \in \mathcal{G}\\
+            G_i \in \mathcal{G} &\implies R^{-1}(G_i) \in \curlyf \implies \bigcup_i R^{-1}(G_i) \in \curlyf\\
+            &\implies R^{-1}\qty(\bigcup_i G_i) \in \curlyf \implies \qty(\bigcup_i G_i) \in \mathcal{G}\\
+            G \in \mathcal{G} &\implies R^{-1}(G) \in \curlyf \implies \qty(R^{-1}(G))^C \in \curlyf \implies G^C \in G
+        \end{align}
+    \end{proof}
+    On the converse, if we have a random variable as defined in Definition 6.2, then that implies that
+    \begin{align}
+        R^{-1}([a,b]) \in \curlyf
+    \end{align}
+    for all $a \le b$ because all closed intervals are Borel sets. Then that trivially proves the definition, i.e. Definition 6.1 $\subseteq$ Definition 6.2. Thus,
+    \begin{align}
+        \text{Definition 6.1} \equiv \text{Definition 6.2} & \qedhere
+    \end{align}
+\end{proof}
+
+\subsection{Discrete Random Variables}
+Take some probability space. Take some random variable
+\begin{align}
+    R: \Omega \to \real
+\end{align}
+\begin{definition}
+    A random variable $R: \Omega \to \real$ is discrete if $\Im(R)$ is a finite or countably infinite set of points, i.e. $R$ hits a countable number of points.
+\end{definition}
+\begin{example}
+    Flip a coin six times. $\Omega$ is the set of all possible outcomes. Take $R: \Omega \to \natural$ as defined as the number of heads. The image of $R$ is
+    \begin{align}
+        \kappa := \{ 0, \ldots, 6 \}
+    \end{align}
+    which is discrete.
+\end{example}
+\noindent Define a probability function $\probability_R(x)$ as
+\begin{align}
+    \probability(R = x)
+\end{align}
+Then, $\probability(R \in B)$ where $B \in \mathcal{B}$ is the sum
+\begin{align}
+    \sum_{x \in B} \probability_R(x)
+\end{align}
+Define a distribution function $F_R(x)$ as
+\begin{align}
+    F_R(x) = \probability(\{ R \le x \}) = \sum_{t \le x} \probability_R(t)
+\end{align}
+In Example 6.6,
+\begin{align}
+    \probability_R(k \in \kappa) = \binom{6}{k}\left( \frac{1}{2} \right)^6
+\end{align}
+For $k \notin \kappa$, $\probability(k) = 0$. The distribution function is then
+\begin{align}
+    F_R(x) = \sum_{t=0}^x \probability_R(t) \dd{t}
+\end{align}
+
+\subsection{Absolutely Continuous Random Variables}
+Take a probability space $(\real, \mathcal{B}, \probability)$. Define
+\begin{align}
+    \probability(B \in \mathcal{B}) = \int_B f(x) \dd{x}
+\end{align}
+such that $f$ is a given probability density function which is \textbf{non-negative}, \textbf{integrable}, and
+\begin{align}
+    \int_\real f(x) \dd{x} = 1
+\end{align}
+Define a random variable $R(\omega) \equiv \omega$. As in the same way we defined a distribution function,
+\begin{align}
+    F_R(x) \equiv \probability(R \le x)
+\end{align}
+Based on the integral above,
+\begin{align}
+    F_R(x) = \int_{-\infty}^x f(\omega) \dd{\omega}
+\end{align}
+\begin{definition}
+    Given a probability space $(\Omega, \curlyf, \probability)$ and a random variable $R: \Omega \to \real$. $R$ is absolutely continuous if there exists an integrable density function $f_R \ge 0$ such that $F_R(x) = \int_{-\infty}^x f_R(t) \dd{t}$
+\end{definition}
+\begin{proposition}
+    Let $R$ be absolutely continuous with a density function $f_R$. Then,
+    \begin{align}
+        \probability(R \in (a,b]) = \int_{a}^b f_R(t) \dd{t}
+    \end{align}
+    \begin{proof}
+        Trivial
+    \end{proof}
+    This is equivalent to
+    \begin{align}
+        \probability(R \in B) = \int_B f(x) \dd{x}
+    \end{align}
+    for Borel set $B \in \mathcal{B}$.
+\end{proposition}
+\begin{lemma}
+    For an \textbf{absolutely continuous} random variable $R$ with density function $f_R$, $\probability\qty(R = \chi)$ for some fixed value $\chi$ equals zero. This does not mean $\chi$ \textit{never} occurs, but the probability is zero.
+    \begin{proof}
+        Trivial
+    \end{proof}
+\end{lemma}
+\begin{example}
+    \textbf{Uniform Distribution}
+    Take probability space $(\real, \mathcal{B}, \probability)$ where $\probability$ is some density function.
+    \begin{align}
+        \probability(B) = \int_B f(x) \dd{x}
+    \end{align}
+    such that the density function is defined as
+    \begin{align}
+        f_R(x) = \begin{cases}
+            \frac{1}{b-a} & a \le x \le b\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    for some constants $a,b$. This has uniform probability for a subset of $\real$. Then, the cumulative distribution function equals
+    \begin{align}
+        F_R(x) = \probability(R \le x) = \begin{cases}
+            0 & x < a\\
+            \int_a^{x} \frac{1}{b-a} \dd{t} = \frac{x-a}{b-a} & x \in [a,b]\\
+            1 & x > b
+        \end{cases}
+    \end{align}
+\end{example}
+
+% \subsection{Functions of a Random Variable}
+
+

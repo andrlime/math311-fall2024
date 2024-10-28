@@ -1,0 +1,80 @@
+\contentsline {section}{\numberline {1}September 24, 2024}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Introduction}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Probability Spaces}{4}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Sigma Algebra}{5}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Probability Measure}{6}{subsubsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.3}Digression on Set Theory}{6}{subsection.1.3}%
+\contentsline {subsubsection}{\numberline {1.3.1}De Morgan's Laws}{7}{subsubsection.1.3.1}%
+\contentsline {section}{\numberline {2}September 25, 2024}{9}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Probability Space Properties}{9}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Properties of a Sigma Algebra}{9}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Generated Sigma Algebras}{9}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Properties of a Probability Measure}{10}{subsubsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.2}Combinatorics and Counting}{11}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Ordered with Replacement}{11}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Ordered without Replacement}{11}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}Unordered without Replacement}{11}{subsubsection.2.2.3}%
+\contentsline {section}{\numberline {3}September 27, 2024}{12}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Counting Problems (cont)}{12}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Unordered Samples \textit {With} Replacement}{12}{subsubsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.2}Independence}{13}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Properties of Independent Events}{13}{subsubsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.3}Bernoulli Trials}{14}{subsection.3.3}%
+\contentsline {section}{\numberline {4}September 30, 2024}{15}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Generalized Bernoulli Trials}{15}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Conditional Probability}{16}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Law of Total Probability}{18}{subsection.4.3}%
+\contentsline {section}{\numberline {5}October 2, 2024}{19}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Law of Total Probability (properly)}{19}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Bayes' Formula}{20}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Borel Sets}{20}{subsection.5.3}%
+\contentsline {subsubsection}{\numberline {5.3.1}Example of a probability space involving $\mathcal {B}$}{21}{subsubsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.4}Random Variables}{21}{subsection.5.4}%
+\contentsline {section}{\numberline {6}October 4, 2024}{23}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Random Variables}{23}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Discrete Random Variables}{24}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Absolutely Continuous Random Variables}{25}{subsection.6.3}%
+\contentsline {section}{\numberline {7}October 7, 2024}{27}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Recap: Absolutely Continuous Random Variables}{27}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Functions of Random Variables}{28}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Properties of Distributions Functions}{29}{subsection.7.3}%
+\contentsline {section}{\numberline {8}October 9, 2024}{31}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Properties of Distribution Functions}{31}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Joint Density Functions}{33}{subsection.8.2}%
+\contentsline {subsubsection}{\numberline {8.2.1}Borel Sets Tangent}{33}{subsubsection.8.2.1}%
+\contentsline {section}{\numberline {9}October 11, 2024}{35}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Recap: Joint Distribution Functions}{35}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Joint vs Individual Density Functions}{36}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Independent Random Variables}{36}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Functions of a Random Variable}{37}{subsection.9.4}%
+\contentsline {section}{\numberline {10}October 14, 2024}{39}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Functions of More Than One Random Variable}{39}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Poisson Distribution}{41}{subsection.10.2}%
+\contentsline {subsubsection}{\numberline {10.2.1}Sum of Poisson Distributions}{42}{subsubsection.10.2.1}%
+\contentsline {section}{\numberline {11}October 16, 2024}{44}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Expectation}{44}{subsection.11.1}%
+\contentsline {subsubsection}{\numberline {11.1.1}Discrete Expectation}{44}{subsubsection.11.1.1}%
+\contentsline {subsubsection}{\numberline {11.1.2}Absolutely Continuous Expectation}{45}{subsubsection.11.1.2}%
+\contentsline {subsection}{\numberline {11.2}Moments}{47}{subsection.11.2}%
+\contentsline {subsubsection}{\numberline {11.2.1}Central Moments}{48}{subsubsection.11.2.1}%
+\contentsline {section}{\numberline {12}October 18, 2024}{49}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Recap: Random Variables}{49}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Median}{50}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Properties of Expectation}{51}{subsection.12.3}%
+\contentsline {section}{\numberline {13}October 23, 2024}{52}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Review of Moments}{52}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Properties of Expectation Continued}{52}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Covariance}{54}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Preview of Correlation}{55}{subsection.13.4}%
+\contentsline {section}{\numberline {14}October 25, 2024}{56}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Cauchy Schwarz}{56}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Correlation Coefficient}{57}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Method of Indicators}{57}{subsection.14.3}%
+\contentsline {section}{\numberline {15}October 28, 2024}{60}{section.15}%
+\contentsline {subsection}{\numberline {15.1}Chebyshev's Inequality}{60}{subsection.15.1}%
+\contentsline {subsubsection}{\numberline {15.1.1}Proof of (a)}{60}{subsubsection.15.1.1}%
+\contentsline {subsubsection}{\numberline {15.1.2}Proof of (b)}{61}{subsubsection.15.1.2}%
+\contentsline {subsubsection}{\numberline {15.1.3}Proof of (c)}{61}{subsubsection.15.1.3}%
+\contentsline {subsection}{\numberline {15.2}Weak Law of Large Numbers}{62}{subsection.15.2}%
+\contentsline {subsubsection}{\numberline {15.2.1}Proof}{63}{subsubsection.15.2.1}%
+\contentsline {subsection}{\numberline {15.3}Conditional Probability}{63}{subsection.15.3}%

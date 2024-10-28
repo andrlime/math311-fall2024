@@ -1,0 +1,188 @@
+\section{October 11, 2024}
+
+\subsection{Recap: Joint Distribution Functions}
+Recall that for $R_1,R_2$ random variables, we say that a pair $(R_1,R_2)$ is absolutely continuous if there exists a joint density function $f_{12}(x,y)$ such that
+\begin{align}
+    F(x,y) \equiv \probability(R_1 \le x \cap R_2 \le y) = \iint_{\real^2}^{[x,y]} f_{12}(\vb{x}) \dd{\vb{x}}
+\end{align}
+This can be rather trivially extrapolated to $\real^N$.
+\begin{example}
+    Suppose $(R_1,R_2)$ has density
+    \begin{align}
+        f_{12}(x,y) = \begin{cases}
+            2e^{-x - 2y} & 0 < x,y < \infty\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Find $\probability(R_1 > 1 \cap R_2 < 1)$.
+\end{example}
+\begin{solution}
+    We can simply integrate the density over this space
+    \begin{align}
+    \hat{x} = [1,\infty) \cap \hat{y} = (0,1]    
+    \end{align}
+    noting that $y < 0$ has density $0$. Thus, we integrate over $\hat{x} \times \hat{y}$
+    \begin{align}
+        \probability = \iint_{\hat{x} \times \hat{y}} 2e^{-x - 2y} \dd{\qty(\hat{x} \times \hat{y})}
+    \end{align}
+    Pretty trivial from here.
+\end{solution}
+Again, this can be trivially extrapolated to $N$ random variables. Treat
+\begin{align}
+    \vb{R} &= (R_1, \ldots, R_N)\\
+    \vb{x} &= (x_1, \ldots, x_N)
+\end{align}
+as a vector of random variables. Then,
+\begin{align}
+    F_{12\cdots N}(\vb{x}) \iint_{\real^N} f_{12\cdots N} \dd{\vb{x}} \equiv \probability\left[ R_1 \le x_1, \ldots, R_N \le x_N \right]
+\end{align}
+\begin{proposition}
+    Given $F_{12}$, we can find $f_{12}$ (assuming continuous) by differentiating
+    \begin{align}
+        \pdv{x} \pdv{y} F_{12}
+    \end{align}
+    Recall that taking partial derivatives is a commutative operation.
+\end{proposition}
+
+\subsection{Joint vs Individual Density Functions}
+\begin{proposition}
+    If $(R_1,R_2)$ is a absolutely continuous pair, then $R_1$ and $R_2$ are absolutely continuous.
+\end{proposition}
+\begin{proof}
+    Let $(R_1, R_2)$ have density $f_{12}(x,y)$. Without loss of generality,
+    \begin{align}
+        F_1(x) \equiv \probability(R_1 \le x)
+    \end{align}
+    But this just $\probability(R_1 \le x \cap R_2 \in \real)$, which just equals
+    \begin{align}
+        \int_{-\infty}^x \int_\real f_{12} \dd{v}\dd{u}
+    \end{align}
+    The inside can be written as
+    \begin{align}
+        f_1(u) \equiv \int_\real f_{12} \dd{v}
+    \end{align}
+    Thus, $R_1$ (and symmetrically, $R_2$) are absolutely continuous.
+\end{proof}
+
+\begin{example}
+    Suppose $(R_1,R_2)$ has density
+    \begin{align}
+        f_{12}(x,y) = \begin{cases}
+            x + y & 0 \le x,y \le 1\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Then computing $f_1$ and $f_2$ are quite trivial using Proposition 9.3.
+\end{example}
+
+\begin{proposition}
+    The converse of Proposition 9.3 is \textit{not} true. Given absolutely continuous random variables $R_1,R_2$, it is not necessarily true that the pair $(R_1,R_2)$ is absolutely continuous. Moreover, there is not necessarily a unique $f_{12}$ given $f_1,f_2$.
+    \begin{proof}
+        There can be integration constants that make the map $R_1,R_2 \to (R_1,R_2)$ not injective.
+    \end{proof}
+\end{proposition}
+
+\subsection{Independent Random Variables}
+Recall that events $A,B$ are independent if
+\begin{align}
+    \probability(A \cap B) = \probability(A) \probability(B)
+\end{align}
+\begin{definition}
+    Take $R_1,R_2$ random variables. We say $R_1$ and $R_2$ are independent if
+    \begin{align}
+        \probability(R_1 \in B_1, R_2 \in B_2) = \probability(R_1 \in B_1) \probability(R_2 \in B_2)
+    \end{align}
+    where $B_1, B_2 \in \mathcal{B}$ are Borel sets.
+\end{definition}
+\noindent This can be extrapolated to a family of random variables, even uncountably many.
+\begin{definition}
+    A family $\mathcal{R} = \{ R_i \}_{i \in I}$ (where $I$ is some index set) is independent if for every finite subset $\{ R_{i_1}, \ldots, R_{i_k} \} \subset \mathcal{R}$,
+    \begin{align}
+        \probability(R_{i_1} \in B_{i_1}, \ldots, R_{i_k} \in B_{i_k}) = \prod_{j} \probability(R_{i_j} \in B_{i_j})
+    \end{align}
+    for all $B_{\ldots} \in \mathcal{B}$.
+\end{definition}
+
+\begin{proposition}
+    Let $R_1, \ldots, R_n$ be independent and individually absolutely continuous with densities $f_1, \ldots, f_n$. Then, the joint random variable $(R_1, \ldots, R_n)$ is absolutely continuous with density
+    \begin{align}
+        f_{1\cdots n} \equiv \prod_i^n f_i(x_i)
+    \end{align}
+\end{proposition}
+\begin{proof}
+    By definition
+    \begin{align}
+        F_{12 \cdots n}(x_1, \ldots, x_n) = \probability(R_1 \le x_1 \cap \cdots \cap R_n \le x_n)
+    \end{align}
+    Independence tells us this equals
+    \begin{align}
+        F_{12 \cdots n}(x_1, \ldots, x_n) = \probability(R_1 \le x_1) \cdots \probability(R_n \le x_n)
+    \end{align}
+    and those can trivially be written as
+    \begin{align}
+        F_{12 \cdots n}(x_1, \ldots, x_n) = F_1(x_1) \cdots F_n(x_n)
+    \end{align}
+    Then,
+    \begin{align}
+        \pdv{x_1}\cdots\pdv{x_n} F_{12 \cdots n} = f_{12 \cdots n} = f_1(x_1) \cdots f_n(x_n)
+    \end{align}
+    because when taking $\pdv{x_j}$, all $f_{k \ne j}$ are treated as constants.
+\end{proof}
+
+\subsection{Functions of a Random Variable}
+\begin{definition}
+    A function
+    \begin{align}
+        g : \real \to \real
+    \end{align}
+    is Borel measurable if the inverse image
+    \begin{align}
+        \forall B \in \mathcal{B}, g^{-1}(B) \in \mathcal{B}
+    \end{align}
+\end{definition}
+
+\begin{proposition}
+    Let $R$ be a random variable and $g: \real \to \real$ be Borel measurable. Then, $g(R)$ is a random variable.
+\end{proposition}
+\begin{proof}
+    Recall a random variable on $\psp$ is some map
+    \begin{align}
+        R : \Omega \to \real
+    \end{align}
+    such that for all $B \in \mathcal{B}$
+    \begin{align}
+        R^{-1}(B) \in \curlyf
+    \end{align}
+    Let $B \in \mathcal{B}$. Write
+    \begin{align}
+        \widetilde{R} \equiv g(R) : \Omega \to \real
+    \end{align}
+    Then,
+    \begin{align}
+        \widetilde{R}^{-1}(B) &= \{ \omega \in \Omega \mid g(R(\omega)) \in B \}\\
+        &= \{ \omega \in \Omega \mid R(\omega) \in g^{-1}(B) \}\\
+        &= R^{-1}(g^{-1}(B)) \in \curlyf
+    \end{align}
+\end{proof}
+
+\begin{proposition}
+    Let $R_1, \ldots, R_n$ be independent random variables and $g_1, \ldots, g_n: \real \to \real$ be Borel measurable functions\footnote{anything continuous is Borel measurable}. Then,
+    \begin{align}
+        g_1(R_1), \ldots, g_n(R_n)
+    \end{align}
+    are independent, i.e. functions of independent random variables are independent.
+\end{proposition}
+
+\begin{proof}
+    Let $\widetilde{R_i} \equiv g_i(R_i)$. Let $B_1, \ldots B_n \in \mathcal{B}$. Then
+    \begin{align}
+        \probability(\widetilde{R_1} \in B_1, \ldots, \widetilde{R_n} \in B_n) &= \probability(g_1(R_1) \in B_1, \ldots, g_n(R_n) \in B_n)\\
+        &= \probability(R_1 \in g_1^{-1}(B_1), \ldots, R_n \in g_n^{-1}(B_n))
+    \end{align}
+    By independence of $\{ R_i \}$, this equals
+    \begin{align}
+        &= \probability(R_1 \in g_1^{-1}(B_1)) \cdots \probability(R_n \in g_n^{-1}(B_n))\\
+        &= \probability(g_1(R_1) \in B_1) \cdots \probability(g_n(R_n) \in B_n)
+    \end{align}
+    which means $\widetilde{R_1}, \ldots, \widetilde{R_n}$ are independent.\footnote{a LiTtLe BiT ThEoReTiCaL ToDaY}
+\end{proof}

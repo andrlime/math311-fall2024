@@ -1,5 +1,5 @@
 % packages
-\documentclass[a4paper]{article}
+\documentclass[b5paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[margin=1.1in]{geometry} % 0.9 for pset, 1.4 for livetex notes
 
@@ -59,6 +59,7 @@
 \newcommand\field{\mathbb{F}}
 \newcommand\qsp{\qq{}}
 \newcommand\curlyf{\mathcal{F}}
+\newcommand\psp{(\Omega, \curlyf, \probability)}
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
 \definecolor{DARKBLUE}{HTML}{005E7A}
@@ -66,6 +67,7 @@
 \definecolor{DARKRED}{HTML}{83223C}
 \definecolor{ORANGE}{HTML}{F0B12C}
 \definecolor{CYAN}{HTML}{2CF0CB}
+\definecolor{RED}{HTML}{C41E3A}
 
 \newcounter{lemmacounter}
 \newcounter{definitioncounter}
@@ -101,12 +103,16 @@
   boxrule=0.5px
 }
 
-% \newcounter{pblmcounter}
-% \newenvironment{problem}
-%   {\begin{boxedxx}
-%   \stepcounter{pblmcounter}
-%   \textbf{Statement of Problem}}
-%   {\end{boxedxx}}
+\newtcolorbox{roundbox4}{
+  sharp corners,
+  colback=RED!5!white,
+  colframe=RED!75!BLACK,
+  boxrule=0.5px
+}
+
+\newenvironment{problem}
+  {\begin{roundbox1}}
+  {\end{roundbox1}}
   
 \newenvironment{solution}
   {\begin{proof}[Solution]}
@@ -129,6 +135,11 @@
   \stepcounter{lemmacounter}
   \textcolor{ORANGE}{\textsf{\textbf{Lemma \thesection.\arabic{lemmacounter}}}}}
   {\end{squarebox2}}
+
+\newenvironment{aside}
+  {\begin{roundbox4}
+  \textcolor{RED}{\textsf{\textbf{Note}}}}
+  {\end{roundbox4}}
   
 \newenvironment{theorem}
   {\begin{squarebox}
@@ -183,5 +194,17 @@
     \include{contents/lecture3.tex}
     \include{contents/lecture4.tex}
     \include{contents/lecture5.tex}
+    \include{contents/lecture6.tex}
+    \include{contents/lecture7.tex}
+    \include{contents/lecture8.tex}
+    \include{contents/lecture9.tex}
+    \include{contents/lecture10.tex}
+    \include{contents/lecture11.tex}
+    \include{contents/lecture12.tex}
+    \include{contents/lecture13.tex}
+    \include{contents/lecture14.tex}
+    \include{contents/lecture15.tex}
+    \include{contents/lecture16.tex}
+    \include{contents/lecture17.tex}
 
 \end{document}

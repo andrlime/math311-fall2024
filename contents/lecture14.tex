@@ -1,0 +1,188 @@
+\section{October 25, 2024}
+
+\subsection{Cauchy Schwarz}
+\begin{theorem}
+    For an inner product space $V$, let $u,v\in V$; then
+    \begin{align}
+        \norm{\langle u, v \rangle} \le \langle u, u \rangle \cdot \langle v, v \rangle
+    \end{align}
+\end{theorem}
+\begin{proof}
+    Straightforward from the definition of inner product.
+\end{proof}
+
+\begin{proposition}
+    For random variables $R_1,R_2$ (assume $E(R_1^2),E(R_2^2)$ are finite), then
+    \begin{align}
+        \qty[ E(R_1R_2) ]^2 \le E(R_1^2) \cdot E(R_2^2)
+    \end{align}
+    with equality if and only if there exist $a_1,a_2 \in \real \ne 0$ such that
+    \begin{align}
+        a_1R_1 + a_2R_2 = 0
+    \end{align}
+    i.e. $R_1$ and $R_2$ are linearly dependent, which is equivalent to saying that the probability that this linearly combined random variable equalling $0$ is $1$.
+\end{proposition}
+\begin{proof}
+    Suppose then that $R_1,R_2$ are linearly dependent, which implies
+    \begin{align}
+        a_1R_1 + a_2R_2 = 0
+    \end{align}
+    Then,
+    \begin{align}
+        \qty[E(R_1R_2)]^2 &= \qty(E\qty(-\frac{a_2}{a_1}R_2^2))^2 = \qty(\frac{a_2}{a_1})^2 \qty(E\qty(R_2^2))^2\\
+        E(R_1^2) \cdot E(R_2^2) &= E\qty(\qty(-\frac{a_2}{a_1}R_2^2)^2) \cdot E(R_2^2) = \qty(\frac{a_2}{a_1})^2 \qty(E\qty(R_2^2))^2
+    \end{align}
+    Now, define
+    \begin{align}
+        S = aR_1 - R_2
+    \end{align}
+    Then,
+    \begin{align}
+        0 &\le E(S^2) = E(a^2R_1^2 + R_2^2 - 2aR_1R_2)\\
+        &\le a^2 E(R_1^2) + E(R_2^2) - 2aE(R_1R_2)
+    \end{align}
+    Pick $a = E(R_1R_2)/E(R_1^2)$. Then, plugging in $a$ and rearranging yields
+    \begin{align}
+        \qty[E(R_1R_2)]^2 \le E(R_1^2) \cdot E(R_2^2) & \qedhere
+    \end{align}
+    Tracing back, when Equation 14.7 is zero, $R_1$ and $R_2$ are linearly dependent, and $S$ is essentially zero.
+\end{proof}
+% This was ugly
+
+\subsection{Correlation Coefficient}
+\begin{definition}
+    Recall that
+    \begin{align}
+        \text{cov}(R_1R_2) = E\qty((R_1 - E(R_1))(R_2 - E(R_2)))
+    \end{align}
+    Define the correlation coefficient of $R_1$ with $R_2$ to be
+    \begin{align}
+        \rho(R_1,R_2) = \text{corr}(R_1,R_2) \equiv \dfrac{\text{cov}(R_1,R_2)}{\sigma_1\sigma_2}
+    \end{align}
+    where $\sigma_1,\sigma_2 \in \real > 0$ are the standard deviation of $R_1$ and $R_2$, and $\text{cov}(\cdots)$ is assumed to exist.
+\end{definition}
+
+\begin{proposition}
+    Assume $E(R_1^2),E(R_2^2) < \infty$. Then,
+    \begin{align}
+        \abs{\rho} \le 1
+    \end{align}
+    with equality if and only if $R_1 - E(R_1)$ and $R_2 - E(R_2)$ are linearly dependent.
+\end{proposition}
+\begin{proof}
+    By definition,
+    \begin{align}
+        \qty(\text{cov}(R_1,R_2))^2 = \qty[E\qty((R_1 - E(R_1))(R_2 - E(R_2)))]^2
+    \end{align}
+    Cauchy Schwarz tells us that
+    \begin{align*}
+        \qty[E\qty((R_1 - E(R_1))(R_2 - E(R_2)))]^2 \le E\qty(R_1 - E(R_1)) \cdot E\qty(R_2 - E(R_2))
+    \end{align*}
+    Thus,
+    \begin{align}
+        \abs{\dfrac{\qty(\text{cov}(R_1,R_2))^2}{\sigma_1\sigma_2}} \le 1 & \qedhere
+    \end{align}
+    The equality holds when $R_1 - E(R_1)$ and $R_2 - E(R_2)$ are linearly dependent as a consequence of Proposition 14.2.
+\end{proof}
+    
+\subsection{Method of Indicators}
+Take some probability space $\psp$ and some $A \in \curlyf$.
+\begin{definition}
+    The \textit{indicator of $A$} is the discrete random variable $I_A$ given by
+    \begin{align}
+        I_A(\omega) = \begin{cases}
+            1 & \omega \in A\\
+            0 & \omega \notin A
+        \end{cases}
+    \end{align}
+    which are analogous to characteristic functions in analysis.
+\end{definition}
+\begin{proposition}
+    The expectation of an indicator is
+    \begin{align}
+        E(I_A) = \probability(I_A = 1) = \probability(A) = \probability\qty(\{ \omega \in \Omega \mid I_A(\omega) = 1 \})
+    \end{align}
+    The expectation of an indicator equals the probability of the event.
+\end{proposition}
+
+\begin{example}
+    Take $R$ is the number of successes in $n$ Bernoulli trials where the probability of success is $p$. Find $E(R)$ and $\text{var}(R)$.
+\end{example}
+\begin{solution}
+    Define $A_i$ as the event where the $i$-th trial is successful. Then,
+    \begin{align}
+        R = \sum_j\qty(I_{A_j}) = \text{number of successes}
+    \end{align}
+    The expectation of $R$ is the sum of expectations of each indicator, i.e.
+    \begin{align}
+        E(R) = \sum_j E(I_{A_j}) = \sum_j \probability(A_j) = np & \qedhere
+    \end{align}
+    The variance then equals
+    \begin{align}
+        E(R^2) - E(R)^2
+    \end{align}
+    which equals $E(R^2) - (np)^2$. That first term equals
+    \begin{align}
+        E\qty[\qty(I_{A_1} + \cdots I_{A_n})^2]
+    \end{align}
+    which equals
+    \begin{align}
+        E\qty[
+            \sum_j I_{A_j}^2 + \sum_{j \ne k} I_{A_j}I_{A_k}
+        ]   
+    \end{align}
+    \begin{aside}
+        For random variable $A$,
+        \begin{align}
+            I_A^2 = I_A
+        \end{align}
+        \begin{proof}
+            $1^2 = 1$ and $0^2 = 0$
+        \end{proof}
+    \end{aside}
+    \begin{aside}
+        If $A$ and $B$ are independent events, then $I_A$ and $I_B$ are independent.
+    \end{aside}
+    Thus, $E(R^2)$ becomes
+    \begin{align}
+        &= \sum_j E\qty[
+            I_{A_j}
+        ] + \sum_{j \ne k} E\qty[
+            I_{A_j}I_{A_k}
+        ]\\
+        &= \sum_j E\qty[
+            I_{A_j}
+        ] + \sum_{j \ne k} E\qty[
+            I_{A_j \cap A_k}
+        ]\\
+        &= np + (n^2 - n)p^2
+    \end{align}
+    Thus,
+    \begin{align}
+        \text{var}(R) = \qty[np + (n^2 - n)p^2] - (np)^2 = np(1-p)
+    \end{align}
+    \begin{example}
+        Suppose $N$ people throw their hat into the middle of a room then randomly each pick a hat. Find $E(R)$ where $R$ is the number of people who pick their own hat.
+    \end{example}
+    \begin{solution}
+        Define $A_i$ as the $i$-th person getting their own hat. Then,
+        \begin{align}
+            R = I_{A_1} + \cdots + I_{A_N}
+        \end{align}
+        Note that these are not independent events! Thus,
+        \begin{align}
+            E(R) = E(I_{A_1}) + \cdots + E(I_{A_N})
+        \end{align}
+        For each person,
+        \begin{align}
+            P(A_i) = 1/N
+        \end{align}
+        Then,
+        \begin{align}
+            E(R) = N \cdot 1/N = 1 & \qedhere
+        \end{align}
+    \end{solution}
+\end{solution}
+
+
+

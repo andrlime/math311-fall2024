@@ -1,0 +1,171 @@
+\section{October 28, 2024}
+
+\subsection{Chebyshev's Inequality}
+Stating this theorem is harder than proving it.
+\begin{theorem}
+    \begin{enumerate}
+        \item[a.] $R \ge 0$ r.v.; $b > 0$ random number
+        \begin{align}
+            \probability(R \ge b) \le E(R)/b && \text{assume expectation exists}
+        \end{align}
+        \item[b.] $R$ r.v.; $c$ constant, $l, \varepsilon > 0$ constants
+        \begin{align}
+            \probability(\abs{R - c} \ge \varepsilon) \le \frac{E(\abs{R-c})^l}{\varepsilon^l}
+        \end{align}
+        \item[c.] $R$ r.v. finite mean $m$, finite variance $\sigma^2 > 0$, $k > 0$
+        \begin{align}
+            \probability(\abs{R-m} \ge k\sigma) \le 1/k^2
+        \end{align}
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{Proof of (a)}
+[a] First, assuming $R$ is absolutely continuous with density $f(x)$. Then,
+\begin{align}
+    E(R) = \int_{-\infty}^\infty x f(x) \dd{x}
+\end{align}
+Since $R \ge 0$, this is equivalent to
+\begin{align}
+    E(R) = \int_{0}^\infty x f(x) \dd{x}
+\end{align}
+We can shove an inequality at this
+\begin{align}
+    E(R) = \int_{0}^\infty x f(x) \dd{x}\ge \int_b^\infty x f(x) \dd{x}
+\end{align}
+Note that we are throwing away $\int_0^b$, so this is not a very sharp estimate. Note that within this integral, $x \ge b$, so this previous line is greater than
+\begin{align}
+    E(R) \ge \int_b^\infty x f(x) \dd{x} \ge b\int_b^\infty f(x) \dd{x} = b \probability(R \ge b)
+\end{align}
+Rearranging,
+\begin{align}
+    \probability(R \ge b) \le E(R)/b
+\end{align}
+For the general case, we claim
+\begin{align}
+    R \ge b I_{A_b}
+\end{align}
+where $A_b \equiv \{ R \ge b \} \subset \Omega$. Recall that $I$ is the indicator function, i.e.
+\begin{align}
+    I_{A_b}(\omega) = \begin{cases}
+        1 & \omega \in A_b\\
+        0 & \omega \notin A_b
+    \end{cases}
+\end{align}
+To prove this, let $\omega \in \Omega$. We want $R(\omega) \ge b I_{A_b}(\omega)$. We can plsplit into cases
+\begin{enumerate}
+    \item Case 1: $\omega \notin A_b$. Then, we want to show that $R(\omega) \ge 0$, which is true by assumption that $R \ge 0$.
+    \item Case 2: $\omega \in A_b$. Then $b I_{A_b}(\omega) = b$. We need to show that $R(\omega) \ge b$. This is true by how $A_b$ is defined, i.e. as $\{ R \ge b \}$.
+\end{enumerate}
+This proves the claim, i.e. for all $\omega$, this statement is true:
+\begin{align}
+    R \ge b I_{A_b}
+\end{align}
+This implies that $E(R) \ge E(b I_{A_b})$. By linearity,
+\begin{align}
+    E(R) \ge b E\qty(I_{A_b}) = b\probability(A_b) = b \probability(R \ge b)
+\end{align}
+which can be rearranged to complete the proof for the general, non-absolutely-continuous case.
+\qed
+
+\subsubsection{Proof of (b)}
+This follows from $A$. The probability
+\begin{align}
+    \probability(\abs{R-c} \ge \varepsilon) = \probability(\abs{R-c}^l \ge \varepsilon^l)
+\end{align}
+Then we apply (a) where $\abs{R - c}$ is our new, non-negative random variable. Thus,
+\begin{align}
+    \probability(\abs{R-c}^l \ge \varepsilon^l) \le \frac{E\qty(\abs{R-c}^l)}{\varepsilon^l}
+\end{align}
+\qed
+
+\subsubsection{Proof of (c)}
+The probability $\probability(\abs{R-m} \ge k\sigma)$, by (b),
+\begin{align}
+    \probability(\abs{R-m} \ge k\sigma) \le \frac{E(\abs{R-m}^2)}{(k\sigma)^2} = \frac{\sigma^2}{k^2\sigma^2} = 1/k^2
+\end{align}
+\qed
+
+\begin{aside}
+    This is not a very sharp inequality. Take $R \sim \exp{1}$ (mean and variance are both $1$). By (c), (assume $k$ large)
+    \begin{align}
+        \probability(\abs{R-m} \ge k\sigma) \le 1/k^2
+    \end{align}
+    For our specific distribution, $m= \sigma = 1$, so we get 
+    \begin{align}
+        \probability(\abs{R - m} \ge k\sigma) = \probability(\abs{R - 1} \ge k) = \probability(R \ge k + 1) = e^{-(k+1)}
+    \end{align}
+    For $k$ large,
+    \begin{align}
+        e^{-(k+1)} \ll 1/k^2
+    \end{align}
+    so the inequality is not sharp, and quite wasteful.
+\end{aside}
+
+
+\subsection{Weak Law of Large Numbers}
+\begin{theorem}
+    Let $R_1, R_2, \ldots$ be a whole bunch of independent random variables on a given probability space. Assume the means and variances are finite, and shared (equal) across all $R_{1 \cdots N}$. And assume $\sigma_i^2 \le M$, i.e. the variances are bounded by some constant $M \in \real$ for all $i$. Define
+    \begin{align}
+        S \equiv \sum_{i} R_i
+    \end{align}
+    and let $n$ be the number of random variables being summed over. Then, for all $\varepsilon > 0$,
+    \begin{align}
+        \probability\qty[\frac{\abs{S - E(S)}}{n} \ge \varepsilon] \ce{->[$n \to \infty$]} 0
+    \end{align}
+    or
+    \begin{align}
+        \probability\qty[ \abs{\frac{R_1 + \cdots + R_n}{n} - m} \ge \varepsilon ] \ce{->[$n \to \infty$]} 0
+    \end{align}
+    i.e. the mean of the random variables tends towards the actual mean as $n \to \infty$
+\end{theorem}
+\begin{example}
+    Flip $N$ coins. As $N \to \infty$, the expected number of heads is $N/2$. As $N \to \infty$, the probability of deviation from the expected value tends towards zero.
+\end{example}
+\begin{proof}[Solution]
+    Obvious.
+\end{proof}
+Why is this law of large numbers \textit{weak}? Because it is stating that the probability of being greater than $\varepsilon$ goes to zero, as opposed to an actual probability going to zero.
+
+\subsubsection{Proof}
+Take
+\begin{align}
+    \probability\qty(\frac{\abs{S - E(S)}}{n} \ge \varepsilon)
+\end{align}
+By Part (b) of Chebyshev, we can write
+\begin{align}
+    \probability\qty(\frac{\abs{S - E(S)}}{n} \ge \varepsilon) &\le \frac{E\qty(\abs{\frac{S-E(S)}{n}}^2)}{\varepsilon^2}\\
+    &\le \frac{1}{n^2\varepsilon^2} E\qty[(S - E(S))^2]\\
+    &\le \frac{\text{var}(S)}{n^2\varepsilon^2}
+\end{align}
+By linearity on the independent variables,
+\begin{align} 
+    \probability\qty(\frac{\abs{S - E(S)}}{n} \ge \varepsilon)
+    &\le \frac{\sum_i^n \text{var}(R_i)}{n^2\varepsilon^2}\\
+    &\le \frac{Mn}{n^2\varepsilon^2} = \frac{M}{n\varepsilon^2}\\
+    &\le 0\\
+    \implies \probability\qty(\frac{\abs{S - E(S)}}{n} \ge \varepsilon) &= 0
+\end{align}
+
+
+\subsection{Conditional Probability}
+Let $R_1,R_2$ be discrete r.v. with probability functions $P_{R_1}(x)$ and $P_{R_2}(x)$ which are `probability mass functions'. What is
+\begin{align}
+    \probability(R_1 = x \mid R_2 = y)
+\end{align}
+The probability $p(x \mid y)$ equals
+\begin{align}
+    \frac{\probability(R_1 = x, R_2 = y)}{\probability(R_2 = y)} = p_{12}(x,y) / p_2(y)
+\end{align}
+which is the quotient of the joint probability function and the individual probability function.
+\begin{aside}
+    For a given, fixed $y$, if $p_2(y) > 0$, then
+    \begin{align}
+        p(x \mid y)
+    \end{align}
+    is a probability function for $x$, i.e.
+    \begin{align}
+        \sum_x p(x \mid y) = 1
+    \end{align}
+    which is true by extending the law of total probability.
+\end{aside}
+
