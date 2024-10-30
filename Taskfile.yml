@@ -13,6 +13,11 @@ tasks:
     cmds:
       - ./build.sh 2
     silent: true
+  clean:
+    cmds:
+      - rm main.toc
+      - rm math311_notes.pdf 
+    silent: true
   o:
     cmds:
       - task: open
@@ -24,5 +29,9 @@ tasks:
   b:
     cmds:
       - task: build
+    silent: true
+  c:
+    cmds:
+      - task: clean
     silent: true
 

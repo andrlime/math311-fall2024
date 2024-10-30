@@ -12,6 +12,9 @@ CHECK="\xE2\x9C\x85"    # ✅
 CROSS="\xE2\x9D\x8C"     # ❌
 BOOK="\xF0\x9F\x93\x96"  # 📖
 
+# strings
+EXPORT="math311_notes.pdf"
+
 # Progress bar function
 progress_bar() {
   local current=$1
@@ -31,7 +34,10 @@ progress_bar() {
 sha1sum contents/* | sha1sum > temp
 
 # Check if hash.txt exists and compare hashes
-if [[ ! -f hash.txt ]]; then
+if [[ ! -f $EXPORT ]]; then
+  echo -e "${YELLOW}${BOOK} ${EXPORT} not found. Building it from source...${NC}"
+  mv temp hash.txt
+elif [[ ! -f hash.txt ]]; then
   echo -e "${YELLOW}${BOOK} hash.txt not found. Creating it and rebuilding...${NC}"
   mv temp hash.txt
 elif diff hash.txt temp > /dev/null; then
@@ -50,10 +56,13 @@ if [[ ! -f temp ]]; then
     pdflatex --shell-escape main.tex > /dev/null 2>&1
   done
   echo -e "\n${GREEN}${CHECK} Compilation complete!${NC}"
+  
+  mv main.pdf $EXPORT
+  echo -e "${GREEN}${CHECK} Moved file to ${EXPORT}!${NC}"
 
   # Cleanup temporary files
   rm */*.aux *.aux *.log *.out
 
-  echo -e "${GREEN} Cleanup complete!${NC}"
+  echo -e "${GREEN}${CHECK} Cleanup complete!${NC}"
 fi
 
