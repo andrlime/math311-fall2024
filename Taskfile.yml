@@ -3,7 +3,7 @@ version: '3'
 tasks:
   open:
     cmds:
-      - open main.pdf
+      - open math311_notes.pdf
     silent: true
   preview:
     cmds:

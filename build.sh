@@ -56,7 +56,7 @@ if [[ ! -f temp ]]; then
     pdflatex --shell-escape main.tex > /dev/null 2>&1
   done
   echo -e "\n${GREEN}${CHECK} Compilation complete!${NC}"
-  
+
   mv main.pdf $EXPORT
   echo -e "${GREEN}${CHECK} Moved file to ${EXPORT}!${NC}"
 

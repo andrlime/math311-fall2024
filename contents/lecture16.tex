@@ -1,8 +1,152 @@
 \section{October 30, 2024}
 
-\subsection{...}
-\subsection{...}
-\subsection{...}
-\subsection{...}
+\subsection{Conditional Probabilities}
+Quick recap: for two events $A$ and $B$,
+\begin{align}
+    \probability(B \mid A) = \frac{\probability(A \cap B)}{\probability(A)}
+\end{align}
+On absolutely continuous random variables, $(R_1,R_2)$ with some joint density $f(x, yi)$, write $f_1(x)$ marginal density of $R_1$, i.e.
+\begin{align}
+    f_1(x) = \int_\real f(x,y) \dd{y}
+\end{align}
+We can define the conditional density of $R_2$ \textit{given} $R_1 = x$ to be
+\begin{align}
+    h(y \mid x) = \frac{f(x,y)}{f_1(x)}
+\end{align}
 
+\begin{aside}
+    A remark about notation
+    \begin{enumerate}
+        \item $\probability(R_1 = x) = 0$ because of absolute continuity
+        \item This can also be denoted as $f_{R_2 \mid R_2}(y \mid x)$ as opposed to $h(y \mid x)$
+    \end{enumerate}
+\end{aside}
+
+Let $R$ be a random variable with continuous density $f(x)$. Then, let $\varepsilon > 0$:
+\begin{align}
+    \probability(x \le R \le x + \varepsilon) \approx f(x) \Delta x
+\end{align}
+Applying this to the conditional probability $h(x,y)$ yields
+\begin{align}
+    \frac{f(x,y) \varepsilon_x \varepsilon_y}{f_1(x) \varepsilon_x} \approx \dfrac{\probability(x \le R_1 \le x + \varepsilon_x \cap y \le R_2 \le y + \varepsilon_y)}{\probability(x \le R_1 \le x + \varepsilon_x)}
+\end{align}
+
+\begin{aside}
+    Another remark. Fix $x$. Then, $h(y \mid x)$ is a density in $y$, so
+    \begin{align}
+        \int_\real h(y \mid x) \dd{y} = \frac{\int_\real f(x,y)\dd{y}}{f_1(x)} = 1
+    \end{align}
+\end{aside}
+
+\begin{lemma}
+    Take $B \in \mathcal{B}$. Then,
+    \begin{align}
+        \probability(R_2 \in B \mid R_1 = x) = \int_B h(y \mid x) \dd{y}
+    \end{align}
+\end{lemma}
+\begin{proof}
+    Quite obvious.
+\end{proof}
+
+\begin{example}
+    $(R_1,R_2)$ have some joint density
+    \begin{align}
+        f(x,y) = \begin{cases}
+            e^{-y} & 0 \le x \le y\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Find the conditional density of $R_2$ given $R_1 = x$ and $\probability(R_2 \le y \mid R_1 = x)$, which is the \textit{conditional distribution function} of $R_2$ given $R_1$.
+\end{example}
+\begin{solution}
+    The conditional density ?? equals
+    \begin{align}
+        f_1(x) &= \int_\real f(x,y) \dd{y}\\
+        &= \int_x^\infty e^{-y} \dd{y}\\
+        &= \cdots = e^{-x}
+    \end{align}
+    Thus, $h(y \mid x)$ equals
+    \begin{align}
+        h(y \mid x) = f(x,y) / f_1(x) = e^{x - y}
+    \end{align}
+    on $y \ge x \ge 0$ and $0$ everywhere else. Now, assume $y \ge x \ge 0$.
+    \begin{align}
+        \probability(R_2 \le y \mid R_1 = x) = \int_{-\infty}^y h(u \mid x) \dd{u} = \int_x^y e^{x-u} \dd{u} = \cdots = -e^{x-y} + 1
+    \end{align}
+\end{solution}
+
+\begin{aside}
+    If $R_1,R_2$ are independent, then $h(y \mid x) = f_2(y)$.
+\end{aside}
+
+\subsection{Higher Dimensions}
+Let $R_1, \ldots, R_N$ be random variables with joint density $f(x_1, \ldots x_N)$. Let the joint density $(R_1, \ldots, R_k)$ be $$f_{1\cdots k}(x_1, \ldots, x_k)$$ for $k \in \{ 1, \ldots, n - 1 \}$. Then, the conditional density of $(R_{k+1}, \ldots, R_N)$ given $(R_1, \ldots R_k)$ is
+\begin{align}
+    h(x_{k+1}, \ldots, x_n \mid x_1, \ldots x_k) = \frac{f(x_1, \ldots, x_n)}{f_{1\cdots k}(x_1, \ldots, x_k)}
+\end{align}
+\begin{example}
+    Let $R_0 \sim \exp{1}$. If $R_0$ has value $\lambda$, random variables $R_1, \ldots, R_N$ are independent, and $R_i \sim \exp{\lambda}$ for $i = 1, \ldots, N$, then find the conditional density of $R_0$ given $(R_1, \ldots, R_N) = (x_1, \ldots, x_N)$ (where $x_1, \ldots, x_N > 0$).
+\end{example}
+\begin{solution}
+    We want
+    \begin{align}
+        h(\lambda \mid x_1, \ldots, x_N) = \frac{f(\lambda, x_1, \ldots, x_N)}{f_{1\cdots n}(x_1, \ldots, x_N)}
+    \end{align}
+    We know the density $h(x_1, \ldots, x_N \mid \lambda)$. We want the density of $R_1, \ldots, R_N$ given $R_0 = \lambda$. That just equals
+    \begin{align}
+        \lambda^N e^{-\lambda(x_1 + \cdots + x_N)}
+    \end{align}
+    From the formula, $h(x_1, \ldots, x_N \mid \lambda) \cdot f_0(\lambda) = f(\lambda, x_1, \ldots, x_N)$. We eventually get that
+    \begin{align}
+        f(\lambda, x_1, \ldots, x_N) &= \lambda^N e^{-\lambda(x_1 + \cdots + x_N)}e^{-\lambda}\\
+        &= \lambda^N e^{-\lambda(1 + x_1 + \cdots + x_N)}
+    \end{align}
+    The denominator of the conditional density is the integral of the joint density on $\lambda \in \real$. That equals
+    \begin{align}
+        \int_0^\infty \lambda^N e^{-\lambda(1 + x_1 + \cdots + x_N)} \dd{\lambda}
+    \end{align}
+    and after integrating that (possibly asking $\Gamma$, Mathematica, or some other -a's for help), we can quite trivially find the quotient that equals the conditional density. The final expression is
+    \begin{align}
+        \frac{\lambda^n e^{-\lambda(1 + x_1 + \cdots + x_N)}(1 + x_1 + \cdots + x_N)}{n!}
+    \end{align}
+\end{solution}
+
+\begin{aside}
+    $$\Gamma(n+1) = \int_0^\infty x^n e^{-x} \dd{x} = n!$$
+\end{aside}
+
+\subsection{Theorem of Total Probability}
+Take $\{ A_i \}_I$ are mutually exclusive and exhaustive events in some probability space. Recall that
+\begin{align}
+    \probability(B) = \sum_{i \in I} \probability(B \mid A_i) \cdot \probability(A_i)
+\end{align}
+What about for a continuous case?
+\begin{definition}
+    Take $R_1,R_2$ as random variables with joint density $f(x,y)$. Let $R_1$ have density $f_1(x)$. Write $h(y \mid x) = f(x,y)/f_1(x)$. Then, given some event $B$,
+    \begin{align}
+        \probability(R_2 \in B) = \int_\real \probability(R_2 \in B \mid R_1 = x) f_1(x) \dd{x}
+    \end{align}
+    This is exactly the same thing as the discrete case.
+\end{definition}
+This is consistent with what we already have.
+\begin{align}
+    \probability(R_2 \in B \mid R_1 = x) = \probability(B_x) = \int_{y \in B} h(y \mid x) \dd{y}
+\end{align}
+and
+\begin{align}
+    \probability(R_2 \in B) = \int_\real \int_{y \in B} f(x,y) \dd{y} \dd{x}
+\end{align}
+\begin{aside}
+    The theorem of total probability for a continuous random variable (see above) holds even when $R_2$ is discrete. As an example, suppose there is some number $x \in [0, 1]$ uniformly and randomly. Then, flip a coin with probability of heads is $x^2$. Find the probability of heads.
+\end{aside}
+\begin{solution}
+    Let $R_1$ be $x \in [0,1]$. Let $R_2 = I_\text{heads}$ ($1$ is heads, $0$ if tails). Then, $\probability(R_2 = 1)$ equals
+    \begin{align}
+        \probability(R_2 = 1) = \int_0^1 \probability(R_2 = 1 \mid R_1 = x) f_1(x) \dd{x}
+    \end{align}
+    In this case, this reduces to
+    \begin{align}
+        \probability(R_2 = 1) = \int_0^1 x^2 \dd{x} = 1/3
+    \end{align}
+\end{solution}
 
