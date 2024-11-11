@@ -5,7 +5,7 @@ Quick recap: for two events $A$ and $B$,
 \begin{align}
     \probability(B \mid A) = \frac{\probability(A \cap B)}{\probability(A)}
 \end{align}
-On absolutely continuous random variables, $(R_1,R_2)$ with some joint density $f(x, yi)$, write $f_1(x)$ marginal density of $R_1$, i.e.
+On absolutely continuous random variables, $(R_1,R_2)$ with some joint density $f(x, y)$, write $f_1(x)$ marginal density of $R_1$, i.e.
 \begin{align}
     f_1(x) = \int_\real f(x,y) \dd{y}
 \end{align}
@@ -18,7 +18,7 @@ We can define the conditional density of $R_2$ \textit{given} $R_1 = x$ to be
     A remark about notation
     \begin{enumerate}
         \item $\probability(R_1 = x) = 0$ because of absolute continuity
-        \item This can also be denoted as $f_{R_2 \mid R_2}(y \mid x)$ as opposed to $h(y \mid x)$
+        \item This can also be denoted as $f_{R_2 \mid R_1}(y \mid x)$ as opposed to $h(y \mid x)$
     \end{enumerate}
 \end{aside}
 
@@ -59,7 +59,7 @@ Applying this to the conditional probability $h(x,y)$ yields
     Find the conditional density of $R_2$ given $R_1 = x$ and $\probability(R_2 \le y \mid R_1 = x)$, which is the \textit{conditional distribution function} of $R_2$ given $R_1$.
 \end{example}
 \begin{solution}
-    The conditional density ?? equals
+    The denominator equals
     \begin{align}
         f_1(x) &= \int_\real f(x,y) \dd{y}\\
         &= \int_x^\infty e^{-y} \dd{y}\\
@@ -107,7 +107,7 @@ Let $R_1, \ldots, R_N$ be random variables with joint density $f(x_1, \ldots x_N
     \end{align}
     and after integrating that (possibly asking $\Gamma$, Mathematica, or some other -a's for help), we can quite trivially find the quotient that equals the conditional density. The final expression is
     \begin{align}
-        \frac{\lambda^n e^{-\lambda(1 + x_1 + \cdots + x_N)}(1 + x_1 + \cdots + x_N)}{n!}
+        \frac{\lambda^N e^{-\lambda(1 + x_1 + \cdots + x_N)}(1 + x_1 + \cdots + x_N)}{N!}
     \end{align}
 \end{solution}
 

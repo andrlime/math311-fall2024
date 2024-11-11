@@ -1,0 +1,159 @@
+\section{November 4, 2024}
+
+\subsection{Conditional Expectation}
+Recall for $R_1,R_2$ absolutely continuous r.v.,
+\begin{align}
+    E(R_2 \mid R_1 = x) = \int_\real y h(y \mid x) \dd{y}
+\end{align}
+where $h(y \mid x)$ equals the quotient of the densities
+\begin{align}
+    h(y \mid x) = f(x,y) / f_1(x)
+\end{align}
+In general, for some function on a random variable $g(R_2)$,
+\begin{align}
+    E(g(R_2) \mid R_1 = x) = \int_\real g(y) h(y \mid x) \dd{y}
+\end{align}
+\begin{proposition}
+    We can do this with $N$ r.v., $R_1, \ldots, R_N$.
+    \begin{align}
+        E(g(R_{k+1}, \ldots, R_N) \mid R_1 = x_1, R_2 = x_2, \ldots, R_k = x_k)
+    \end{align}
+    would equal
+    \begin{align}
+        \int_S g(x_{k+1}, \ldots, x_N) h(x_{k+1}, \ldots, x_N \mid x_1, \ldots, x_k) \dd{S}
+    \end{align}
+    where $S \equiv x_{k+1} \times \cdots \times x_N$.
+\end{proposition}
+\begin{example}
+    Suppose $R_0 \sim \exp(1)$. For $R_0 = \lambda$, define $R_1, \ldots, R_N$ as independent\footnote{i.i.d means independent and identically distributed, but this phraseology is not used in this text.} each with distribution $\exp(\lambda)$. We previously computed
+    \begin{align}
+        h(\lambda \mid x_1, \ldots, x_N) = \frac{1}{N!}\lambda^N e^{-\lambda(1+x_1 + \cdots + x_N)} \cdot (1 + x_1 + \cdots + x_N)^{N+1}
+    \end{align}
+    Find the conditional expectation of $R_0^{-N}$ given that $(R_1, \ldots, R_N)$ equals $(x_1, \ldots, x_N)$.
+\end{example}
+\begin{solution}
+    We can write
+    \begin{align}
+        E(R_0^{-N} \mid R_1 = x_1, \ldots, R_N = x_N) &= \int_0^\infty \lambda^{-N} h(y \mid x_1, \ldots, x_N) \dd{\lambda}\\
+        &= \int_0^\infty \frac{1}{N!}e^{-\lambda(1+x_1+\cdots+x_N)}(1+x_1+\cdots+x_N) \dd{\lambda}
+    \end{align}
+    which is an easy integral that eventually simplifies into
+    \begin{align}
+        \frac{1}{N!}(1+x_1+\cdots+x_N)^{N}
+    \end{align}
+\end{solution}
+
+\subsection{Theorem of Total Expectation}
+\begin{proposition}
+    For $R_1$ absolutely continuous and $R_2$ r.v.,
+    \begin{align}
+        E(R_2) = \int_\real E(R_2 \mid R_1 = x) f_1(x) \dd{x}
+    \end{align}
+    This formula suggests that $E(R_2 \mid R_1 = x) = E(R_2)$, which suggests that for $g(x) = E(R_2 \mid R_1 = x)$, $E(R_2) = E(g(R_1))$.
+\end{proposition}
+\begin{proof}
+    The right hand side of the equation equals
+    \begin{align}
+        \iint_{x \times y} y h(y \mid x) \dd{y} f_1(x) \dd{x}
+    \end{align}
+    This equals
+    \begin{align}
+        \iint_{x \times y} y f(x,y)/\cancel{f_1(x)} \dd{y} \cancel{f_1(x)} \dd{x}
+    \end{align}
+    which equals the left hand side.
+    \begin{align}
+        \iint_{x \times y} y f(x,y) \dd{y} \dd{x} = E(R_2)
+    \end{align}
+\end{proof}
+\begin{lemma}
+    There is a discrete version of this. Suppose $R_1$ is discrete with probability mass function $p_1(x)$. Then $E(R_2)$ equals
+    \begin{align}
+        \sum_x E(R_2 \mid R_1 = x) p_1(x)
+    \end{align}
+\end{lemma}
+\begin{example}
+    Person stuck in a mine (poor guy!). There are three doors labelled 1, 2, and 3 and one of them leads to safety. Suppose Door 1 takes 3 hours to lead to safety. Door 2 takes 5 hours and ends up at the starting point. Door 3 takes 7 hours and also ends up at the starting point. Once he gets back, he forgets which door he just picked. Every time he gets into the mine, he randomly picks a door with no memory. How long does it take to get out?
+\end{example}
+\begin{solution}
+    Set $R$ as the number of hours to get to safety. The trick is to let $S$ be the first door picked. The expectation of $R$ equals
+    \begin{align}
+        E(R) = \sum_{i \in S} E(R \mid S = i) \probability(S = i)
+    \end{align}
+    This equals
+    \begin{align}
+        E(R) &= E(R \mid S = 1) \probability(S = 1)\\\
+        &+ E(R \mid S = 2) \probability(S = 2) \notag\\
+        &+ E(R \mid S = 3) \probability(S = 3) \notag
+    \end{align}
+    This is effectively a `dynamic' programming problem where previous... adventures are the recursive relation. So this reduces to
+    \begin{align}
+        E(R) = \frac{1}{3}\left( 3 + 5 + E(R) + 7 + E(R) \right) \implies E(R) = 15
+    \end{align}
+\end{solution}
+
+\subsection{Expectation Conditional on an Event}
+We sometimes care about expectations like $E(R \mid R \in B)$ where $B \subseteq \real$.
+\begin{proposition}
+    The expectation simplifies into
+    \begin{align}
+        E(R \mid R \in B) \ce{->[indicators]} \frac{E(R I_B(R))}{\probability(R \in B)}
+    \end{align}
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}
+        \item The discrete case. Then
+            \begin{align}
+                E(R \mid R \in B) &= \sum_x x \probability(R = x \mid R \in B)\\
+                &= \sum_{x \ne 0} x \frac{\probability(R = x, R \in B)}{\probability(R \in B)}\\
+                &= \sum_{x \ne 0} x \frac{\probability\qty(R I_B(R) = x)}{\probability(R \in B)}
+            \end{align}
+            This just equals $$\frac{E(R I_B(R))}{\probability(R \in B)}$$
+        \item The absolutely continuous case, i.e. $(R_1,R_2)$ absolutely continuous with joint density $f(x,y)$. Then, the conditional distribution function equals
+            \begin{align}
+                F_R(R \le x_0 \mid R \in B)
+            \end{align}
+            That is equivalent to
+            \begin{align}
+                \frac{\probability(R \le x_0 \mid R \in B)}{\probability(R \in B)}
+            \end{align}
+            which integrates to
+            \begin{align}
+                \frac{\int_{x \in B \cap x \le x_0} f(x) \dd{x}}{\probability(R \in B)}
+            \end{align}
+            which, using indicators, becomes
+            \begin{align}
+                \frac{\int_{-\infty}^{x_0} f(x) I_B(x) \dd{x}}{\probability(R \in B)}
+            \end{align}
+            We can define the conditional density of $R$ given $R \in B$ to be
+            \begin{align}
+                f_R(x \mid R \in B) = \frac{f(x) I_B(x)}{\probability(R \in B)}
+            \end{align}
+            so naturally, $E(R \mid R \in B)$ equals
+            \begin{align}
+                \frac{\int_\real x f_R(x) I_B(x) \dd{x}}{\probability(R \in B)} = \frac{E(RI_B(R))}{\probability(R \in B)}
+            \end{align}
+    \end{enumerate}
+\end{proof}
+\begin{aside}
+    Suppose $\real = \bigcup B_i$ where $B_i$ are all disjoint. Then,
+    \begin{align}
+        E(R) = \sum_i E(R \mid R \in B_i) \probability(R \in B_i)
+    \end{align}
+    This is an alternative Theorem of Total Expectation using the fact that the $B_i$ span the entirety of $\real$. This is because $I_B(R)$ reduces into $1$ on all reals when $B \equiv \real$.
+\end{aside}
+
+\begin{example}
+    Roll a die $n$ times and define $R$ as the number of 1s. Find $E(R \mid R \ge 2)$.
+\end{example}
+\begin{solution}
+    The expectation of $R$ equals
+    \begin{align}
+        E(R) = E(R \mid R = 0) \probability(R = 0) + E(R \mid R = 1) \probability(R = 1) + \chi \probability(R \ge 2)
+    \end{align}
+    where $\chi$, the sum of the rest of the terms, is what we want to solve for.
+    \begin{align}
+        \frac{n}{6} &= 0 + E(R \mid R = 1) \probability(R = 1) + \chi\\
+        &= n \qty(\frac{5}{6})^{n-1} \qty(\frac{1}{6}) + \chi \qty(1 - \frac{5}{6}^n - n\qty(\frac{5}{6})^{n-1}\qty(\frac{1}{6}))
+    \end{align}
+    and it can be computed $E(R \mid R \ge 2)$ (i.e. $\chi$) using some algebra.
+\end{solution}

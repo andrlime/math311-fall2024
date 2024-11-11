@@ -1,0 +1,101 @@
+\section{November 8, 2024}
+
+\subsection{Characteristic Functions Recap}
+Recall $M_R(u \in \real) \equiv E(e^{-iuR})$. In the case where $R$ has density $f(x)$, then $M_R(u)$ just equals the Fourier transform $f(x) \ce{->[$\mathcal{F}$]} \hat{f}(\xi)$.\\
+
+\noindent In general, for $N_R(s \in \complex) \equiv E(e^{-sR})$. In the case where $R$ has density $f(x)$, then $N_R(s)$ just equals the Laplace transform $f(x) \ce{->[$\mathcal{L}$]} \hat{f}(\xi)$. The Laplace transform is finite when $f(x)$ is bounded by $Me^{at}$ for some constants $M$ and $a$ both above and below $x = 0$.
+
+\subsubsection{Properties of Characteristic Functions}
+Some properties were listed for Laplace transforms.
+\begin{proposition}
+    \begin{align}
+        x^\alpha e^{-ax} u(x) \ce{->[$\mathcal{L}$]} \frac{\Gamma(\alpha+1)}{(s+a)^{\alpha+1}} && \Re s > -a
+    \end{align}
+\end{proposition}
+\begin{proof}
+    This can be `proven' via
+    \begin{align}
+        \mathcal{L}_f(s)
+        &= \int_\real e^{-sx} x^{\alpha} e^{-ax} u(x) \dd{x}\\
+        &= \int_\real e^{-x(a+s)} x^{\alpha} u(x) \dd{x}\\
+        &= \int_\real \frac{y^\alpha}{(a+s)^\alpha}e^{-y} \frac{\dd{y}}{(a+s)}\\
+        &= \frac{1}{(a+s)^{\alpha+1}} \int_0^\infty y^\alpha e^{-y} \dd{y}\\
+        &= \frac{1}{(a+s)^{\alpha+1}} \Gamma(\alpha+1)
+    \end{align}
+    However, this is not entirely true because $y = (a+s)x$ as a substitution assumes $s$ is real. Due to $\mathcal{L}_f(s)$ being analytic, it suffices to evaluate this integral on a line.
+\end{proof}
+
+\subsection{Examples}
+These examples are not worth copying the solution to, but the techniques are still useful.
+\begin{enumerate}
+    \item Suppose $R_1,R_2$ are independent; $R_1$ is uniformly distributed on $[-1,1]$ and $R_2 \sim \exp(1)$. Take $R_0 = R_1 + R_2$. Find the density of $R_0$.
+    \begin{solution}
+        use characteristic functions and convolution theorem. he spent like 10 minutes doing this example by hand. it's crazy.
+    \end{solution}
+    \item Suppose $R_1,\ldots, R_N$ are independent and each are Gaussian distributed with $R_i \sim N(m_i, \sigma_i^2)$. Find the density of $R_0 = R_1 + \cdots R_N$. 
+    \begin{solution}
+        Let $R \sim N(m,\sigma^2)$. Compute $N_R(s)$, i.e. the Laplace transform of the Gaussian distribution. 
+        \begin{align}
+            N(m,\sigma^2) \ce{->[$\mathcal{L}$]} e^{-sm + \sigma^2s^2/2}
+        \end{align}
+        The answer is that the density stays normally distributed after transformation. If we have $N$ of these, then we can use the convolution theorem to find
+        \begin{align}
+            N_{R_0}(s) = e^{-s(m_1 + \cdots + m_N) + \frac{(\sigma_1^2 + \cdots + \sigma_N^2)s^2}{2}}
+        \end{align}
+        This is a normal distribution that linearly sums the means and variances of its components.
+    \end{solution}
+
+    \begin{aside}
+        For $R$ absolutely continuous, if there is an $h(x)$ such that $\mathcal{L}_h(s) = N_R(s)$ on $\Re s = a$ for some $a$, then that implies that $R$ has density $h(x)$.
+        \begin{proof}
+            Student: ``did you ever prove this?''\\
+
+            \noindent Prof: ``no but we stated it''
+        \end{proof}
+    \end{aside}
+    
+    \item Let $R \sim \text{pois}(\lambda)$. Find $N_R(\lambda)$. If $R_1, \ldots, R_N$ independennt and $R_i \sim \text{pois}(\lambda_i)$, then find $R_0 = R_1 + \cdots + R_N$
+    \begin{solution}
+        Here, we cannot integrate because the Poisson distribution is discrete. Instead, for some Poisson distribution $R$ with parameter $lambda$,
+        \begin{align}
+            N_R(s) = E(e^{-sR}) &= \sum_k e^{-sk} p_R(k)
+            &= \sum_k e^{-sk} \frac{\lambda^k e^{-\lambda}}{k!}\\
+            &= e^{-\lambda} \cdot \sum_k \frac{(\lambda e^{-s})^k}{k!}\\
+            &= e^{-\lambda} e^{e^{-s}\lambda}
+        \end{align}
+    \end{solution}
+    For $R_0 = R_1 + \cdots + R_N$, the characteristic function is the product of the components,
+    \begin{align}
+        e^{-\lambda_1} e^{e^{-s}\lambda_1} \cdots e^{-\lambda_N} e^{e^{-s}\lambda_N} 
+    \end{align}
+    which obviously simplfiies into a Poisson distribution with parameter $\lambda_1 + \cdots + \lambda_N$.
+
+    \item Take $R \sim \exp(\lambda)$. Find $N_R(s)$. Then, find $R_0 = R_1 + \cdots + R_N$.
+    \begin{solution}
+        Using the table of Laplace transforms,
+        \begin{align}
+            N_R(s) = \frac{\lambda}{s+\lambda} && \Re s > -\lambda
+        \end{align}
+        Clearly, $N_{R_0}(s)$ equals
+        \begin{align}
+            N_{R_0}(s) = \frac{\lambda^n}{(s+\lambda)^n} \implies f_{R_0}(x) = x^{n-1} e^{\lambda x} \frac{\lambda^n}{(n-1)!} u(x)
+        \end{align}
+        where $u(x)$ is the Heaviside function. This density is that of a Gamma distribution $\Gamma(\alpha = n, \beta = 1/\lambda)$.
+    \end{solution}
+
+    \begin{definition}
+        A Gama r.v. with parameters $\alpha, \beta$ has density
+        \begin{align}
+            f(x) = \begin{cases}
+                \frac{x^{\alpha-1} e^{-x/\beta}}{\Gamma(\alpha) \beta^\alpha} & x \ge 0\\
+                0 & x < 0
+            \end{cases}
+        \end{align}
+    \end{definition}
+
+\end{enumerate}
+
+
+
+
+

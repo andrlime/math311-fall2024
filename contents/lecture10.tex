@@ -22,7 +22,7 @@
     \end{align}
     Note that we do not care about $R_1 = 0$ because it has zero probability. This equals
     \begin{align}
-        \iint_{y \le x^2 z} f_{12}(x,y) \dd{x}\dd{y}
+        \iint_{y \le x^2 z} f_{12}(x,y) \dd{y}\dd{x}
     \end{align}
     We can take $z \ge 0$ because negative quotients are not possible. Then, the cases $z \in [0,1]$ and $z > 1$ are separate in evaluating this double integral.
     \begin{enumerate}
@@ -32,11 +32,11 @@
         \end{align}
         \item Take $z > 1$. Then, we are integrating
         \begin{align}
-            \int_0^{\sqrt{1/z}} x^2 z \dd{z} + \int_{\sqrt{1/z}}^1 1 \dd{z}
+            \int_0^{\sqrt{1/z}} x^2 z \dd{x} + \int_{\sqrt{1/z}}^1 1 \dd{x}
         \end{align}
         which equals
         \begin{align}
-            \int_0^{\sqrt{1/z}} x^2 z \dd{z} + \qty(1 - \sqrt{1/z})
+            \int_0^{\sqrt{1/z}} x^2 z \dd{x} + \qty(1 - \sqrt{1/z})
         \end{align}
         which trivially equals
         \begin{align}
@@ -66,7 +66,7 @@
     \begin{align}
         f(z) = \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-\mu)^2}{2\sigma^2}}
     \end{align}
-    where $\mu$ is the mean and $\sigma > 0$ is the standard deviation of a Gaussian/normal distribution.
+    where $\mu$ is the mean and $\sigma^2 > 0$ is the variance, is a Gaussian/normal distribution.
 \end{definition}
 Everybody knows what a normal distribution, its mean, and its standard deviation are.
 

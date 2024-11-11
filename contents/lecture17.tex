@@ -1,0 +1,141 @@
+\section{November 1, 2024}
+This lecture is in a discrete $\varepsilon$-neighborhood of the set of all lectures contained on Midterm 2.
+
+\subsection{Conditional Probabilities}
+Recall the conditional probability for $R_1,R_2$ r.v.
+\begin{align}
+    \probability(R_2 = y \mid R_1 = x) = \frac{\probability(R_1 = x \cap R_2 = y)}{\probability(R_1 = x)}
+\end{align}
+assuming that $\probability(R_1 = x) \ne 0$. This can be worked into the language of (discrete) probability mass functions:
+\begin{align}
+    p(x,y) &= \probability(R_1 = x, R_2 = y)\\
+    p_1(x) &= \probability(R_1 = x) = \sum_y p(x,y)
+\end{align}
+This yields the Theorem of Total Probability, stated in a previous section, that states that
+\begin{align}
+    \probability(R_2 \in B) = \sum_{x} \probability(R_2 \in B \mid R_1 = x) p_1(x)
+\end{align}
+which generalizes many statements from before. This also equals, for absolutely continuous r.v. $R_1,R_2$ with joint density $f(x,y)$,
+\begin{align}
+    h(y \mid x) = \frac{f(x,y)}{f_1(x)} \qsp f_1(x) = \int_\real f(x,y) \dd{y} %= f_{R_2 \mid R_1}(y \mid x)
+\end{align}
+which is the \textit{conditional density of $R_2$ given $R_1$}. For this case, the Theorem of Total Probability is
+\begin{align}
+    \probability(R_2 \in B) = \int_\real \probability(R_2 \in B \mid R_1 = x) f_1(x) \dd{x}
+\end{align}
+
+\subsubsection{Conditional Distribution Function}
+The conditional distribution may be given by
+\begin{align*}
+    F_{R_2 \mid R_1}(y_0 \mid x) = \probability(R_2 \le y_0 \mid R_1 = x) = \int_{-\infty}^{y_0} h(y \mid x) \dd{y} \qsp \text{$x$ constant}
+\end{align*}
+
+\subsubsection{Examples}
+\begin{enumerate}
+    \item $(R_1,R_2)$ has joint density
+    \begin{align}
+        f(x,y) = \begin{cases}
+            e^{-y/x - x}/x & 0 < x,y < \infty\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Find $\probability(R_2 > 1 \mid R_1 = x) = \int_1^\infty h(y \mid x) \dd{y}$.
+    \begin{solution}
+        To find $h$,
+        \begin{align}
+            h(y \mid x) = \frac{f(x,y)}{\int_\real f(x,y) \dd{y}} = \cdots = e^{-y/x}/x
+        \end{align}
+        Then, $\probability(R_2 > 1 \mid R_1 = x) = \int_1^\infty h(y \mid x) \dd{y}$, which equals
+        \begin{align}
+            \probability(R_2 > 1 \mid R_1 = x) = \int_1^\infty e^{-y/x}/x \dd{x} = \cdots = e^{\qty(-\frac{1}{x})}
+        \end{align}
+    \end{solution}
+    \item $R_1$ is the outcome $n$ of rolling a fair, six-sided dice. Given $R_1 = n$, define $R_2 \sim \exp(n)$, i.e. has density
+    \begin{align}
+        f_2(y) = \begin{cases}
+            n \cdot e^{-n x} & x \ge 0\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Find $\probability(R_2 \le y)$.
+    \begin{solution}
+        Using the Theorem of Total Probability, we get
+        \begin{align}
+            F_2(y) = \probability(R_2 \le y_0) = \sum_x \probability(R_2 \le y_0 \mid R_1 = x) \probability(R_1 = x)
+        \end{align}
+        for $x \in \{ 1, 2, \ldots, 6 \}$. So we have
+        \begin{align}
+            F_2(y_0) = \probability(R_2 \le y_0) &= \frac{1}{6} \sum_{n=1}^6 \probability(R_2 \le y_0 \mid R_1 = n)\\
+            &= \frac{1}{6} \sum_{n=1}^6 \int_{-\infty}^{y_0} n e^{-n y} \dd{y}\\
+            F_2(y) &= \frac{1}{6} \sum_{n=1}^6 \qty( 1 - e^{-ny} )
+        \end{align}
+        The density is just the derivative, i.e. $f_2(y) = \dv{y} F_2(y)$.
+    \end{solution}
+\end{enumerate}
+
+\subsection{Conditional Expectation}
+Recall that if $R$ is an absolutely continuous random variable with density $f(x)$, then the expectation of $R$ is
+\begin{align}
+    E(R) = \int_\real x f(x) \dd{x} \qsp E(g(R)) = \int_\real g(x) f(x) \dd{x}
+\end{align}
+\begin{definition}
+    The conditional expectation of $R_2$ \textit{given} $R_1 = x$ is
+    \begin{align}
+        E(R_2 \mid R_1 = x) = \int_\real y h(y \mid x) \dd{y}
+    \end{align}
+    where $h(y \mid x)$ is the conditional density of $R_2$ given $R_1$.
+\end{definition}
+The same thing applies to the conditional expectation of a function on $R_2$, where
+\begin{align}
+    E(g(R_2) \mid R_1 = x) = \int_\real g(y) h(y \mid x) \dd{y}
+\end{align}
+Now, suppose $R$ is discrete; then, replace the integral by a sum:
+\begin{align}
+    E(R_2 \mid R_1 = x) &= \sum_y y p(y \mid x)\\
+    E(g(R_2) \mid R_1 = x) &= \sum_y g(y) p(y \mid x)
+\end{align}
+\begin{example}
+    Take $R_1 \sim \exp(1)$. Given $R_1 = x$, let $R_2$ be uniformly distributed on $[0,x]$. Find $E(R_2 \mid R_1 = x)$ and $E(R_2^4 \mid R_1 = x)$.
+\end{example}
+\begin{solution}
+    \begin{align}
+        h(y \mid x) = \begin{cases}
+            1/x & 0 \le y \le x\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Then, $E(R_2 \mid R_1 = x) = \int_\real y h(y \mid x) \dd{y} = \cdots = \frac{x}{2}$. For $R_2^4$, a similar process yields $\frac{x^4}{5}$. 
+\end{solution}
+
+\begin{example}
+    A die is tossed $n$ times. Let $R_1$ be the number of $1$, and $R_2$ be the number of $2$. Find $E(R_2 \mid R_1 = k)$. This equals
+    \begin{align}
+        E(R_2 \mid R_1 = k) = \sum_y y \cdot p(y \mid k)
+    \end{align}
+\end{example}
+\begin{solution}
+    \begin{align}
+        \probability(R_2 = l \mid R_1 = k) = \frac{\probability(R_2 = l \cap R_1 = k)}{\probability(R_1 = k)}
+    \end{align}
+    This is a multinomial distribution. Somewhere on the previous pages gives a formula for this. We get
+    \begin{align}
+        \probability(\cdots) &= \dfrac{\frac{n!}{k!l!(n-k-l)!}\qty(\frac{1}{6})^k \qty(\frac{1}{6})^l \qty(\frac{4}{6})^{n-k-l}}{\binom{n}{k} \cdot \qty(\frac{1}{6})^k \cdot \qty(\frac{5}{6})^{n-k}}\\
+        &= \frac{(n-k)!}{l!(n-k-l)!)} \qty(\frac{1}{6})^l \qty(\frac{4}{6})^{n-k-l} \qty(\frac{6}{5})^{n-k}
+    \end{align}
+    Then, the total probability equals
+    \begin{align}
+        \sum_{k=0}^{n-k} l \cdot \probability(\cdots)
+    \end{align}
+    which can be summed if enough time is spent.
+\end{solution}
+
+\begin{proof}[An easier way]
+    If $k$ rolls are $1$, then $n-k$ rolls are not $1$. Then, the probability of getting $l$ rolls that are $2$ in these $n-k$ rolls is
+    \begin{align}
+        \binom{n-k}{l} \qty(\frac{1}{5})^l \qty(\frac{4}{5})^{n-k-l}
+    \end{align}
+    It turns out that these are the same.
+\end{proof}
+
+The expectation of this binomial distribution is $np$, where $n$ is the number of rolls and $p$ is the probability of success. In this case, given $k$ rolls that are $1$, this means the expectation is $(n-k) \cdot \frac{1}{5}$.
+

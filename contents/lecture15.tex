@@ -3,6 +3,7 @@
 \subsection{Chebyshev's Inequality}
 Stating this theorem is harder than proving it.
 \begin{theorem}
+    \textbf{Chebyshev's Inequality}
     \begin{enumerate}
         \item[a.] $R \ge 0$ r.v.; $b > 0$ random number
         \begin{align}
@@ -51,7 +52,7 @@ where $A_b \equiv \{ R \ge b \} \subset \Omega$. Recall that $I$ is the indicato
         0 & \omega \notin A_b
     \end{cases}
 \end{align}
-To prove this, let $\omega \in \Omega$. We want $R(\omega) \ge b I_{A_b}(\omega)$. We can plsplit into cases
+To prove this, let $\omega \in \Omega$. We want $R(\omega) \ge b I_{A_b}(\omega)$. We can split into cases
 \begin{enumerate}
     \item Case 1: $\omega \notin A_b$. Then, we want to show that $R(\omega) \ge 0$, which is true by assumption that $R \ge 0$.
     \item Case 2: $\omega \in A_b$. Then $b I_{A_b}(\omega) = b$. We need to show that $R(\omega) \ge b$. This is true by how $A_b$ is defined, i.e. as $\{ R \ge b \}$.
@@ -72,7 +73,7 @@ This follows from $A$. The probability
 \begin{align}
     \probability(\abs{R-c} \ge \varepsilon) = \probability(\abs{R-c}^l \ge \varepsilon^l)
 \end{align}
-Then we apply (a) where $\abs{R - c}$ is our new, non-negative random variable. Thus,
+Then we apply (a) where $\abs{R - c}^l$ is our new, non-negative random variable and $\varepsilon^l$ is our number. Thus,
 \begin{align}
     \probability(\abs{R-c}^l \ge \varepsilon^l) \le \frac{E\qty(\abs{R-c}^l)}{\varepsilon^l}
 \end{align}
@@ -86,7 +87,7 @@ The probability $\probability(\abs{R-m} \ge k\sigma)$, by (b),
 \qed
 
 \begin{aside}
-    This is not a very sharp inequality. Take $R \sim \exp{1}$ (mean and variance are both $1$). By (c), (assume $k$ large)
+    This is not a very sharp inequality. Take $R \sim \exp(1)$ (mean and variance are both $1$). By (c), (assume $k$ large)
     \begin{align}
         \probability(\abs{R-m} \ge k\sigma) \le 1/k^2
     \end{align}

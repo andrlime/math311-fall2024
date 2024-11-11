@@ -1,0 +1,143 @@
+\section{November 6, 2024}
+
+
+\subsection{Complex Space}
+
+\subsubsection{Complex Valued Random Variables}
+Take $\psp$ as some probability space. We say that a complex valued function
+\begin{align}
+    T: \Omega \to \complex
+\end{align}
+is a random variable if both $\Re(T)$ and $\Im(T)$ are `normal' (real) random variables. Specifically,
+\begin{align}
+    T = \Re(T) + i\Im(T)
+\end{align}
+where $\Re(T): \Omega \to \real$ and $\Im(T): \Omega \to \real$. Then, the expectation of $T$ equals
+\begin{align}
+    E(T) = E(\Re T) + iE(\Im T)
+\end{align}
+
+\subsubsection{Characteristic Functions}
+Take $R$ as a r.v. Its characteristic function is some map
+\begin{align}
+    M_R : \real \to \complex
+\end{align}
+given by $M(u \in \real) = E\qty(e^{-iuR})$ where $R$ is some random variable, and $M$ is some function of a random variable that just so happens to be complex valued.
+
+\begin{proposition}
+    If $R$ is absolutely continuous with density $f_R(x)$, then
+    \begin{align}
+        M(u) = \int_{-\infty}^\infty e^{-iux} f_R(x) \dd{x}
+    \end{align}
+    \textbf{Interestingly, this is just the Fourier Transform of $f_R$. (note that this is well defined because it absolutely converges)}
+\end{proposition}
+
+\subsubsection{Generalized Characteristic Function}
+The generalized characteristic function $N_R(s \in \complex)$ is given by
+\begin{align}
+    N_R(s) = E(e^{-sR}) \ce{->[if $R$ abs cont][density $f_R(x)$]} \int_{-\infty}^\infty e^{-sx} f_R(x) \dd{x}
+\end{align}
+This is not necessarily well-defined in general. In the case where $s = iu$, then $N_R(s) = N_R(iu) = \cdots = M_R(u)$. \textbf{In general, this is the (2-sided) Laplace transform of $f_R(x)$.}
+
+\begin{lemma}
+    Suppose $R$ is uniformly distributed on $[-1,1]$. Then, $N_R(s) = \int_\real e^{-sx} f_R(x) \dd{x}$. After some integration this becomes
+    \begin{align}
+        N_R(s) = \frac{1}{2s}(e^s - e^{-s})
+    \end{align}
+    It can be shown that $N_R(0) = 1$. This is \textit{always true} because $\int_\real f_R(x) \cdot 1 \dd{x} \equiv 1$.
+\end{lemma}
+
+\begin{example}
+    Take the exponential function $R \sim \exp(1)$. Then,
+    \begin{align}
+        N_R(s) = \mathcal{L}(e^{-x}) = \frac{1}{s+1} && \Re(s+1) > 0
+    \end{align}
+\end{example}
+
+\subsubsection{Laplace Transform Aside}
+\begin{aside}
+    The 2-sided Laplace transform $\mathcal{L}_2$ is on $(-\infty,\infty)$ whereas the `normal' Laplace transform is on $[0,\infty)$.
+\end{aside}
+\begin{theorem}
+    \textbf{Sums of random variables correspond to products of characteristic functions.} Take $R_1, \ldots, R_N$ as independent random variables with $N_{R_i}(s)$ finite for all $i$. Define
+    \begin{align}
+       R_0 = \sum_i R_i
+    \end{align}
+    Then, $N_{R_0}(s)$ is finite and equals
+    \begin{align}
+        N_{R_0}(s) = \prod_i N_{R_i}(s)
+    \end{align}
+    and for $s = iu$, this applies to $M_R(u)$ as well.
+\end{theorem}
+\begin{proof}
+    $N_{R_0}$ is equal to $E(e^{-sR_0})$. This factors into $E(e^{-sR_1} \cdots e^{-sR_N})$ which, by independence, yields
+    \begin{align}
+        N_{R_0} = N_{R_1} \cdots N_{R_N}
+    \end{align}
+\end{proof}
+
+\begin{example}
+    Suppose $R_1,R_2$ independent. Let $R_1$ be uniformly distributed on $[-1,1]$ and $R_2 \sim \exp(1)$. Set $R_0 = R_1 + R_2$. We can compute the generalized characteristic functions.
+    \begin{align}
+        N_{R_0}(s) = N_{R_1}(s)\cdot N_{R_2}(s) = \frac{1}{2s}\qty(e^s - e^{-s}) + \frac{1}{s+1}
+    \end{align}
+    How would we find $R_0$ then? By taking the inverse Laplace transform of $N_{R_0}$. Taking this inverse may require use of the Residue Theorem.
+\end{example}
+
+\begin{theorem}
+    Suppose $R$ is absolutely continuous and $N_R(s)$ is given by $\int_{-\infty}^\infty e^{-sx} h(x) \dd{x}$ for some piecewise continuous $h(x)$ for $\{ s \mid \Re(s) = a\}$ on some $a$. Then, $R$ has density
+    \begin{align}
+        f_R(x) = h(x)
+    \end{align}
+    (if a function $h(x)$ whose Laplace transform is $N_R(s)$ can be found on some $s$ for which $\Re(s) = a$, then that function is the inverse Laplace transform of $N_R(s)$)
+\end{theorem}
+
+\subsubsection{Laplace Transform Properties}
+Set $\mathcal{L}_f(s) = \int_\real e^{-sx} f(x) \dd{x}$ for general $f: \mathcal{F}$ (any function; not necessarily a density) as the Laplace transform of $f$.
+\begin{aside}
+    Take $f \equiv 1$. Then $\mathcal{L}_f(s) = \eval{\frac{-e^{-sx}}{s}}_{-\infty}^\infty$. This is not necessarily defined for \textit{any} $s \in \complex$.
+\end{aside}
+\begin{lemma}
+    If $\abs{f(t)}$ is bounded by some constant $M_1 e^{a_1t}$ for $t \ge 0$ and $f(t) \le M_2 e^{a_2 t}$ for $t \le 0$, then $\mathcal{L}_f(s)$ is finite f, then $\mathcal{L}_f(s)$ is finite for $a_1 < \Re(s) < a_2$.
+\end{lemma}
+\begin{proof}
+    The absolute Laplace transform is given by
+    \begin{align}
+        \int_{-\infty}^\infty \abs{e^{-sx} f(x)} \dd{x}
+    \end{align}
+    which can be split into
+    \begin{align}
+        & \int_{0}^\infty e^{-\Re(s)x} \abs{f(x)} \dd{x} + \int_{-\infty}^0 e^{-\Re(s)x} \abs{f(x)} \dd{x}\\
+        \le & \int_0^\infty M_1 e^{-\Re(s) + a_1}t \dd{t} + \int_{-\infty}^0 M_2 e^{-\Re(s) + a_2}t \dd{t}
+    \end{align}
+    which only holds on $t \in (a_1,a_2)$.
+\end{proof}
+
+\begin{enumerate}
+    \item it's linear
+    \item $f(x - a) \ce{->[$\mathcal{L}_f$]} e^{-sa} \mathcal{L}_f(s)$
+    \begin{proof}
+        highly trivial
+    \end{proof}
+    \item $f(-x) \ce{->[$\mathcal{L}_f$]} \mathcal{L}_f(-s)$
+    \begin{proof}
+        again... trivial
+    \end{proof}
+    \item $e^{-ax} f(x) \ce{->[$\mathcal{L}_f$]} \mathcal{L}_f(s+a)$
+    \begin{proof}
+        obvious
+    \end{proof}
+    \item Heaviside function
+    \begin{align}
+        u(x) = \begin{cases}
+            1 & x \ge 0\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    Then, $\mathcal{L}_u(s) = 1/s$ for $\Re(s) > 0$.
+    \begin{proof}
+        not as \textit{trivial}, but still easy
+    \end{proof}
+\end{enumerate}
+
+
