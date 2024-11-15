@@ -1,0 +1,198 @@
+\section{November 15, 2024}
+
+\subsection{Convergence (cont)}
+Recap. Random variables $R_n \ce{->[$\probability$]} R$ converge in probability means that for all $\varepsilon > 0$, $\probability(\abs{R_n - R} \ge \varepsilon) \ce{->[$n \to \infty$]} 0$. Random variables $R_n \ce{->[$d$]} R$ converge in distribution means that $F_{R_n}(x) \to F_{R}(x)$ as $n \to \infty$ for all $x$ where $F_R$ is continuous.
+
+\begin{proposition}
+    If a sequence of r.v. converges in probability, then it also converges in distribution.
+    \begin{align}
+        R_n \ce{->[$\probability$]} R \implies R_n \ce{->[$d$]} R
+    \end{align}
+\end{proposition}
+\begin{proof}
+    Claim. For $\varepsilon > 0$,
+    \begin{align}
+        F_R(x - \varepsilon) - \probability(\abs{R_n - R} \ge \varepsilon) \le F_{R_n}(x) \le F_R(x + \varepsilon) + \probability(\abs{R_n - R} \ge \varepsilon)
+    \end{align}
+    Then, as $n \to \infty$,
+    \begin{align}
+        F_R(x - \varepsilon) \le \lim_{n\to\infty} F_{R_n}(x) \le F_R(x + \varepsilon) && \varepsilon > 0
+    \end{align}
+    If $F_R(x)$ is continuous at $x$, then as $\varepsilon \to 0$, this implies $F_R(x \pm \varepsilon) \to \lim_{n\to\infty} F_{R_n}(x)$, which implies
+    \begin{align}
+        F_R(x) \le \lim_{n\to \infty} F_{R_n}(x) \le F_R(x)
+    \end{align}
+    which implies that $R_n \ce{->[$d$]} R$ for points where $F_R$ is continuous.
+    \begin{proof}[Proof of Claim]
+        First,
+        \begin{align}
+            F_{R_n}(x) &= \probability(R_n \le x)\\
+            &= \probability(R_n \le x \cap R - R_n < \varepsilon) + \probability(R_n \le x \cap R_n - R \ge \varepsilon)
+        \end{align}
+        Notably, this is less than or equal to
+        \begin{align}
+            F_{R_n}(x) &\le \probability(R \le x + \varepsilon) + \probability(\abs{R_n - R} \ge \varepsilon)\\
+            = F_R(x + \varepsilon) + \probability(\abs{R_n - R} \ge \varepsilon)
+        \end{align}
+        Similarly,
+        \begin{align}
+            F_R(x - \varepsilon) &= \probability(R \le x - \varepsilon)\\
+            &= \probability(R \le x - \varepsilon \cap R - R_n < \varepsilon) + \probability(R \le x - \varepsilon \cap R_n - R \le \varepsilon)\\
+            &\le \probability(R_n \le x) + \probability(\abs{R_n - R} \ge \varepsilon)\\
+            F_{R_n}(x) &\le F_R(x - \varepsilon) - \probability(\abs{R_n - R} \ge \varepsilon)
+        \end{align}
+        which constructs the inequality
+        \begin{align}
+            F_R(x - \varepsilon) - \probability(\abs{R_n - R} \ge \varepsilon) \le F_{R_n}(x) \le F_R(x + \varepsilon) + \probability(\abs{R_n - R} \ge \varepsilon)
+        \end{align}
+    \end{proof}
+\end{proof}
+
+\begin{lemma}
+    The converse of this is not true, i.e. convergence in distribution does not imply convergence in probabiliity.
+\end{lemma}
+
+As a silly example,
+\begin{example}
+    Take $R_n$ as the number of heads when a coin is flipped once. Let $R$ be the same. Let $R_i$ all be independent.
+\end{example}
+\begin{solution}
+    \begin{align}
+        F_{R_n}(x) = \begin{cases}
+            1 & x \ge 1\\
+            1/2 & x \in [0,1)\\
+            0 & \text{else}
+        \end{cases}
+    \end{align}
+    This obviously converges to $F_R(x)$. However, the probabilities do not converge for all $\varepsilon > 0$. Take $0 < \varepsilon < 1$. Then,
+    \begin{align}
+        \probability(\abs{R_n - R} \ge \varepsilon = 1/2) = 1/2 \ne 0
+    \end{align}
+    which does not tend to zero as $n\to\infty$.
+\end{solution}
+
+Convergence in probability has a rather strange aspect that a random variable doesn't converge to itself.
+
+\begin{lemma}
+    $R_n \ce{->[$d$]} R$ is not the same as $R_n - R \ce{->[$d$]} 0$.
+    \begin{proof}
+        This is an example of $R_n$ converging to $R$ in distribution. However, $R_n - R \ne 0$, as it is not effectively zero (has non-zero density elsewhere).
+    \end{proof}
+\end{lemma}
+
+
+\subsection{A Theorem to State but Not Prove}
+\begin{theorem}
+    \begin{align}
+        R_n \ce{->[$d$]} R \iff \forall u \in \real, M_{R_n}(u) \to M_R(u)
+    \end{align}
+    \begin{proof}
+        This was not proven.
+    \end{proof}
+\end{theorem}
+
+\subsection{Central Limit Theorem}
+\begin{theorem}
+    \textbf{(Central Limit Theorem)} Let $R_1, R_2, \ldots$ be i.i.d (and absolutely continuous) random variables with mean $m$, finite variance $\sigma^2$, (and finite $E(\abs{R}^3) < \infty$) (the last condition is not strictly necessary but is used in this proof?). Define the r.v.
+    \begin{align}
+        T_n \equiv \frac{1}{\sigma \sqrt{n}} \qty(\sum_{i=1}^n R_i - nm)
+    \end{align}
+    Then,
+    \begin{align}
+        T_n \ce{->[$d$]} N(0,1)
+    \end{align}
+    $T_n$ converges to the normal distribution with mean $0$ and variance $1$.
+\end{theorem}
+
+\begin{aside}
+    Some remarks.
+    \begin{enumerate}
+        \item The first moment for $T_n$ equals
+        \begin{align}
+            E(T_n) = \frac{1}{\sigma \sqrt{n}} \qty(n E(R_i) - nm) = 0
+        \end{align}
+        \item The variance for $T_n$ equals
+        \begin{align}
+            \frac{1}{n\sigma^2} \qty(n \sigma^2 - 0) = 1
+        \end{align}
+    \end{enumerate}
+    This suggests that $T_n$ necessarily has mean and variance of $0$ and $1$, and \textit{converge to a normal distribution}.
+\end{aside}
+
+\begin{example}
+    Flip a coin many times. Let $R_i$ be the number of heads in the $i$-th pair of even flips (e.g. 1 is first 2, 2 is next 2, etc.)
+\end{example}
+\begin{solution}
+    We would expect $E(R_i) = 1$. The weak law of large numbers says that
+    \begin{align}
+        \frac{1}{n} \sum_{i=1}^n R_i - 1 \ce{->[$\probability$][n \to \infty]} 0
+    \end{align}
+    The density as $n \to \infty$ approaches $\delta(x - 1)$. The central limit theorem tells us that this distribution is, in fact, a normal distribution. 
+\end{solution}
+
+\subsubsection{Proof}
+\begin{proof}
+
+It suffices to show that the characteristic function of $T_n$ converges to the characteristic function of $N(0,1)$, i.e.
+\begin{align}
+    M_{T_n}(u) \ce{->[$n \to \infty$]} M_{N(0,1)}(u) \equiv e^{-u^2/2} && \forall u
+\end{align}
+Assume WLOG that $E(R_n) = 0$. Then,
+\begin{align}
+    M_{T_n}(u) &= E\qty(\exp\qty(-\frac{iu}{\sigma \sqrt{n}}\sum_{j=1}^n R_j)) 
+    = \prod_{j=1}^n E\qty(\exp\qty(-\frac{iuR_j}{\sigma \sqrt{n}})) \\
+    &= \qty[M_{R_1}\qty(\frac{u}{\sigma\sqrt{n}})]^n
+\end{align}
+$M_{R_1}$ thus must be computed.
+\begin{align}
+    M_{R_1}\qty(\frac{u}{\sigma\sqrt{n}}) = \int_{-\infty}^\infty e^{-\frac{iu}{\sigma\sqrt{n}}x} f(x) \dd{x}
+\end{align}
+Now we do a Taylor Expansion.
+\begin{aside}
+    \textbf{(Taylor Expansions)} For $z \in \complex$,
+    \begin{align}
+        e^z = 1 + z + \frac{z^2}{2} + O\qty(\abs{z}^3)
+    \end{align}
+    \begin{aside}
+        $g(x) = O(f(x))$ means $g(x)$ is on the order of $f(x)$, i.e. there exists some $C$ such that
+        \begin{align}
+            \abs{g(x)} \le C \abs{f(x)}
+        \end{align}
+    \end{aside}
+\end{aside}
+Thus, the integral from above equals
+\begin{align*}
+    M_{R_1}\qty(\frac{u}{\sigma\sqrt{n}}) &= \int_{-\infty}^\infty \qty[1 - \frac{iux}{\sigma\sqrt{n}} + \frac{1}{2}\qty(\frac{iux}{\sigma\sqrt{n}})^2 + O\qty(\left| \frac{-iux}{\sigma\sqrt{n}} \right|^3)] f(x) \dd{x}\\
+    &= 1 - \frac{iu}{\sigma\sqrt{n}} E(R_1) - \int_\real \frac{1}{2} \frac{u^2x^2}{n\sigma^2} f(x) \dd{x} + \int_\real O\qty(\frac{\abs{u}^3\abs{x}^3}{n^{3/2}\sigma^3}) f(x) \dd{x}\\
+    &= 1 - 0 - \frac{u^2}{2n\sigma^2}\sigma^2 + O\qty(\frac{\abs{u}^3}{n^{3/2}})E(R^3)
+\end{align*}
+As $n \to \infty$, we can take the log:
+\begin{align}
+    \log\qty(M_{R_1}\qty(\frac{u}{\sigma \sqrt{n}}))^n
+\end{align}
+which equals
+\begin{align}
+    n\log\qty(1 - \frac{u^2}{2n} + O\qty(\frac{\abs{u}^3}{n^{3/2}}))
+\end{align}
+which equals, because $\log(1 + z) = z + O(\abs{z}^2)$,
+\begin{align}
+    n \qty(-\frac{1}{2}\frac{u^2}{n} + O(1/n^{3/2}))
+\end{align}
+    which as $n \to \infty$, tends to, because $E(R^3)$ is bounded,
+\begin{align}
+    -\frac{1}{2}u^2 + 0
+\end{align}
+Recall that this is logarithmic. When we exponentiate both sides,
+\begin{align}
+    \qty(M_{R_1})^n \to e^{-u^2/2}
+\end{align}
+
+\end{proof}
+
+
+
+
+
+
+
+

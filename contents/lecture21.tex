@@ -1,0 +1,130 @@
+\section{November 13, 2024}
+
+\subsection{MORE Properties of Characteristic Functions}
+Recap. What are characteristic functions? Given $R$ r.v.,
+\begin{definition}
+    The characteristic function of $R$, $M_R(u)$, equals
+    \begin{align}
+        M_R(u) = E(e^{-iuR}) = \int_\real e^{-iux} f(x) \dd{x} = \mathcal{F}_R(u)
+    \end{align}
+    for $u \in \real$. The generalized characteristic of $R$, $N_R(u)$, equals
+    \begin{align}
+        N_R(s) = E(e^{-sR}) = \int_\real e^{-sx} f(x) \dd{x} = \mathcal{L}_R(u)
+    \end{align}
+    for $s \in \complex$ (does not exist for all $s \in \complex$). Note that $N_R(iu) = M_R(u)$.
+\end{definition}
+More properties...
+\begin{enumerate}
+    \item $N_R(0) = M_R(0) = E(e^0) = 1$
+    \item $\abs{M_R(u)} \le 1$ for all $u \in \real$.
+    \begin{proof}
+        In the case that $R$ has density $f_R(x)$,
+        \begin{align}
+            \abs{M_R(u)} = \abs{\int_\real e^{-iux} f(x) \dd{x}}
+        \end{align}
+        which is in general a complex number. This is bounded by
+        \begin{align}
+            \abs{\int_\real \ldots} &\le \int_\real \abs{e^{-iux} f_R(x)} \dd{x}\\
+            &\le \int_\real \abs{f_R(x)} \dd{x}
+        \end{align}
+        but because $f_R$ is a density, this integrates to $1$.
+    \end{proof}
+    \item If $R$ has density $f$ and $f$ is an even function, then
+    \begin{align}
+        M_R(u) \in \real
+    \end{align}
+    the characteristic function is necessarily real valued.
+    \begin{proof}
+        Clearly,
+        \begin{align}
+            M_R(u) &= \int_{-\infty}^\infty e^{-iux} f(x) \dd{x}\\
+            &= \int_{-\infty}^\infty \qty[\cos(-ux) + i\sin(-ux)] f(x) \dd{x}\\
+            &= \int_{-\infty}^\infty \qty[\cos(ux) - i\sin(ux)] f(x) \dd{x}
+        \end{align}
+        Since $\sin(ux)$ is an odd function, this means that $\Im(M_R(u)) \equiv 0$, so
+        \begin{align}
+            M_R(u) = \int_\real \cos(ux) f(x) \dd{x} \in \real
+        \end{align}
+    \end{proof}
+    \item If $R$ is a discrete r.v. on $\integer$, then $M_R$ is periodic with period $2\pi$, i.e. $M_R(u + 2\pi) = M_R(u)$.
+    \begin{proof}
+        \begin{align}
+            M_R(u) = E(e^{-iuR}) = \sum_{x \in R} e^{-iux} \probability(R = x)
+        \end{align}
+        If $R$ takes only integral values, then $M_R(u + 2\pi)$ equals
+        \begin{align}
+            M_R(u + 2\pi) = \sum_{x \in R} e^{-iux} e^{2\pi i u} p_x
+        \end{align}
+        Since $u \in \integer$, this becomes
+        \begin{align}
+            M_R(u + 2\pi) = \sum_{x \in R} e^{-iux} p_x = M_R(u)
+        \end{align}
+    \end{proof}
+    \begin{aside}
+        For $R$ discrete r.v., the coefficients $p_n$ are the Fourier coefficients of the function $M_R(u)$.
+        \begin{align}
+            p_n = \frac{1}{2\pi} \int_0^{2\pi} e^{iun} M_R(u) \dd{u}
+        \end{align}
+    \end{aside}
+    \item \textbf{Moment Generating Property} If $N_R$ is analytic in a ball around $0$ of radius $\varepsilon > 0$, then the generalized characteristic function can be written as
+    \begin{align}
+        N_R(s) = \sum_{k=0}^\infty \frac{(-1)^k}{k!} \underbracket{E(R^k)}_{\text{$k$-th moment}} s^K
+    \end{align}
+    This tells us that once we compute the characteristic function, we can read off the $k$-th moments.
+    \begin{proof}[Sketch of Proof]
+        For the case where $R$ has density $f(x)$,
+        \begin{align}
+            N_R(s)
+            &= \int_\real e^{-sx} f(x) \dd{x} = \int_\real \qty[\sum_k \frac{(-1 \cdot s \cdot x)^k}{k!}] f(x) \dd{x}\\
+            &= \sum_k \int_\real \qty(\frac{(-1)^k x^k}{k!} f(x) \dd{x}) s^k\\
+            &= \sum_k \frac{(-1)^k}{k!} E(R^k) s^k & \qedhere
+        \end{align}
+    \end{proof}
+    \begin{example}
+        If $R \sim N(0,1)$, then $N_R(s) = e^{-s^2/2}$. Use this to find $E(R^k)$ for all $k$.
+    \end{example}
+    \begin{solution}
+        \begin{align}
+            N_R(s) = e^{-s^2/2} = \sum_\lambda \frac{s^{2\lambda}}{2^\lambda \lambda!} \leftrightarrow \sum_k \frac{(-1)^k}{k!} E(R^k) s^k
+        \end{align}
+        This has odd moments equal to zero because $s^{2\lambda}$ does not include odd exponents. So
+        \begin{align}
+            \sum_\lambda \frac{E(R^{2\lambda}}{(2\lambda)!}s^{2\lambda}
+        \end{align}
+        Then this converts into
+        \begin{align}
+            \frac{E(R^{2\lambda})}{(2\lambda)!} = \frac{1}{2^\lambda \lambda!} \implies \boxed{E(R^{2k}) = \frac{(2k)!}{2^{k}k!}}
+        \end{align}
+    \end{solution}
+    \begin{aside}
+        If $\sum_k a_k s^k = \sum_k b_k s^k$ for all $s$ in an open set of $\complex$, then $a_k = b_k$.
+    \end{aside}
+    (The core lemmas behind this, from complex analysis, were assumed)
+\end{enumerate}
+
+\subsection{Notions of Convergence of Random Variables}
+\begin{definition}
+    Let $R_1, \ldots$ be random variables on the same probability space. We say that $R_n \ce{->[$\probability$]} R$ ($R_n$ converges to $R$ in probability) if for all $\varepsilon > 0$,
+    \begin{align}
+        \probability(R_n - R > \varepsilon) \ce{->[$n \to \infty$]} 0
+    \end{align}
+\end{definition}
+This connects back to the Weak Law of Large Numbers.
+\begin{definition}
+    Let $R_1, \ldots$ be random variables on the same probability space. We say that $R_n \ce{->[$d$]} R$ (convergence in distribution) if $F_{R_n}(x) \to F_R(x)$ for all points $x$ at which these functions are continuous.
+\end{definition}
+
+\begin{example}
+    Suppose $R_n \sim \exp(n)$ are independent. Show that (i) $R_n \ce{->[$p$]} 0$ and (ii) $R_n \ce{->[$d$]} 0$.
+\end{example}
+\begin{solution}
+    \begin{enumerate}
+        \item[(i)] Let $\varepsilon > 0$. Trivially,
+        \begin{align}
+            \probability(R_n \ge \varepsilon) = \int_\varepsilon^\infty f_{R_n}(x) \dd{x} \ce{->[$n \to \infty$]} 0
+        \end{align}
+        \item[(ii)] Let $x \ge 0$. Obviously, $F_{R_n}(x) = 1 - e^{-nx}$. For $x > 0$, as $n \to \infty$, $F_{R_n}(x) \to 1$. For $x \le 0$, $F_{R_n}(x) \to 0$. This suggests that the distribution approaches the Heaviside function, and the density approaches $\delta(x)$, i.e. only has density at $x = 0$. Thus, as $n \to \infty$, $R_n$ converges to effectively zero. This also shows that $F_{R_n}(x) \to F_R(x)$ on all $x$ where there is continuity.
+    \end{enumerate}
+\end{solution}
+
+
