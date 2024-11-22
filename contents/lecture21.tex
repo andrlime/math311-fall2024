@@ -106,7 +106,7 @@ More properties...
 \begin{definition}
     Let $R_1, \ldots$ be random variables on the same probability space. We say that $R_n \ce{->[$\probability$]} R$ ($R_n$ converges to $R$ in probability) if for all $\varepsilon > 0$,
     \begin{align}
-        \probability(R_n - R > \varepsilon) \ce{->[$n \to \infty$]} 0
+        \probability(\abs{R_n - R} \ge \varepsilon) \ce{->[$n \to \infty$]} 0
     \end{align}
 \end{definition}
 This connects back to the Weak Law of Large Numbers.
@@ -115,7 +115,7 @@ This connects back to the Weak Law of Large Numbers.
 \end{definition}
 
 \begin{example}
-    Suppose $R_n \sim \exp(n)$ are independent. Show that (i) $R_n \ce{->[$p$]} 0$ and (ii) $R_n \ce{->[$d$]} 0$.
+    Suppose $R_n \sim \exp(n)$ are independent. Show that (i) $R_n \ce{->[$\probability$]} 0$ and (ii) $R_n \ce{->[$d$]} 0$.
 \end{example}
 \begin{solution}
     \begin{enumerate}
