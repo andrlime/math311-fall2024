@@ -1,0 +1,188 @@
+\section{November 20, 2024}
+
+\subsection{Some Recap}
+Recall for $A_n \in \Omega$,
+\begin{align}
+    \limsup_n A_n &= \bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k \\
+    \liminf_n A_n &= \bigcup_{n=1}^\infty \bigcap_{k=n}^\infty A_k
+\end{align}
+$\omega \in \limsup$ refers to $\omega$ being in infinitely many $A_k$, while $\omega \in \liminf$ refers to $\omega$ eventually being in all $A_k$, i.e. for all $n \ge k$ (some constant $k$).
+
+
+\subsection{Borel-Cantelli Lemma}
+\begin{theorem}
+    (\textbf{Borel-Cantelli Lemma}) Take events $A_1, A_2, \ldots$ on some probability space with converging $\sum_k \probability(A_k) < \infty$. Then,
+    \begin{align}
+        \probability\qty(\limsup_n A_n) = 0
+    \end{align}
+\end{theorem}
+
+\begin{proof}
+    The probability of $\limsup$ equals
+    \begin{align}
+        \probability\qty(\limsup_n A_n) &= \probability\qty(\bigcap_{n=1} \bigcup_{k=n} A_k)\\
+        &\le \probability\qty(\bigcup{k=n}^\infty A_k) \qsp \forall n \in \natural\\
+        &\le \sum_{k=n}^\infty \probability(A_k) \ce{->[$n\to\infty$]} 0
+    \end{align}
+    because if the limit was not zero, then convergence would be a contradiction.
+\end{proof}
+
+\begin{aside}
+    For a sum to converge, i.e.
+    \begin{align}
+        \sum_{n=1}^\infty a_n = s \implies s_N \equiv \sum_{n=1}^N a_n \ce{->[$n\to\infty$]} s
+    \end{align}
+    This means $s - s_N \ce{->[$N\to\infty$]} 0$, which implies that
+    \begin{align}
+        \sum_{n = N+1}^\infty a_n \ce{->[$N \to\infty$]} 0
+    \end{align}
+\end{aside}
+
+\subsubsection{Consequences of Lemma}
+Recall a sequence of random variables $R_1, \ldots$ converges almost surely to $R$ means
+\begin{align}
+    \probability(\{ R_n \to R \}) = 1
+\end{align}
+which, recall, is equivalent to
+\begin{align}
+    \probability\qty(\bigcap_{m=1}^\infty \liminf_n \{ \abs{R_n - R} < 1/m \}) = 1
+\end{align}
+which is also equivalent to
+\begin{align}
+    \forall m \in \natural, \probability\qty(\liminf_n \{ \abs{R_n - R} < 1/m \})
+\end{align}
+
+\begin{proposition}
+    Suppose
+    \begin{align}
+        \sum_{n=1}^\infty \probability\qty(\abs{R_n - R} \ge \varepsilon) < \infty
+    \end{align}
+    for all $\varepsilon > 0$. Then, $R_n \ce{->[\text{a.s.}]} R$. Note the converse is not necessarily true.
+\end{proposition}
+\begin{proof}
+    The finite sum
+    \begin{align}
+        \sum_{n=1}^\infty \probability\qty(\abs{R_n - R} \ge \varepsilon) < \infty
+    \end{align}
+    implies, via the Borel-Cantelli Lemma, that
+    \begin{align}
+        \probability\qty(\limsup_n \{ \abs{R_n - R} \ge \varepsilon \}) = 0
+    \end{align}
+    This is equivalent to
+    \begin{align}
+        \probability\qty[\qty(\limsup_n \{ \abs{R_n - R} \ge \varepsilon \})^C] = 1
+    \end{align}
+    
+    \begin{aside}
+        \begin{align}
+            \qty(\limsup_n A_n)^C = \liminf_n A_n^C
+        \end{align}
+        because of De Morgan's Laws.
+    \end{aside}
+
+    Thus, for all $\varepsilon$,
+    \begin{align}
+        \probability\qty[\liminf_n \{ \abs{R_n - R} < \varepsilon \}] = 1
+    \end{align}
+    From this, for $\varepsilon = 1/m$ on all $m \in \natural$, it follows that $R_n \ce{->[\text{a.s.}]} R$.
+\end{proof}
+
+\begin{example}
+    Take $R_1, R_2, \ldots$ independent with $R_i \sim \text{Bernoulli}(1/n)$, i.e. a single trial with probability of success $0 \le p \le 1$. Show that $R_n$ does not almost surely converge to $0$.
+\end{example}
+\begin{solution}
+    Let $\varepsilon > 0$. Then,
+    \begin{align}
+        \sum_{n=1}^\infty \probability\qty(\abs{R_n - 0} > \varepsilon) = \sum_n 1/n = \infty
+    \end{align}
+    so the above-proved proposition does not apply.
+\end{solution}
+
+\begin{aside}
+    \begin{align}
+        \sum_n 1/n^\alpha
+    \end{align}
+    converges when $\alpha > 1$ and diverges when $\alpha \le 1$.
+\end{aside}
+
+\begin{example}
+    Take $R_1, R_2, \ldots$ independent with $R_i \sim \text{Bernoulli}(1/n)$, i.e. a single trial with probability of success $0 \le p \le 1$. Define $S_n \equiv R_n R_{n+1}$. Show that $S_n \ce{->[\text{a.s.}]} 0$.
+\end{example}
+\begin{solution}
+    Let $\varepsilon > 0$. Then,
+    \begin{align}
+        \sum_{n=1}^\infty \probability\qty(\abs{R_n - 0} > \varepsilon) = \sum_n 1/n(n+1) < \infty
+    \end{align}
+    Thus, the above-proved proposition shows that $S_n \ce{->[\text{a.s.}]} 0$.
+\end{solution}
+
+\begin{proposition}
+    For some sequence of random variables $R_1, \ldots$, if
+    \begin{align}
+        \sum_{n=1}^\infty E\qty((R_n - R)^k) < \infty
+    \end{align}
+    for some $k > 0$, then $R_n \ce{->[\text{a.s.}]} R$.
+\end{proposition}
+\begin{proof}
+    We can apply Chebyshev's Inequality
+    \begin{align}
+        \sum_{n=1}^\infty \probability(\abs{R_n - R} \ge \varepsilon) \le \sum_{n=1}^\infty \frac{E(R_n - R)^k}{\varepsilon^k} < \infty
+    \end{align}
+    and then the previous proposition.
+\end{proof}
+
+
+\subsection{Strong Law of Large Numbers}
+\begin{aside}
+    Weak LLN is convergence in probability. Strong LLN is almost sure convergence.
+\end{aside}
+
+\begin{theorem}
+    (\textbf{Strong Law of Large Numbers}) For $R_1, R_2, \ldots$ independent r.v. and $E((R_i - E(R_i))^4) < M$, i.e. 4th central moments are bounded for all $i$. Let
+    \begin{align}
+        S_n = R_1 + \cdots + R_n
+    \end{align}
+    Then,
+    \begin{align}
+        \frac{S_n - E(S_n)}{n} \ce{->[\text{a.s.}]} 0
+    \end{align}
+\end{theorem}
+
+\begin{proof}
+    First, assume WLOG that $E(R_i) = 0$. It suffices to show that
+    \begin{align}
+        \sum_{n=1}^\infty E\qty[\qty(\frac{S_n}{n})^k] < \infty
+    \end{align}
+    for some $k$, as then by the previous propositions, there is almost sure convergence. It just so happens that this works for $k = 4$, i.e.
+    \begin{align}
+        \sum_{n=1}^\infty E\qty[\qty(\frac{S_n}{n})^4] < \infty
+    \end{align}
+    What is $S_n^4$?
+    \begin{align}
+        S_n^4 &= \qty(R_1 + \cdots + R_n)^4\\
+        &= \sum_{j} R_j^4 + \binom{4}{2} \sum_{j,k} R_j^2 R_k^2 + \frac{4!}{2!1!1!} \sum_{j \ne k,l} R_j^2 R_k R_l\\
+        &+ 4! \sum_{j,k,l,m} R_jR_kR_lR_m + \binom{4}{3} \sum_{j,k} R_j^3 R_k
+    \end{align}
+    The expectation of $S_n^4$ thus equals
+    \begin{align}
+        \sum_{j}^n E(R_j^4) + \binom{4}{2} \sum_{j,k} E(R_j^2) E(R_k^2)
+    \end{align}
+    because all first-order expectations equal zero, or $E(R_i) = 0$ for all $i$. This $\le$
+    \begin{align}
+        nM + \binom{4}{2} \sum_{j,k} E(R_j^2) E(R_k^2)
+    \end{align}
+    By Cauchy Schwarz, this $\le$
+    \begin{align}
+        nM + \kappa \sum_{j,k} \sqrt{E(R_j^4)} \sqrt{E(R_k^4)}
+    \end{align}i
+    which is again bounded by $M$, i.e. converges. Thus,
+    \begin{align}
+        E\qty[\qty(\frac{S_n}{n})^4] = \frac{1}{n^4} E\qty(S_n^4) \le nM + 6\frac{n(n-1)}{2}M
+    \end{align}
+    Thus,
+    \begin{align}
+        \sum_{n=1}^\infty E\qty[\qty(\frac{S_n}{n})^4] \le M \sum_{n=1}^\infty \qty(\frac{1}{n^3} + \frac{3}{n^2}) < \infty
+    \end{align}
+    which using previous propositions, shows almost sure convergence.
+\end{proof}
+

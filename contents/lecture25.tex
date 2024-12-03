@@ -1,0 +1,152 @@
+\section{November 22, 2024}
+
+\subsection{Cauchy Distribution}
+There is a case where LLN fails for $R_1, \ldots, R_n$ independent, i.e.
+\begin{align}
+    \frac{R_1 + \cdots + R_n}{n} \ce{->[$d$]} \text{constant}
+\end{align}
+does not hold.
+
+\begin{definition}
+    \textbf{(Cauchy Distribution)} A random variable $R$ that is Cauchy distributed has density
+    \begin{align}
+        f_R(x) = \frac{1}{\pi(1+x^2)}
+    \end{align}
+    The second moment $E(R^2) = \infty$.
+\end{definition}
+
+The characteristic function of this equals
+\begin{align}
+    M_R(u) = \int_{-\infty}^\infty e^{-iux} \frac{1}{\pi(1 + x^2)} = e^{-\abs{u}}
+\end{align}
+by doing a standard contour integral and maybe using the residue theorem.
+
+\begin{example}
+    Take $R_1, R_2, \ldots$ i.i.d. Cauchy. Then,
+    \begin{align}
+        M_{R_1 + \cdots + R_n}(u) = e^{-n\abs{u}}
+    \end{align}
+    So,
+    \begin{align}
+        M_{\frac{R_1 + \cdots + R_n}{n}}(u) = M_{R_1 + \cdots + R_n}\qty(\frac{u}{n}) = e^{-n\abs{u/n}} = e^{-\abs{u}}
+    \end{align}
+    This indicates that
+    \begin{align}
+        \frac{R_1 + \cdots + R_n}{n} \ce{->[$d$]} R_1 \qsp \text{it is Cauchy, not constant}
+    \end{align}
+    There is no law of large numbers for Cauchy because it goes to infinity very slowly.
+\end{example}
+
+\subsection{An Interesting Problem}
+\begin{proposition}
+    Take $R_1, R_2, \ldots$ i.i.d. a sequence of random variables, where $R_i \sim \text{Bernoulli}(1/2)$. Take
+    \begin{align}
+        S_n \equiv \sum_{j=1}^n \frac{R_j}{2^j}
+    \end{align}
+    Then, 
+    \begin{align}
+        S_n \ce{->[$d$]} Z \equiv \text{Unif}[0,1]
+    \end{align}
+\end{proposition}
+\begin{solution}
+    First, compute $M_Z(u)$.
+    \begin{align}
+        M_Z(u) &= E\qty(e^{-iuZ}) \int_{0}^1 e^{-iux} \dd{x}\\
+        &= \frac{1 - e^{-iu}}{iu}
+    \end{align}
+    We want to show that $M_{S_n}(u) \longrightarrow \frac{1 - e^{-iu}}{iu}$ for all $u \in \real$.
+    \begin{align}
+        M_{S_n}(u) = M_{\Sigma}(u) &= \prod_{j=1}^n M_{R_j/2^j}(u)\\
+        &= \sum_x e^{-iux} \probability(x)\\
+        &= \frac{1}{2}\qty(1 + e^{-iu/2^j})
+    \end{align}
+    Thus,
+    \begin{align}
+        M_{S_n}(u) = \frac{1}{2^n} \qty(1 + e^{-iu/2}) \qty(1 + e^{-iu/2^2}) \cdots \qty(1 + e^{-iu/2^n})
+    \end{align}
+
+    \begin{lemma}
+        As a convenient hint,
+        \begin{align}
+            1 + e^{-iu/2^j} = \frac{e^{-iu/2^{j-1}} - 1}{e^{-iu/2^j} - 1}
+        \end{align}
+        \begin{proof}
+            Ben proved it on the board but it is not particularly interesting enough to copy into here.
+        \end{proof}
+    \end{lemma}
+
+    Thus,
+    \begin{align}
+        M_{S_n}(u) = \frac{1}{2^n} \qty(\frac{e^{-iu} - 1}{e^{-iu/2} - 2})\qty(\frac{e^{-iu/2^{n-1}} - 1}{e^{-iu/2^n} - 2})
+    \end{align}
+    These cascadingly cancel into
+    \begin{align}
+        M_{S_n}(u) = \frac{1}{2^n} \frac{e^{-iu} - 1}{e^{-iu/2^n} - 1}
+    \end{align}
+    We want to show that this converges to $(1 - e^{-iu})/iu$ as $n \to \infty$. This can be achieved with a Taylor expansion:
+    \begin{align}
+        \frac{1}{2^n}\frac{e^{-iu} - 1}{e^{-iu/2^n} - 1} = \frac{e^{-iu} - 1}{2^n\qty(1 - iu/2^n + \cdots - 1)}
+    \end{align}
+    which equals
+    \begin{align}
+        \frac{e^{-iu} - 1}{-iu + 2^nO\qty[\qty(\frac{iu}{2^n})^2]} \ce{->[$n \to \infty$]} \frac{1 - e^{-iu}}{iu}
+    \end{align}
+\end{solution}
+
+\subsection{Banach's Matchbox Problem}
+(smoked pipe)
+\begin{proposition}
+    Banach has two matchboxes: one in his left pocket and one in his right pocket; both have $N$ matches. Every time Banach wants to smoke, he takes a match randomly and independently from one of the two boxes. At some point when Banach tries to take a match, the box he picks will be empty. What is the probability that the non-empty box has exactly $k \in \natural_0$ matches?
+\end{proposition}
+
+\begin{solution}
+    WLOG, to get to the premise of the problem, Banach has taken a total of $N$ matches from the right and $N - k$ from the left for a total of $2N - k$ matches. The next match then must be the right (which has probability $1/2$). Now this reduces to two Binomial distributions:
+    \begin{align}
+        \binom{2N - k}{N} \qty(\frac{1}{2})^N \qty(\frac{1}{2})^{N-k} \qty(\frac{1}{2})\qty(2)
+    \end{align}
+    Thus, the probability equals
+    \begin{align}
+        \binom{2N - k}{N}\qty(\frac{1}{2})^{2N - k}
+    \end{align}
+    which is the \textbf{negative binomial distribution}.
+\end{solution}
+
+\begin{definition}
+    \textbf{(Negative Binomial Distribution)} Take independent trials with probability of success $p$. Let $R$ be the number of trials until $r$ successes. Then,
+    \begin{align}
+        R \equiv \text{NB}(r,p) \implies \probability(R = n) &= \binom{n-1}{r-1} p^{r-1} (1-p)^{n-1-(r-1)}\\
+        &= \binom{n-1}{r-1}p^r(1-p)^{n-r}
+    \end{align}
+\end{definition}
+
+\subsection{Exponential Example}
+Take $R,S \sim \exp(1)$. Show that the distribution of $R$ given that $R + S = z$ is $\text{Unif}[0,z]$. We want
+\begin{align}
+    f_{R \mid R + S}(R = x \mid R + S = z)
+\end{align}
+but if we flip this we get
+\begin{align}
+    f_{R + S \mid R}(R + S = z \mid R = x)
+\end{align}
+which is trivial and just equals
+\begin{align}
+    f_S(z - x) = \begin{cases}
+        e^{-(z-x)} & z-x \ge 0\\
+        0 & \text{else}
+    \end{cases}
+\end{align}
+
+To solve the rest of this problem, we can use the continuous Bayes' Theorem:
+\begin{proposition}
+    \textbf{(Continuous Bayes' Theorem)}
+    \begin{align}
+        f_{Y \mid X}(y \mid x) f_X(x) = f_{X,Y}(x,y) = f_Y(y)f_{X \mid Y}(x \mid y)
+    \end{align}
+\end{proposition}
+
+The rest of this problem is left as an exercise for the reader. It is quite trivial, but some densities may need to be computed. Eventually, we get
+\begin{align}
+    f_{R \mid R + S}(R = x \mid R + S = z) = \frac{e^{-(z-x)e^{-x}}}{ze^{-z}} = \frac{1}{z}
+\end{align}
+which is just the density of $\text{Unif}[0,z]$.
+

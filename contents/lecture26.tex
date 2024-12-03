@@ -1,0 +1,120 @@
+\section{November 25, 2024}
+More examples...
+
+\subsection{Sticks}
+\begin{proposition}
+    Randomly and uniformly break a unit stick (length 1) into two pieces: a long piece and a short piece. Find the expected value of the ratio of the two pieces.
+\end{proposition}
+\begin{solution}
+    Let $R$ be the short side. Then, $R \sim \text{Unif}[0,1/2]$. We then want to compute the ratio
+    \begin{align}
+        \frac{R}{1-R}
+    \end{align}
+    which equals
+    \begin{align}
+        \int_0^1 \frac{x}{1-x} f_R(x) \dd{x} &= 2 \int_0^{1/2} \frac{x}{1-x} \dd{x}\\
+        &= 2 \int_0^{1/2} \qty(\frac{1}{1-x} - 1) \dd{x}\\
+        &= 2 \qty[ \eval{ -x - \ln(1-x)}_0^{1/2} ] = \boxed{\ln(4) - 1}
+    \end{align}
+\end{solution}
+
+\subsection{Another Example}
+\begin{proposition}
+    Take $Y \sim \text{Unif}[0,1]$. Given $Y = y$, let $X \sim \text{Binomial}(n,y)$. Find $E(X)$ and $\text{var}(X)$.
+\end{proposition}
+\begin{solution}
+    The Theorem of Total Expectation can be used.
+    \begin{align}
+        E(X) &= \int_Y E(X \mid Y = y) f_Y(y) \dd{y}\\
+        &= \int_0^1 ny \cdot 1 \dd{y} = \boxed{\frac{n}{2}}
+    \end{align}
+    What about the variance? We can compute $E\qty(X^2)$ which equals
+    \begin{align}
+        E\qty(X^2) = \int_0^1 E(X^2 \mid Y = y) \cdot 1 \dd{y}
+    \end{align}
+    Note that $\text{var}(X) = E\qty(X^2) - E(X)^2 = np(1-p)$. Thus, $E\qty(X^2) = (np)^2 + np(1-p)$. Hence,
+    \begin{align}
+        E\qty(X^2) = \int_0^1 n^2y^2 + ny - ny^2 \dd{y} = \boxed{\frac{n^2}{3} + \frac{n}{2} - \frac{n}{3}}
+    \end{align}
+    It follows that $\var(X)$ equals
+    \begin{align}
+        \text{var}(X) &= \frac{n^2}{3} + \frac{n}{2} - \frac{n}{3} - \qty(\frac{n}{2})^2\\
+        &= \frac{n(n + 2)}{12}  
+    \end{align}
+\end{solution}
+
+
+\subsection{Yet Another Example}
+\begin{proposition}
+    Let $R \sim \text{Geom}(p)$, i.e. the number of independent trials until a success given probability of success $p$. Show that $E(R) = 1/p$ and $\text{var}(R) = (1-p)/p^2$ by using conditional expectation on $S \equiv I_{\text{1st trial success}}$.
+\end{proposition}
+\begin{solution}
+    We can again use the Theorem of Total Expectation.
+    \begin{align}
+        E(R) &= E(R \mid S = 0) \probability(S = 0) + E(R \mid S = 1) \probability(S = 1)\\
+        &= (E(R) + 1)(1-p) + (1)(p)\\
+        &= p + E(R) - p + 1 - pE(R)\\
+        &= E(R) (1 - p) + 1
+    \end{align}
+    It follows that
+    \begin{align}
+        pE(R) = 1 \implies \boxed{E(R) = 1/p}
+    \end{align}
+    In a similar manner comes the variance. First,
+    \begin{align}
+        E(R^2) &= E(R^2 \mid S = 0) \probability(S = 0) + E(R^2 \mid S = 1) \probability(S = 1)\\
+        &= E(R^2 \mid S = 0) (1-p) + p\\
+        &= E\qty((R+1)^2)(1-p) + p\\
+        &= E(R^2 + 2R + 1)(1-p) + p\\
+        &= \qty[E(R^2) + E(2R) + 1](1-p) + p
+    \end{align}
+    Thus,
+    \begin{align}
+        p E(R^2) = \frac{2(1-p)}{p} + 1 \implies \boxed{E(R^2) = \frac{2(1-p)}{p^2} + \frac{1}{p}}
+    \end{align}
+    From this,
+    \begin{align}
+        \text{var}(R) = \frac{2}{p^2} - \frac{2}{p} + \frac{1}{p} - \frac{1}{p^2} = \boxed{\frac{1-p}{p^2}}
+    \end{align}
+\end{solution}
+
+\subsection{ANOTHER Example}
+\begin{proposition}
+    Let $X_1, X_2, X_3 \sim \text{Bernoulil}(p)$ (independent). Define $Y_1 = \text{max}(X_1, X_2)$, $Y_2 = \text{max}(X_1, X_3)$, and $Y_3 = \text{max}(X_2, X_3)$. Set $Y = Y_1 + Y_2 + Y_3$. Find $E(Y)$ and $\text{var}(Y)$.
+\end{proposition}
+\begin{solution}
+    Clearly,
+    \begin{align}
+        E(Y) = E(Y_1) + E(Y_2) + E(Y_3) \ce{->[symmetry]} 3E(Y_1)
+    \end{align}
+    That expectation equals
+    \begin{align}
+        E(Y_1) = 0P_{Y_1}(0) + 1\qty[p^2 + 2p(1-p)] = p(2-p)
+    \end{align}
+    It follows that $E(Y) = 3p(2-p)$. For variance,
+    \begin{align}
+        E(Y^2) &= E((Y_1 + Y_2 + Y_3)^2) = E(Y_1^2 + Y_2^2 + Y_3^2 + 2Y_1Y_2 + 2Y_2Y_3 + 2Y_1Y_3)\\
+        &= E(Y_1) + E(Y_2) + E(Y_3) + E(2Y_1Y_2 + 2Y_2Y_3 + 2Y_1Y_3)\\
+        \ce{->[symmetry]} &= 3p(2-p) + 6E(Y_1Y_2)
+    \end{align}
+    which can eventually solve for the variance. The solution is straightforward but annoying and Ben kind of just... gave up.
+\end{solution}
+
+
+\subsection{An Example with Graphs}
+\begin{proposition}
+    Take a fully connected graph with $n$ nodes. Given $k = 1, 2, \ldots, n$, can the edges be denoted $A$ or $B$ such that no set of $k$ vertices has all its faces with edges of all the same color?
+\end{proposition}
+\begin{solution}
+    Let $S$ be a set of all $\binom{n}{k}$ subsets of $k$ vertices. Let $E_i$ be the event where all of the $\binom{k}{2}$ edges connecting the $i$-th subset of vertices have the same color. What is $\probability(E_i)$?
+    \begin{align}
+        \probability(E_i) = 2 \cdot \qty(\frac{1}{2})^{\binom{k}{2}} = \qty(\frac{1}{2})^{\binom{k}{2} - 1}
+    \end{align}
+    We want the probability
+    \begin{align}
+        \probability\qty(\bigcup_{i=1}^{\binom{n}{k}} E_i) \le \sum_{i=1}^{\binom{n}{k}} \qty(\frac{1}{2})^{\binom{k}{2} - 1} \stackrel{?}{\le} 1
+    \end{align}
+    If $n \gg k$, then this inequality holds, i.e. there can exist some permutation of colors such that the desired coloring is possible. The answer is that it depends.
+\end{solution}
+
+

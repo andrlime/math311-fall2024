@@ -1,0 +1,201 @@
+\section{November 18, 2024}
+
+\subsection{Limits of Sets}
+\begin{definition}
+    Take $A_1, A_2, \ldots \in \Omega$ as some sets. Then,
+    \begin{align}
+        \limsup_n A_n = \bigcap_{n=1}^\infty \bigcup_{k=n}^\infty A_k
+    \end{align}
+    and
+    \begin{align}
+        \liminf_n A_n = \bigcup_{n=1}^\infty \bigcap_{k=n}^\infty A_k
+    \end{align}
+\end{definition}
+
+\begin{proposition}
+    \begin{enumerate}
+        \item[(i)] The limit
+        \begin{align}
+            \limsup_n A_n = \{ \omega \in \Omega \mid \omega \text{ is in infinitely many } A_n \}
+        \end{align}
+        \item[(ii)] the limit
+        \begin{align}
+            \liminf_n A_n = \{ \omega \in \Omega \mid \omega \text{ is in all, but finitely many } A_n \}
+        \end{align}
+        Equivalently, $\liminf \cdots$ means that $\omega$ is \textit{eventually} in $A_n$, i.e. for some $k$, $\omega \in A_n$ for all $k \ge n$
+    \end{enumerate}
+\end{proposition}
+\begin{proof}
+    \begin{enumerate}
+        \item[(i)] By definition,
+        \begin{align}
+            \omega \in \limsup_n A_n
+            &\iff \forall n, \omega = \bigcup_{k=n}^\infty A_k\\
+            &\iff \forall n, \exists k \ge n, \omega \in A_k\\
+            &\iff \omega \text{ is in infinitely many } A_n
+        \end{align}
+        because if this was not the case, then there would be some largest $n$, but that is a contradiction with there existing $k \ge n$ \textbf{for all} $n$.
+
+        \item[(ii)] By definition,
+        \begin{align}
+            \omega \in \liminf_n A_n
+            &\iff \omega \in \bigcap_{k=n}^\infty \text{ for some } n\\
+            &\iff \text{for some } n, \forall k \ge n, \omega \in A_k
+        \end{align}
+        Beyond a certain $k$, $\omega$ must be in all $A_n$.
+    \end{enumerate}
+\end{proof}
+
+As an example...
+\begin{example}
+    Take $A_n$ defined as
+    \begin{align}
+        A_n = \begin{cases}
+            [-1,1] \subseteq \real & n \text{ even}\\
+            [-2,2] \subseteq \real & n \text{ odd}
+        \end{cases}
+    \end{align}
+    Then, $\limsup_n A_n = [-2,2]$ and $\liminf_n A_n = [-1,1]$.
+\end{example}
+
+\subsection{Almost Sure Convergence}
+\begin{definition}
+    Let $R_1, R_2, \ldots$ be random variables on a given probability space $\psp$. Define the set
+    \begin{align}
+        \{ R_n \to R \} \equiv \{ \omega \in \Omega \mid R_n(\omega) \ce{->[$n \to \infty$]} R(\omega) \}
+    \end{align}
+    We say that $R_n$ ``converges almost surely'' to $R$, or $R_n \ce{->[\text{a.s.}]} R$, if
+    \begin{align}
+        \probability(\{ R_n \to R \}) = 1
+    \end{align}
+\end{definition}
+
+\begin{example}
+    Take $\Omega = [0,1]$, $\curlyf$ as Borel sets of $[0,1]$, and $\probability([a,b]) = b-a$ where $0 \le a \le b \le 1$. Define $R_n(\omega)$ as
+    \begin{align}
+        R_n(\omega) = \begin{cases}
+            1 & \omega = 0\\
+            1/n & \omega \in (0,1]
+        \end{cases}
+    \end{align}
+    Show that $R_n \ce{->[\text{a.s.}]} 0$
+\end{example}
+\begin{solution}
+    The set $\{ R_n \to R \}$ is the set $\{ \omega \in [0,1] \mid R_n(\omega) \ce{->[$n \to \infty$]} 0 \}$. This set is just $(0,1]$. The probability of this set is 1 by definition, so this set obviously ``converges almost surely''.
+\end{solution}
+
+This definition is slightly difficult to work with.
+\begin{proposition}
+    \begin{align}
+        \{ R_n \to R \} = \bigcap_{m=1}^\infty \liminf_n A_{nm}
+    \end{align}
+    where $A_{nm}$ is defined as
+    \begin{align}
+        A_{nm} \equiv \{ \omega \in \Omega \mid \abs{R_n(\omega) - R(\omega)} \le 1/m \}
+    \end{align}
+\end{proposition}
+\begin{proof}
+    This proof can be done with equivalences again
+    \begin{align}
+        \omega \in \{ R_n \to R \}
+        &\iff R_n(\omega) \ce{->[$n \to \infty$]} R_\omega\\
+        &\iff \forall \varepsilon > 0, \abs{R_n(\omega) - R(\omega)} < \varepsilon \text{ for $n$ suf. large}\\
+        &\iff \forall m \in \natural, \abs{R_n(\omega) - R(\omega)} < 1/m \text{ for $n$ suf. large}\\
+        &\iff \forall m, \omega \in A_{nm} \text{ (eventually)}\\
+        &\iff \forall m, \omega \in \liminf_n A_{nm}
+    \end{align}
+\end{proof}
+
+\begin{proposition}
+    \begin{align*}
+        R_n \ce{->[\text{a.s.}]} R \iff \forall \varepsilon > 0, \probability\qty(\{ \abs{R_k - R} \ge \varepsilon \text{ for some $k \ge n$}\}) \ce{->[$n \to \infty$]} 0
+    \end{align*}
+\end{proposition}
+We can first prove a lemma!
+\begin{lemma}
+    If $R_n \ce{->[\text{a.s.}]} R$, then $R_n \ce{->[$\probability$]} R$.
+\end{lemma}
+\begin{proof}
+    Let $\varepsilon > 0$. Then, for some $k \ge n$,
+    \begin{align}
+        &\probability(\abs{R_n - R} \ge \varepsilon)\\
+        \le &\probability(\{ \abs{R_k - R} \ge \varepsilon \text{ for some $k \ge n$} \})
+    \end{align}
+    as $n\to\infty$, this reduces to
+    \begin{align}
+        \probability(\abs{R_n - R} \ge \varepsilon) \ce{->[$n \to \infty$]} 0
+    \end{align}
+    which is equivalent to
+    \begin{align}
+        R_n \ce{->[$\probability$]} R
+    \end{align}
+\end{proof}
+
+\begin{lemma}
+    The converse is not true, i.e. convergence in probability does not imply convergence in ``almost sure''.
+\end{lemma}
+\begin{proof}
+    Take $R_n \sim \text{Bernoulli}(1/n)$ where $\text{Bernoulli}(x)$ is the result of a single Bernoulli trial with probability of success $x$. By definition, for $1 > \varepsilon > 0$,
+    \begin{align}
+        \probability(\abs{R_n - 0} \ge \varepsilon)
+        &= \probability(R_n = 1)\\
+        &= 1/n \ce{->[$n \to \infty$]} 0
+    \end{align}
+    However, $R_n$ does not ``almost surely'' converge.
+    \begin{align}
+        \probability(\{ \abs{R_k - R} \ge \varepsilon \text{ for some $k \ge n$} \})
+        &= \probability(\{R_k = 1 \text{ for some $k \ge n$}\})\\
+        &\ge \probability(\{ R_k = 1 \text{ for some $k \in [1,N]$, $N > n$} \}
+    \end{align}
+    This is a smaller set, so proving the statement for this finite case proves the converse not being true.
+    \begin{align}
+        &\ge \cdots\\
+        &= 1 - \probability(R_k = 0 \text{ for all } k = n, n+1, \ldots, N)\\
+        &= 1 - \qty(\frac{n-1}{n})\qty(\frac{n}{n+1})\cdots\qty(\frac{N-1}{N})\\
+        &= 1 - \frac{n-1}{N} \ne 0
+    \end{align}
+    As $N \to \infty$, then
+    \begin{align}
+        \probability(\abs{R_k - 0} \ge \varepsilon \text{ for some $k \ge n$}) \ge 1 = 1
+    \end{align}
+    Thus, the probability does not go to zero, so the sets do not ``almost surely'' converge.
+\end{proof}
+
+\subsubsection{Proof of Proposition}
+Here comes another lemma...
+\begin{lemma}
+    \begin{align}
+        R_n \ce{->[\text{a.s.}]} R \iff \forall m \in \natural, \probability\qty(\liminf_n A_{nm}) = 1
+    \end{align}
+\end{lemma}
+\begin{proof}
+    \begin{enumerate}
+        \item[$\implies$] This is direct
+            \begin{align}
+                R_n \ce{->[\text{a.s.}]} R
+                &\implies \probability(\{ R_n \to R \}) = 1\\
+                &\implies \probability\qty(\bigcap_{m=1}^\infty \liminf_n A_{nm}) = 1\\
+                &\implies \forall m \in \natural, \probability\qty(\liminf_n A_{nm}) = 1
+            \end{align}
+        \item[$\impliedby$] This uses the last problem from the first midterm, which is in one of the Appendixes.
+            \begin{align}
+                \forall n, \probability(B_n) = 1 \implies \probability\qty(\bigcap_{n=1}^\infty B_n) = 1
+            \end{align}
+            Using this,
+            \begin{align}
+                \probability\qty(\bigcap_{m=1}^\infty \liminf A_{nm}) = 1
+                &\implies \probability(\{ R_n \to R \}) = 1\\
+                &\implies R_n \ce{->[\text{a.s.}]} R
+            \end{align}
+    \end{enumerate}
+\end{proof}
+
+Now we can prove the proposition.
+\begin{align}
+    R_n \ce{->[\text{a.s.}]} R &\iff \forall m, \probability\qty(\liminf_n A_{nm}) = 1\\
+    &\iff \forall m, \lim_{n\to\infty} \probability\qty(\bigcap_{k=n}^\infty A_k) = 1 \qsp \text{expanding seq.}\\
+    &\iff \probability\qty(\forall k \ge n \qsp \abs{R_k - R} < 1/m) \ce{->[$n \to \infty$]} 1\\
+    &\iff \probability\qty(\exists k \ge n \qsp \abs{R_k - R} \ge 1/m) \ce{->[$n \to \infty$]} 0\\
+    &\iff \probability\qty(\abs{R_k - R} \ge \varepsilon \text{ for some $k \ge n$}) \ce{->[$n \to \infty$]} 0
+\end{align}
+
