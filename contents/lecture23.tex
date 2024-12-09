@@ -30,7 +30,7 @@
         \item[(i)] By definition,
         \begin{align}
             \omega \in \limsup_n A_n
-            &\iff \forall n, \omega = \bigcup_{k=n}^\infty A_k\\
+            &\iff \forall n, \omega \in \bigcup_{k=n}^\infty A_k\\
             &\iff \forall n, \exists k \ge n, \omega \in A_k\\
             &\iff \omega \text{ is in infinitely many } A_n
         \end{align}
@@ -145,7 +145,7 @@ We can first prove a lemma!
     \begin{align}
         \probability(\{ \abs{R_k - R} \ge \varepsilon \text{ for some $k \ge n$} \})
         &= \probability(\{R_k = 1 \text{ for some $k \ge n$}\})\\
-        &\ge \probability(\{ R_k = 1 \text{ for some $k \in [1,N]$, $N > n$} \}
+        &\ge \probability(\{ R_k = 1 \text{ for some $k \in [1,N]$, $N > n$} \})
     \end{align}
     This is a smaller set, so proving the statement for this finite case proves the converse not being true.
     \begin{align}

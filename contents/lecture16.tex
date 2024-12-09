@@ -140,7 +140,7 @@ and
     The theorem of total probability for a continuous random variable (see above) holds even when $R_2$ is discrete. As an example, suppose there is some number $x \in [0, 1]$ uniformly and randomly. Then, flip a coin with probability of heads is $x^2$. Find the probability of heads.
 \end{aside}
 \begin{solution}
-    Let $R_1$ be $x \in [0,1]$. Let $R_2 = I_\text{heads}$ ($1$ is heads, $0$ if tails). Then, $\probability(R_2 = 1)$ equals
+    Let $R_1$ be $x \in [0,1]$. Let $R_2 = I_\text{heads}$ ($1$ if heads, $0$ if tails). Then, $\probability(R_2 = 1)$ equals
     \begin{align}
         \probability(R_2 = 1) = \int_0^1 \probability(R_2 = 1 \mid R_1 = x) f_1(x) \dd{x}
     \end{align}

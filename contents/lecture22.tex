@@ -32,7 +32,7 @@ Recap. Random variables $R_n \ce{->[$\probability$]} R$ converge in probability 
         Notably, this is less than or equal to
         \begin{align}
             F_{R_n}(x) &\le \probability(R \le x + \varepsilon) + \probability(\abs{R_n - R} \ge \varepsilon)\\
-            = F_R(x + \varepsilon) + \probability(\abs{R_n - R} \ge \varepsilon)
+            &= F_R(x + \varepsilon) + \probability(\abs{R_n - R} \ge \varepsilon)
         \end{align}
         Similarly,
         \begin{align}
@@ -66,7 +66,7 @@ As a silly example,
     \end{align}
     This obviously converges to $F_R(x)$. However, the probabilities do not converge for all $\varepsilon > 0$. Take $0 < \varepsilon < 1$. Then,
     \begin{align}
-        \probability(\abs{R_n - R} \ge \varepsilon = 1/2) = 1/2 \ne 0
+        \probability(\abs{R_n - R} \ge \varepsilon) = 1/2 \ne 0
     \end{align}
     which does not tend to zero as $n\to\infty$.
 \end{solution}

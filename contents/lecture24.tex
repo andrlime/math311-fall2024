@@ -21,7 +21,7 @@ $\omega \in \limsup$ refers to $\omega$ being in infinitely many $A_k$, while $\
     The probability of $\limsup$ equals
     \begin{align}
         \probability\qty(\limsup_n A_n) &= \probability\qty(\bigcap_{n=1} \bigcup_{k=n} A_k)\\
-        &\le \probability\qty(\bigcup{k=n}^\infty A_k) \qsp \forall n \in \natural\\
+        &\le \probability\qty(\bigcup_{k=n}^\infty A_k) \qsp \forall n \in \natural\\
         &\le \sum_{k=n}^\infty \probability(A_k) \ce{->[$n\to\infty$]} 0
     \end{align}
     because if the limit was not zero, then convergence would be a contradiction.
@@ -174,7 +174,7 @@ which is also equivalent to
     By Cauchy Schwarz, this $\le$
     \begin{align}
         nM + \kappa \sum_{j,k} \sqrt{E(R_j^4)} \sqrt{E(R_k^4)}
-    \end{align}i
+    \end{align}
     which is again bounded by $M$, i.e. converges. Thus,
     \begin{align}
         E\qty[\qty(\frac{S_n}{n})^4] = \frac{1}{n^4} E\qty(S_n^4) \le nM + 6\frac{n(n-1)}{2}M

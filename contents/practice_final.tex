@@ -1,0 +1,162 @@
+\section{Appendix C: Practice Final}
+Below are the practice problems that were provided for the final exam.
+
+\subsection{Problem 1}
+For each of the following, give a precise definition of the term, or formally state the result (whichever is applicable):
+\begin{enumerate}
+    \item Probability space
+    \item Random variable
+    \item Three independent random variables
+    \item Chebyshev's inequality
+    \item Convergence in distribution
+    \item Central Limit Theorem
+    \item Convergence in probability
+\end{enumerate}
+\begin{solution}
+    \begin{enumerate}
+        \item A probability space is a triplet $\psp$ consisting of a sample space $\Omega$ of all possible outcomes of an experiment, an event space $\curlyf$ which is a sigma algebra of subsets of $\Omega$ (i.e. events to consider), and a probability measure $\probability: \curlyf \to [0,1]$ that measures the probabilities of events.
+        \item A random variable is a function $R: \Omega \to \real$ such that the inverse image $R^{-1}(B) \in \curlyf$ for all Borel sets $B \in \mathcal{B}$.
+        \item Three independent random variables on some probability space $\psp$ are $R_1,R_2,R_3$ such that
+            \begin{align}
+                \probability\qty(R_1 \in F_1 \qand R_2 \in F_2 \qand R_3 \in F_3) = \prod_{i=1}^3 \probability\qty(R_i \in F_i)
+            \end{align}
+            for elements $F_1,F_2,F_3 \in \curlyf$.
+        \item Chebyshev's inequality has three parts
+            \begin{enumerate}
+                \item For $R$ r.v., $b \in \real$,
+                    \begin{align}
+                        \probability(R \ge b) \le E(R)/b
+                    \end{align}
+                \item For $R$ r.v., $c$ and $l$ constants,
+                    \begin{align}
+                        \probability(\abs{R - c} \ge \varepsilon) \le \frac{E\qty(\abs{R-c}^l)}{\varepsilon^l}
+                    \end{align}
+                    is true for all $\varepsilon > 0$
+                \item For $R$ r.v. with finite variance $\sigma^2 > 0$, finite mean $m$, and $k$ constant,
+                    \begin{align}
+                        \probability(\abs{R-m} \ge k\sigma) \le \frac{1}{\sigma^2}
+                    \end{align}
+            \end{enumerate}
+        \item Convergence in distribution for a sequence of random variables ($R_n \ce{->[$d$]} R$) if
+            \begin{align}
+                F_{R_n}(x) \to F_R(x)
+            \end{align}
+            for all $x$ on which $F_R$ is continuous.
+        \item Central Limit Theorem. For i.i.d. random variables $R_1, \ldots$ with finite mean $m$, variance $\sigma^2$, and third moment,
+            \begin{align}
+                \sum_{i=1}^n \frac{R_i - nm}{\sigma\sqrt{n}} \ce{->[$d$]} N(0,1)
+            \end{align}
+        \item Convergence in probability for a sequence of random variables ($R_n \ce{->[$\probability$]} R$) if for all $\varepsilon > 0$
+            \begin{align}
+                \probability(\abs{R - R_n} \ge \varepsilon) \ce{->[$n \to \infty$]} 0
+            \end{align}
+    \end{enumerate}
+\end{solution}
+
+\subsection{Problem 2}
+There are $k$ biased coins in a box, labelled $1$ through $k$. The probability that the $i$-th coin lands on heads is $i/k$. A coin is randomly selected from the box and is repeatedly flipped. If the first $n$ flips all result in heads, what is the conditional probability that the $(n+1)$-th flip will also land on heads?
+\begin{solution}
+    The conditional probability
+    \begin{align}
+        \probability\qty((n+1)\text{-th is heads} \mid \text{first $n$ all heads})
+    \end{align}
+    equals
+    \begin{align}
+        \frac{\probability(\text{first $n+1$ heads})}{\probability(\text{first $n$ heads})}
+    \end{align}
+    The law of total probability gives the probability of $n$ heads for some coin as
+    \begin{align}
+        \probability(A_n) = \sum_{i=1}^k \qty(\frac{i}{k})^n \frac{1}{k}
+    \end{align}
+    Thus, the conditional probability equals
+    \begin{align}
+        \frac{\sum_{i=1}^k \qty(\frac{i}{k})^{n+1}}{\sum_{i=1}^k \qty(\frac{i}{k})^n}
+    \end{align}
+\end{solution}
+
+\subsection{Problem 3}
+Let $n \in N$ and consider the set $S$ of all permutations of the integers $\{1, 2, \ldots , n\}$. For $k \in \{1, 2, \ldots , n\}$, we say a permutation $f \in S$ has fixed point $k$ if and only if $f(k) = k$. Choose a permutation uniformly at random from $S$ and consider the random variable $R$ that gives the number of its fixed points. Compute $E(R)$ and $\text{Var}(R)$.
+\begin{solution}
+    We can write using indicators:
+    \begin{align}
+        R = I_1 + I_2 + \cdots + I_n
+    \end{align}
+    each has a probability $1/n$ of being a fixed point by independence. Thus,
+    \begin{align}
+        E(R) = 1 && \text{Var}(R) = E(R^2) - 1
+    \end{align}
+    Then,
+    \begin{align}
+        E(R^2) = n(1/n) + (n^2-n)\qty(\frac{1}{n-1}\frac{1}{n}) = 2
+    \end{align}
+    Thus, Var$(R) = 1$.
+\end{solution}
+
+\subsection{Problem 4}
+Let $R_1, R_2, \ldots$ be i.i.d. random variables with finite mean and finite variance. State the Weak Law of Large Numbers for these conditions and prove it using Chebyshev’s inequality.
+\begin{solution}
+    Define $S_n \equiv \sum_i^n R_i$. Then,
+    \begin{align}
+        \probability\qty[\frac{S_n - E(S_n)}{n} \ge \varepsilon] \ce{->[$n \to \infty$]} 0
+    \end{align}
+    The proof is in Section 15.
+\end{solution}
+
+\subsection{Problem 5}
+Let $R$ and $S$ be independent Bernouilli random variables with parameter $p = 1/2$. Define $Z = R + S$ and $W = \abs{R - S}$. Prove that $\text{Cov}(Z, W) = 0$ but $Z$ and $W$ are not independent.
+\begin{solution}
+    For $Z = R+S$, the event space is $0$, $1$, and $2$ with probabilities $1/4$, $1/2$, $1/4$. For $W = \abs{R - S}$, the event space is $0$ and $1$ with probabiltiies $1/2$ and $1/2$/ It can be shown that
+    \begin{align}
+        \text{Cov}(Z,W) = 0
+    \end{align}
+    but $\probability(Z = 0, W = 0) = 1/4$ while $\probability(Z = 0)\cdot \probability(W = 0) = 1/4 \cdot 1/2 = 1/8$.
+\end{solution}
+
+\subsection{Problem 6}
+Let $X$ have the exponential distribution with parameter 3 and let $Y = e^X$.
+\begin{enumerate}
+    \item[(a)] Find the expectation and variance of $Y$.
+    \item[(b)] For $Y_1, Y_2, \ldots$ i.i.d. with the same distribution as $Y$, what is the approximate distribution of $(Y_1 + Y_2 + \cdots + Y_n)/\sqrt{n}$ when $n$ is large?
+    \item[(c)] Is there a random variable $S$ such that
+    \begin{align}
+        \frac{Y_1 + Y_2 + \cdots + Y_k}{k} \ce{->[$\probability$]} S
+    \end{align}
+    as $k \rightarrow \infty$? Justify your answer. If you answer is yes, specify $S$.
+\end{enumerate}
+\begin{solution}
+    
+\end{solution}
+
+\subsection{Problem 7}
+Let $R$ have density $f_R(r) = 1/r^2$ for $r \ge 1$. Given $R$, let $U$ be uniformly distributed on $[0,R]$.
+\begin{enumerate}
+    \item[(a)] Find $E(U \mid R = r)$.
+    \item[(b)] Find the marginal density $f_U$ of $U$.
+    \item[(c)] Compute the conditional density of $R$ given $U = u$.
+\end{enumerate}
+\begin{solution}
+    
+\end{solution}
+
+\subsection{Problem 8}
+Let $U$ be uniformly distributed on $[0, 1]$. For $n = 1, 2, \ldots$, define random variables $R_n$ by
+\begin{align}
+    R_n = UI_{\{ U \le 1 - (1/n) \}}
+\end{align}
+\begin{enumerate}
+    \item[(a)] Show that $R_n$ converges to $U$ almost surely.
+    \item[(b)] Let $X_n$ be i.i.d. $X_n \sim \text{Bernouilli}(1 - (1/n))$, also independent of $U$. Define $Y_n = U X_n$. Does $Y_n$ have the same distribution as $R_n$? Why or why not?
+    \item[(c)] Show that $Y_n$ converges in probability to $U$.
+    \item[(d)] Show that $Y_n$ does not converge to $U$ almost surely.
+\end{enumerate}
+\begin{solution}
+
+\end{solution}
+
+
+\subsection{Problem 9}
+You break a rod of length $1$ uniformly at random in two pieces. Then take the shorter of the two pieces and break it again uniformly at random. Let $S$ be the length of the shortest of the three pieces. What is the density of $S$?
+\begin{solution}
+
+\end{solution}
+
