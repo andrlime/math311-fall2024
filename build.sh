@@ -53,7 +53,11 @@ fi
 if [[ ! -f temp ]]; then
   for i in $(seq 1 $1); do
     progress_bar $i $1
-    pdflatex --shell-escape main.tex > /dev/null 2>&1
+    pdflatex -halt-on-error --shell-escape main.tex > /dev/null 2>&1
+    if [[ $? -ne 0 ]]; then
+      echo -e "\n${RED}${CROSS} Build failed!${NC}"
+      exit 1
+    fi
   done
   echo -e "\n${GREEN}${CHECK} Compilation complete!${NC}"
 
